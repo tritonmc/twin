@@ -6,9 +6,15 @@
 @import "@material/theme/mdc-theme";
 @import "@material/typography/mdc-typography";
 @import "@material/elevation/mdc-elevation";
+@import "@material/textfield/mdc-text-field";
+@import "@material/floating-label/mdc-floating-label";
+@import "@material/notched-outline/mdc-notched-outline";
+@import "@material/line-ripple/mdc-line-ripple";
+@import "@material/button/mdc-button";
 
 // Import partials
 @import "partials/main";
+@import "partials/typography";
 
 // Import pages
 @import "pages/home";

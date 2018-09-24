@@ -5,9 +5,13 @@
   "dependencies": {
     "@material/theme": "^0.39.1",
     "@material/typography": "^0.39.0",
+    "@rmwc/button": "^2.2.2",
     "@rmwc/elevation": "^2.2.0",
+    "@rmwc/textfield": "^2.2.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5"
   },
   "scripts": {
