@@ -7,6 +7,17 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "express": "^4.16.3"
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-bearer-token": "^2.2.0",
+    "fs": "^0.0.1-security"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }

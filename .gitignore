@@ -22,3 +22,4 @@ yarn-debug.log*
 yarn-error.log*
 
 frontend/src/styles/index.css
+backend/api/config.js
