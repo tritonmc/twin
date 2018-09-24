@@ -1,0 +1,12 @@
+{
+  "name": "twin-backend",
+  "version": "1.0.0",
+  "description": "Backend for Triton Web Interface",
+  "main": "index.js",
+  "author": "Rexcantor64",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
