@@ -16,6 +16,7 @@ class Dashboard extends Component {
       id: this.props.match.params.id,
       data: [],
       tritonVersion: -1,
+      languages: [],
     };
   }
 
@@ -26,6 +27,7 @@ class Dashboard extends Component {
         loading: false,
         data: response.data.data,
         tritonVersion: response.data.tritonv,
+        languages: response.data.languages,
       });
     } catch (ex) {
       this.setState({ error: true });
@@ -39,18 +41,16 @@ class Dashboard extends Component {
       );
     return (
       <div id="dashboard">
-        <div className="dashboard-background-holder">
-          <Elevation
-            z="3"
-            id="dashboard-content"
-            className={this.state.loading ? "dashboard-content--loading" : ""}>
-            {this.state.loading ? (
-              <CircularProgress size="xlarge" />
-            ) : (
-              <div className="language-items-container">{this.getItemList()}</div>
-            )}
-          </Elevation>
-        </div>
+        <Elevation
+          z="3"
+          id="dashboard-content"
+          className={this.state.loading ? "dashboard-content--loading" : ""}>
+          {this.state.loading ? (
+            <CircularProgress size="xlarge" />
+          ) : (
+            <div className="language-items-container">{this.getItemList()}</div>
+          )}
+        </Elevation>
       </div>
     );
   }
@@ -70,6 +70,7 @@ class Dashboard extends Component {
             tags={data.tags}
             servers={data.servers}
             blacklist={data.blacklist}
+            availableLanguages={this.state.languages}
           />
         );
       }

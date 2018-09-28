@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@material/animation@^0.39.0":
+"@material/animation@^0.39.0", "@material/animation@~0.39.0":
   version "0.39.0"
   resolved "https://registry.yarnpkg.com/@material/animation/-/animation-0.39.0.tgz#d3d503c9f87ac1193dc4a5b0cccfaedb39478439"
   integrity sha512-f3BGCba0GdYY+eGFnK0L08HLyljgEyBvMLoJoutP225IpvzsLLTqumL/796nFCsouWn6E3G+8BUVjAtzTjU2lA==
@@ -117,6 +117,17 @@
   integrity sha512-Aia0R7/MuW3Whjj8fQnNzINAvQosL7d9+5M/kut657P6u+7KLUQJr204GU8cWvxGthG85XneWz3hDTGjhqagiw==
   dependencies:
     "@material/ripple" "^0.39.3"
+
+"@material/snackbar@~0.39.0":
+  version "0.39.1"
+  resolved "https://registry.yarnpkg.com/@material/snackbar/-/snackbar-0.39.1.tgz#2e8c013a12495b5ab11cbd638c527b820581efcc"
+  integrity sha512-cvzu7eGJcs+taLO12QeTYMlQyYuWcsAftRc5ADbC1AF08mPjQXvlyJscSkzXZcnXvh1/jVB+r+iW9eHL3mAOmw==
+  dependencies:
+    "@material/animation" "^0.39.0"
+    "@material/base" "^0.39.0"
+    "@material/rtl" "^0.39.1"
+    "@material/theme" "^0.39.1"
+    "@material/typography" "^0.39.0"
 
 "@material/textfield@~0.39.0":
   version "0.39.3"
@@ -263,6 +274,16 @@
     "@material/ripple" "~0.39.0"
     "@rmwc/base" "^2.2.0"
     classnames "^2.2.5"
+
+"@rmwc/snackbar@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@rmwc/snackbar/-/snackbar-2.2.2.tgz#3ff3346da1398ee855ee9a1198c1d9b128955411"
+  integrity sha512-gtv0ELAWUbBfdWOfh/TToH98lqxSY/ebYr2g79jZs/9tMxamx6Bli+BTYrc5/HGOgoULz/jTWg87yGV/gNsqoA==
+  dependencies:
+    "@material/animation" "~0.39.0"
+    "@material/snackbar" "~0.39.0"
+    "@rmwc/base" "^2.2.0"
+    "@rmwc/button" "^2.2.2"
 
 "@rmwc/textfield@^2.2.2":
   version "2.2.2"

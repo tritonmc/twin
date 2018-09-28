@@ -4,10 +4,12 @@ import { Button } from "@rmwc/button";
 import { Grid, GridCell, GridInner } from "@rmwc/grid";
 import { Checkbox } from "@rmwc/checkbox";
 import { IconButton } from "@rmwc/icon-button";
+import { Snackbar } from "@rmwc/snackbar";
 
 class TextItem extends Component {
   constructor(props) {
     super(props);
+    this.snackbarId = 0;
     this.state = {
       key: this.props.langKey,
       universal: this.props.universal,
@@ -15,13 +17,29 @@ class TextItem extends Component {
       description: this.props.description,
       tags: this.props.tags || [],
       tagInput: "",
-      tagValidationMsg: undefined,
+      servers: this.props.servers || [],
+      serverInput: "",
+      languages: this.props.languages,
+      snackbars: {},
     };
+  }
+
+  showSnackbar(text) {
+    var add = {};
+    add[this.snackbarId++] = (
+      <Snackbar key={this.snackbarId} show={true} message={text} alignStart />
+    );
+    this.setState({
+      snackbars: Object.assign(this.state.snackbars, add),
+    });
+    return this.snackbarId;
   }
 
   render() {
     return (
       <div className="language-item text-item">
+        {this.state.snackbars &&
+          Object.keys(this.state.snackbars).map((key, index) => this.state.snackbars[key])}
         <Grid>
           <GridCell desktop="6" phone="4" tablet="8">
             <TextField
@@ -66,14 +84,29 @@ class TextItem extends Component {
               plugin.
             </TextFieldHelperText>
           </GridCell>
-          <GridCell phone="4" tablet="8" desktop="6">
+          <GridCell
+            phone="4"
+            tablet={this.state.universal === true ? "8" : "4"}
+            desktop={this.state.universal === true ? "12" : "6"}>
             <GridInner>
               <span style={{ fontSize: "1.5em" }}>Tags</span>
               {this.state.tags &&
                 this.state.tags.map((tag) => (
                   <GridCell key={tag} phone="4" tablet="8" desktop="12" className="tag-cell">
                     <span>{tag}</span>
-                    <IconButton icon="delete_forever" />
+                    <IconButton
+                      icon="delete_forever"
+                      onClick={() => {
+                        var index = this.state.tags.indexOf(tag);
+                        if (index !== -1) {
+                          var array = this.state.tags.slice();
+                          array.splice(index, 1);
+                          this.setState({
+                            tags: array,
+                          });
+                        }
+                      }}
+                    />
                   </GridCell>
                 ))}
               <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
@@ -86,25 +119,16 @@ class TextItem extends Component {
                       this.setState({ tagInput: evt.target.value });
                     }}
                   />
-                  {this.state.tagValidationMsg && (
-                    <TextFieldHelperText persistent>
-                      {this.state.tagValidationMsg}
-                    </TextFieldHelperText>
-                  )}
                 </div>
                 <IconButton
                   icon="add_circle"
                   onClick={() => {
                     if (!this.state.tagInput) {
-                      this.setState({
-                        tagValidationMsg: "You can't add an empty tag!",
-                      });
+                      this.showSnackbar("You can't add an empty tag!");
                       return;
                     }
                     if (this.state.tags.includes(this.state.tagInput)) {
-                      this.setState({
-                        tagValidationMsg: "Tag already exists!",
-                      });
+                      this.showSnackbar("Tag already exists!");
                       return;
                     }
                     var tags = this.state.tags.slice();
@@ -118,13 +142,88 @@ class TextItem extends Component {
               </GridCell>
             </GridInner>
           </GridCell>
+          {this.state.universal !== true && (
+            <GridCell phone="4" tablet="4" desktop="6">
+              <GridInner>
+                <span style={{ fontSize: "1.5em" }}>Servers</span>
+                {this.state.servers &&
+                  this.state.servers.map((server) => (
+                    <GridCell key={server} phone="4" tablet="8" desktop="12" className="tag-cell">
+                      <span>{server}</span>
+                      <IconButton
+                        icon="delete_forever"
+                        onClick={() => {
+                          var index = this.state.servers.indexOf(server);
+                          if (index !== -1) {
+                            var array = this.state.servers.slice();
+                            array.splice(index, 1);
+                            this.setState({
+                              servers: array,
+                            });
+                          }
+                        }}
+                      />
+                    </GridCell>
+                  ))}
+                <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
+                  <div className="mdc-text-field-wrapper">
+                    <TextField
+                      dense
+                      label="Add a new server"
+                      value={this.state.serverInput}
+                      onChange={(evt) => {
+                        this.setState({ serverInput: evt.target.value });
+                      }}
+                    />
+                  </div>
+                  <IconButton
+                    icon="add_circle"
+                    onClick={() => {
+                      if (!this.state.serverInput) {
+                        this.showSnackbar("You can't add an empty server!");
+                        return;
+                      }
+                      if (this.state.servers.includes(this.state.serverInput)) {
+                        this.showSnackbar("Server already exists!");
+                        return;
+                      }
+                      var servers = this.state.servers.slice();
+                      servers.push(this.state.serverInput);
+                      this.setState({
+                        serverInput: "",
+                        servers: servers,
+                      });
+                    }}
+                  />
+                </GridCell>
+              </GridInner>
+            </GridCell>
+          )}
+          <GridCell phone="4" tablet="8" desktop="12">
+            <GridInner>
+              <span style={{ fontSize: "1.5em" }}>Text</span>
+              {this.props.availableLanguages ? (
+                this.props.availableLanguages.map((lang) => (
+                  <GridCell key={lang} phone="4" tablet="8" desktop="12">
+                    <TextField
+                      outlined
+                      style={{ width: "100%" }}
+                      label={lang}
+                      value={this.state.languages && this.state.languages[lang]}
+                      onChange={(evt) => {
+                        var languages = Object.assign(this.state.language, {});
+                        languages[lang] = evt.target.value;
+                        this.setState({ languages: languages });
+                      }}
+                    />
+                  </GridCell>
+                ))
+              ) : (
+                <p>Please add languages to your config.yml first</p>
+              )}
+            </GridInner>
+          </GridCell>
         </Grid>
-        <p>{"Servers" + this.props.servers}</p>
-        <p>Tags {this.props.tags}</p>
-        <p>Languages</p>
-        {Object.keys(this.props.languages).map((lang) => (
-          <p key={lang}>{" " + this.props.languages[lang]}</p>
-        ))}
       </div>
     );
   }

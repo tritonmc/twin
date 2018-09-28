@@ -8,6 +8,7 @@
 
   ::-webkit-scrollbar {
     width: $scrollbar-width;
+    height: $scrollbar-width;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -21,20 +22,22 @@
   }
 
   .dashboard-background-holder {
+  }
+  #dashboard-content {
+    position: relative;
     &::before {
-      top: $main-container-margin;
-      left: $main-container-margin;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: url("../img/background.jpg") no-repeat center center fixed;
       filter: blur(15px);
       content: " ";
       z-index: -1;
       display: block;
       position: absolute;
-      width: calc(100vw - #{$main-container-margin} * 2);
-      height: calc(100vh - #{$main-container-margin} * 2);
+      margin: 10px;
     }
-  }
-  #dashboard-content {
     padding: $main-container-padding;
     padding-right: $main-container-padding - $scrollbar-width;
     margin: $main-container-margin;
@@ -53,7 +56,7 @@
 
     .language-items-container {
       padding-right: $scrollbar-width;
-      overflow: auto;
+      overflow: hidden auto;
       height: calc(100vh - #{$main-container-margin} * 2 - #{$main-container-padding} * 2);
       .language-item {
         text-align: left;
@@ -61,6 +64,9 @@
           padding: 0 10px;
           border-radius: 10px;
           span {
+            display: inline-block;
+            width: calc(100% - 48px);
+            overflow: auto;
             line-height: 48px;
           }
           button {

@@ -6,7 +6,22 @@
   align-items: center;
   justify-content: center;
   #resource-input {
-    background: white;
+    position: relative;
+    &::before {
+      background: url("../img/background.jpg") no-repeat center center fixed;
+      filter: blur(15px);
+      content: " ";
+      z-index: -1;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: 10px;
+    }
+    background: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
