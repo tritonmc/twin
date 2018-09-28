@@ -1,0 +1,64 @@
+#dashboard {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ::-webkit-scrollbar {
+    width: $scrollbar-width;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #9a9999e6;
+    border-radius: 19px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #bdbbbb1f;
+    border-radius: 20px;
+  }
+
+  .dashboard-background-holder {
+    &::before {
+      top: $main-container-margin;
+      left: $main-container-margin;
+      background: url("../img/background.jpg") no-repeat center center fixed;
+      filter: blur(15px);
+      content: " ";
+      z-index: -1;
+      display: block;
+      position: absolute;
+      width: calc(100vw - #{$main-container-margin} * 2);
+      height: calc(100vh - #{$main-container-margin} * 2);
+    }
+  }
+  #dashboard-content {
+    padding: $main-container-padding;
+    padding-right: $main-container-padding - $scrollbar-width;
+    margin: $main-container-margin;
+    background: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.85);
+    //background: white;
+    border-radius: 10px;
+    text-align: center;
+    width: calc(100vw - #{$main-container-margin} * 2);
+    height: calc(100vh - #{$main-container-margin} * 2);
+    box-sizing: border-box;
+
+    hr {
+      border-color: rgba(255, 255, 255, 0.75);
+    }
+
+    .language-items-container {
+      padding-right: $scrollbar-width;
+      overflow: auto;
+      height: calc(100vh - #{$main-container-margin} * 2 - #{$main-container-padding} * 2);
+    }
+    &.dashboard-content--loading {
+      width: initial;
+      height: initial;
+    }
+  }
+}
