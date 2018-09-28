@@ -58,7 +58,7 @@ class Dashboard extends Component {
   getItemList() {
     var result = [];
     this.state.data.forEach((data, i) => {
-      if (i !== 0) result.push(<hr />);
+      if (i !== 0) result.push(<hr key={i} />);
       if (data.type === "text") {
         result.push(
           <TextItem

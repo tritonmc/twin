@@ -1,0 +1,9 @@
+.mdc-text-field--textarea {
+  .mdc-floating-label {
+    background-color: inherit;
+    top: 5px;
+  }
+  .mdc-floating-label--float-above {
+    transform: translateY(-20%) scale(0.923);
+  }
+}

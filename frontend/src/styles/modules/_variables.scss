@@ -1,6 +1,8 @@
 // Override MDC theme
-$mdc-theme-primary: #d32f2f; // Red 700
-$mdc-theme-accent: #ff6d00; // Orange A700
+$mdc-theme-primary: #ff6d00; // Orange A700
+$mdc-theme-accent: #d32f2f; // Red 700
+$mdc-theme-background: black;
+$mdc-theme-surface: rgba(0, 0, 0, 0.8);
 
 // Dimentions
 $main-container-margin: 30px;

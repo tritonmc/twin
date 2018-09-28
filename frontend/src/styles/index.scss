@@ -11,9 +11,15 @@
 @import "@material/notched-outline/mdc-notched-outline";
 @import "@material/line-ripple/mdc-line-ripple";
 @import "@material/button/mdc-button";
-@import "@rmwc/circular-progress/circular-progress";
+@import "@rmwc/circular-progress/circular-progress"; // .css
+@import "@material/layout-grid/mdc-layout-grid";
+@import "@material/checkbox/mdc-checkbox";
+@import "@material/form-field/mdc-form-field";
+@import "@rmwc/icon/icon"; // .css
+@import "@material/icon-button/mdc-icon-button";
 
 // Import partials
+@import "partials/forms";
 @import "partials/main";
 @import "partials/typography";
 
