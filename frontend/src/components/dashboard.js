@@ -4,8 +4,10 @@ import { Elevation } from "@rmwc/elevation";
 //import { Button } from "@rmwc/button";
 import { Redirect } from "react-router-dom";
 import { CircularProgress } from "@rmwc/circular-progress";
+import { connect } from "react-redux";
 import TextItem from "./items";
 import axios from "axios";
+import { setData } from "../actions/items";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -14,20 +16,17 @@ class Dashboard extends Component {
       error: false,
       loading: true,
       id: this.props.match.params.id,
-      data: [],
-      tritonVersion: -1,
-      languages: [],
     };
   }
 
   async componentDidMount() {
     try {
       var response = await axios.get("/api/v1/get/" + this.state.id);
+      this.props.dispatch(
+        setData(response.data.data, response.data.tritonv, response.data.languages)
+      );
       this.setState({
         loading: false,
-        data: response.data.data,
-        tritonVersion: response.data.tritonv,
-        languages: response.data.languages,
       });
     } catch (ex) {
       this.setState({ error: true });
@@ -57,26 +56,45 @@ class Dashboard extends Component {
 
   getItemList() {
     var result = [];
-    this.state.data.forEach((data, i) => {
+    this.props.data.forEach((data, i) => {
       if (i !== 0) result.push(<hr key={i} />);
-      if (data.type === "text") {
+      if (data.get("type") === "text") {
         result.push(
           <TextItem
-            key={data.key}
-            languages={data.languages}
-            langKey={data.key}
-            description={data.description}
-            universal={data.universal}
-            tags={data.tags}
-            servers={data.servers}
-            blacklist={data.blacklist}
-            availableLanguages={this.state.languages}
+            key={data.get("key")}
+            languages={data.get("languages")}
+            langKey={data.get("key")}
+            description={data.get("description")}
+            universal={data.get("universal")}
+            tags={data.get("tags")}
+            servers={data.get("servers")}
+            blacklist={data.get("blacklist")}
+            availableLanguages={this.props.availableLanguages}
+            dispatch={this.props.dispatch}
+            isDuplicateKey={(key) => this.isDuplicateKey(key)}
           />
         );
       }
     });
     return result;
   }
+
+  isDuplicateKey(key) {
+    return (
+      this.props.data.findIndex((item) => {
+        return item.get("key") === key;
+      }) !== -1
+    );
+  }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  var root = state.items.itemListRoot;
+  return {
+    data: root.get("data"),
+    tritonVersion: root.get("tritonVersion"),
+    availableLanguages: root.get("availableLanguages"),
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);

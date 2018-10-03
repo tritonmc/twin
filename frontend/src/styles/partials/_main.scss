@@ -23,3 +23,7 @@ body:before {
   -o-background-size: cover;
   background-size: cover;
 }
+
+.mdc-snackbar {
+  z-index: 999;
+}

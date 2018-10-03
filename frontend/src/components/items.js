@@ -5,29 +5,41 @@ import { Grid, GridCell, GridInner } from "@rmwc/grid";
 import { Checkbox } from "@rmwc/checkbox";
 import { IconButton } from "@rmwc/icon-button";
 import { Snackbar } from "@rmwc/snackbar";
+import {
+  changeItemKey,
+  changeItemUniversal,
+  changeItemBlacklist,
+  changeItemDescription,
+  addItemTag,
+  removeItemTag,
+} from "../actions/items";
 
 class TextItem extends Component {
   constructor(props) {
     super(props);
     this.snackbarId = 0;
     this.state = {
-      key: this.props.langKey,
-      universal: this.props.universal,
-      blacklist: this.props.blacklist,
-      description: this.props.description,
-      tags: this.props.tags || [],
-      tagInput: "",
-      servers: this.props.servers || [],
-      serverInput: "",
-      languages: this.props.languages,
       snackbars: {},
     };
+    this.tagInput = React.createRef();
   }
 
   showSnackbar(text) {
     var add = {};
     add[this.snackbarId++] = (
-      <Snackbar key={this.snackbarId} show={true} message={text} alignStart />
+      <Snackbar
+        key={this.snackbarId}
+        show={true}
+        message={text}
+        onHide={() => {
+          var sbs = Object.assign({}, this.state.snackbars);
+          sbs[this.snackbarId] = undefined;
+          this.setState({
+            snackbars: sbs,
+          });
+        }}
+        alignStart
+      />
     );
     this.setState({
       snackbars: Object.assign(this.state.snackbars, add),
@@ -36,6 +48,7 @@ class TextItem extends Component {
   }
 
   render() {
+    var { dispatch, langKey } = this.props;
     return (
       <div className="language-item text-item">
         {this.state.snackbars &&
@@ -44,9 +57,15 @@ class TextItem extends Component {
           <GridCell desktop="6" phone="4" tablet="8">
             <TextField
               style={{ width: "100%" }}
-              value={this.state.key}
-              onChange={(evt) => {
-                this.setState({ key: evt.target.value });
+              defaultValue={this.props.langKey}
+              onBlur={(evt) => {
+                if (this.props.langKey === evt.target.value) return;
+                if (!this.props.isDuplicateKey(evt.target.value))
+                  dispatch(changeItemKey(langKey, evt.target.value));
+                else {
+                  this.showSnackbar("Duplicate key! Please choose another one!");
+                  evt.target.value = langKey;
+                }
               }}
               withLeadingIcon="vpn_key"
               label="Item Key"
@@ -58,24 +77,24 @@ class TextItem extends Component {
           </GridCell>
           <GridCell phone="4" tablet="4" desktop="2">
             <Checkbox
-              checked={this.state.universal || false}
-              onChange={(evt) => this.setState({ universal: evt.target.checked })}>
+              checked={this.props.universal || false}
+              onChange={(evt) => dispatch(changeItemUniversal(langKey, evt.target.checked))}>
               <strong>Universal</strong>
             </Checkbox>
           </GridCell>
           <GridCell phone="4" tablet="4" desktop="4">
             <Checkbox
-              checked={this.state.blacklist || false}
-              onChange={(evt) => this.setState({ blacklist: evt.target.checked })}>
+              checked={this.props.blacklist || false}
+              onChange={(evt) => dispatch(changeItemBlacklist(langKey, evt.target.checked))}>
               <strong>Use Server List as Blacklist</strong>
             </Checkbox>
           </GridCell>
           <GridCell phone="4" tablet="8" desktop="12">
             <TextField
               textarea
-              value={this.state.description}
-              onChange={(evt) => {
-                this.setState({ description: evt.target.value });
+              defaultValue={this.props.description}
+              onBlur={(evt) => {
+                dispatch(changeItemDescription(langKey, evt.target.value));
               }}
               label="Description"
             />
@@ -86,63 +105,45 @@ class TextItem extends Component {
           </GridCell>
           <GridCell
             phone="4"
-            tablet={this.state.universal === true ? "8" : "4"}
-            desktop={this.state.universal === true ? "12" : "6"}>
+            tablet={this.props.universal === true ? "8" : "4"}
+            desktop={this.props.universal === true ? "12" : "6"}>
             <GridInner>
               <span style={{ fontSize: "1.5em" }}>Tags</span>
-              {this.state.tags &&
-                this.state.tags.map((tag) => (
+              {this.props.tags &&
+                this.props.tags.map((tag) => (
                   <GridCell key={tag} phone="4" tablet="8" desktop="12" className="tag-cell">
                     <span>{tag}</span>
                     <IconButton
                       icon="delete_forever"
                       onClick={() => {
-                        var index = this.state.tags.indexOf(tag);
-                        if (index !== -1) {
-                          var array = this.state.tags.slice();
-                          array.splice(index, 1);
-                          this.setState({
-                            tags: array,
-                          });
-                        }
+                        dispatch(removeItemTag(langKey, tag));
                       }}
                     />
                   </GridCell>
                 ))}
               <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
                 <div className="mdc-text-field-wrapper">
-                  <TextField
-                    dense
-                    label="Add a new tag"
-                    value={this.state.tagInput}
-                    onChange={(evt) => {
-                      this.setState({ tagInput: evt.target.value });
-                    }}
-                  />
+                  <TextField dense label="Add a new tag" ref={this.tagInput} />
                 </div>
                 <IconButton
                   icon="add_circle"
                   onClick={() => {
-                    if (!this.state.tagInput) {
+                    if (!this.tagInput || !this.tagInput.current.value) {
                       this.showSnackbar("You can't add an empty tag!");
                       return;
                     }
-                    if (this.state.tags.includes(this.state.tagInput)) {
+                    if (this.props.tags.includes(this.tagInput.current.value)) {
                       this.showSnackbar("Tag already exists!");
                       return;
                     }
-                    var tags = this.state.tags.slice();
-                    tags.push(this.state.tagInput);
-                    this.setState({
-                      tagInput: "",
-                      tags: tags,
-                    });
+                    dispatch(addItemTag(langKey, this.tagInput.current.value));
+                    this.tagInput.current.value = "";
                   }}
                 />
               </GridCell>
             </GridInner>
           </GridCell>
-          {this.state.universal !== true && (
+          {/*{this.state.universal !== true && (
             <GridCell phone="4" tablet="4" desktop="6">
               <GridInner>
                 <span style={{ fontSize: "1.5em" }}>Servers</span>
@@ -222,7 +223,7 @@ class TextItem extends Component {
                 <p>Please add languages to your config.yml first</p>
               )}
             </GridInner>
-          </GridCell>
+          </GridCell>*/}
         </Grid>
       </div>
     );

@@ -1,0 +1,8 @@
+export const SET_DATA = "SET_DATA";
+export const CHANGE_ITEM_TYPE = "CHANGE_ITEM_TYPE";
+export const CHANGE_ITEM_FIELD = "CHANGE_ITEM_FIELD";
+export const ADD_ITEM_TAG = "ADD_ITEM_TAG";
+export const REMOVE_ITEM_TAG = "REMOVE_ITEM_TAG";
+export const ADD_ITEM_SERVER = "ADD_ITEM_SERVER";
+export const REMOVE_ITEM_SERVER = "REMOVE_ITEM_SERVER";
+export const CHANGE_ITEM_TEXT = "CHANGE_ITEM_TEXT";
