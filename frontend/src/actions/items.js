@@ -49,7 +49,6 @@ export const removeItemServer = (id, server) => ({
 });
 export const changeItemText = (id, language, text) => ({
   type: types.CHANGE_ITEM_TEXT,
-  oldType: "text",
   language,
   text,
   id,
