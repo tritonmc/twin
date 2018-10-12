@@ -5,9 +5,9 @@ import { Elevation } from "@rmwc/elevation";
 import { Redirect } from "react-router-dom";
 import { CircularProgress } from "@rmwc/circular-progress";
 import { connect } from "react-redux";
-import TextItem from "./items";
 import axios from "axios";
 import { setData } from "../actions/items";
+import ItemList from "./itemList";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -44,57 +44,11 @@ class Dashboard extends Component {
           z="3"
           id="dashboard-content"
           className={this.state.loading ? "dashboard-content--loading" : ""}>
-          {this.state.loading ? (
-            <CircularProgress size="xlarge" />
-          ) : (
-            <div className="language-items-container">{this.getItemList()}</div>
-          )}
+          {this.state.loading ? <CircularProgress size="xlarge" /> : <ItemList />}
         </Elevation>
       </div>
     );
   }
-
-  getItemList() {
-    var result = [];
-    this.props.data.forEach((data, i) => {
-      if (i !== 0) result.push(<hr key={i} />);
-      if (data.get("type") === "text") {
-        result.push(
-          <TextItem
-            key={data.get("key")}
-            languages={data.get("languages")}
-            langKey={data.get("key")}
-            description={data.get("description")}
-            universal={data.get("universal")}
-            tags={data.get("tags")}
-            servers={data.get("servers")}
-            blacklist={data.get("blacklist")}
-            availableLanguages={this.props.availableLanguages}
-            dispatch={this.props.dispatch}
-            isDuplicateKey={(key) => this.isDuplicateKey(key)}
-          />
-        );
-      }
-    });
-    return result;
-  }
-
-  isDuplicateKey(key) {
-    return (
-      this.props.data.findIndex((item) => {
-        return item.get("key") === key;
-      }) !== -1
-    );
-  }
 }
 
-const mapStateToProps = (state) => {
-  var root = state.items.itemListRoot;
-  return {
-    data: root.get("data"),
-    tritonVersion: root.get("tritonVersion"),
-    availableLanguages: root.get("availableLanguages"),
-  };
-};
-
-export default connect(mapStateToProps)(Dashboard);
+export default connect()(Dashboard);
