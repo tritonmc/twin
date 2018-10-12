@@ -1,5 +1,5 @@
 import * as types from "../constants/ActionTypes";
-import { /*List,*/ Map } from "immutable";
+import { List, Map } from "immutable";
 import { combineReducers } from "redux";
 
 function itemListRoot(state = Map(), action) {
@@ -29,6 +29,8 @@ function itemListRoot(state = Map(), action) {
         return item.get("key") === action.id;
       });
       if (indexTag === -1) return state;
+      if (!state.hasIn(["data", indexTag, "tags"]))
+        state = state.setIn(["data", indexTag, "tags"], new List());
       if (
         state.getIn(["data", indexTag, "tags"]).findIndex((item) => {
           return item === action.tag;
@@ -51,6 +53,8 @@ function itemListRoot(state = Map(), action) {
         return item.get("key") === action.id;
       });
       if (indexServer === -1) return state;
+      if (!state.hasIn(["data", indexServer, "servers"]))
+        state = state.setIn(["data", indexServer, "servers"], new List());
       if (
         state.getIn(["data", indexServer, "servers"]).findIndex((item) => {
           return item === action.server;

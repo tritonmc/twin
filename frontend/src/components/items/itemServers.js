@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 class ItemServers extends PureComponent {
   constructor(props) {
     super(props);
-    this.serverInput = React.createRef();
+    this.onServerRemoveClick = this.onServerRemoveClick.bind(this);
   }
 
   render() {
@@ -20,49 +20,85 @@ class ItemServers extends PureComponent {
           <span style={{ fontSize: "1.5em" }}>Servers</span>
           {this.props.servers &&
             this.props.servers.map((server) => (
-              <GridCell key={server} phone="4" tablet="8" desktop="12" className="tag-cell">
-                <span>{server}</span>
-                <IconButton
-                  icon="delete_forever"
-                  onClick={() => {
-                    dispatch(removeItemServer(langKey, server));
-                  }}
-                />
-              </GridCell>
+              <ServerItem key={server} value={server} onClick={this.onServerRemoveClick} />
             ))}
-          <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
-            <div className="mdc-text-field-wrapper">
-              <TextField dense label="Add a new server" red={this.serverInput} />
-            </div>
-            <IconButton
-              icon="add_circle"
-              onClick={() => {
-                if (!this.serverInput || !this.serverInput.current.value) {
-                  dispatch(
-                    showSnack("", {
-                      label: "You can't add an empty server!",
-                      timeout: 7000,
-                      button: { label: "OK, GOT IT" },
-                    })
-                  );
-                  return;
-                }
-                if (this.props.servers.includes(this.serverInput.current.value)) {
-                  dispatch(
-                    showSnack("", {
-                      label: "Server already exists!",
-                      timeout: 7000,
-                      button: { label: "OK, GOT IT" },
-                    })
-                  );
-                  return;
-                }
-                dispatch(addItemServer(langKey, this.serverInput.current.value));
-                this.serverInput.current.value = "";
-              }}
-            />
-          </GridCell>
+          <ServerInput dispatch={dispatch} langKey={langKey} />
         </GridInner>
+      </GridCell>
+    );
+  }
+  onServerRemoveClick(value) {
+    var { dispatch, langKey } = this.props;
+    dispatch(removeItemServer(langKey, value));
+  }
+}
+
+class ServerAddButton extends React.Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+  render() {
+    var { onClick } = this.props;
+    return <IconButton icon="add_circle" onClick={onClick} />;
+  }
+}
+
+class ServerItem extends React.Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+  render() {
+    var { onClick, value } = this.props;
+    return (
+      <GridCell phone="4" tablet="8" desktop="12" className="tag-cell">
+        <span>{value}</span>
+        <IconButton icon="delete_forever" onClick={() => onClick(value)} />
+      </GridCell>
+    );
+  }
+}
+
+class ServerInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.serverInput = React.createRef();
+    this.onServerAddClick = this.onServerAddClick.bind(this);
+  }
+  shouldComponentUpdate() {
+    return false;
+  }
+  onServerAddClick() {
+    var { dispatch, langKey } = this.props;
+    if (!this.serverInput || !this.serverInput.current.value) {
+      dispatch(
+        showSnack("", {
+          label: "You can't add an empty server!",
+          timeout: 7000,
+          button: { label: "OK, GOT IT" },
+        })
+      );
+      return;
+    }
+    if (this.props.servers && this.props.servers.includes(this.serverInput.current.value)) {
+      dispatch(
+        showSnack("", {
+          label: "Server already exists!",
+          timeout: 7000,
+          button: { label: "OK, GOT IT" },
+        })
+      );
+      return;
+    }
+    dispatch(addItemServer(langKey, this.serverInput.current.value));
+    this.serverInput.current.value = "";
+  }
+  render() {
+    return (
+      <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
+        <div className="mdc-text-field-wrapper">
+          <TextField dense label="Add a new server" ref={this.serverInput} />
+        </div>
+        <ServerAddButton onClick={this.onServerAddClick} />
       </GridCell>
     );
   }

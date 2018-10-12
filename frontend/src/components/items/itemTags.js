@@ -9,8 +9,7 @@ import { connect } from "react-redux";
 class ItemTags extends PureComponent {
   constructor(props) {
     super(props);
-    this.tagInput = React.createRef();
-    this.onTagAddClick = this.onTagAddClick.bind(this);
+    this.onTagRemoveClick = this.onTagRemoveClick.bind(this);
   }
 
   render() {
@@ -24,25 +23,52 @@ class ItemTags extends PureComponent {
           <span style={{ fontSize: "1.5em" }}>Tags</span>
           {this.props.tags &&
             this.props.tags.map((tag) => (
-              <GridCell key={tag} phone="4" tablet="8" desktop="12" className="tag-cell">
-                <span>{tag}</span>
-                <IconButton
-                  icon="delete_forever"
-                  onClick={() => {
-                    dispatch(removeItemTag(langKey, tag));
-                  }}
-                />
-              </GridCell>
+              <TagItem key={tag} value={tag} onClick={this.onTagRemoveClick} />
             ))}
-          <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
-            <div className="mdc-text-field-wrapper">
-              <TextField dense label="Add a new tag" ref={this.tagInput} />
-            </div>
-            <TagAddButton onClick={this.onTagAddClick} />
-          </GridCell>
+          <TagInput dispatch={dispatch} langKey={langKey} />
         </GridInner>
       </GridCell>
     );
+  }
+  onTagRemoveClick(value) {
+    var { dispatch, langKey } = this.props;
+    dispatch(removeItemTag(langKey, value));
+  }
+}
+
+class TagAddButton extends React.Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+  render() {
+    var { onClick } = this.props;
+    return <IconButton icon="add_circle" onClick={onClick} />;
+  }
+}
+
+class TagItem extends React.Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+  render() {
+    var { onClick, value } = this.props;
+    return (
+      <GridCell phone="4" tablet="8" desktop="12" className="tag-cell">
+        <span>{value}</span>
+        <IconButton icon="delete_forever" onClick={() => onClick(value)} />
+      </GridCell>
+    );
+  }
+}
+
+class TagInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.tagInput = React.createRef();
+    this.onTagAddClick = this.onTagAddClick.bind(this);
+  }
+  shouldComponentUpdate() {
+    return false;
   }
   onTagAddClick() {
     var { dispatch, langKey } = this.props;
@@ -56,7 +82,7 @@ class ItemTags extends PureComponent {
       );
       return;
     }
-    if (this.props.tags.includes(this.tagInput.current.value)) {
+    if (this.props.tags && this.props.tags.includes(this.tagInput.current.value)) {
       dispatch(
         showSnack("", {
           label: "Tag already exists!",
@@ -69,16 +95,15 @@ class ItemTags extends PureComponent {
     dispatch(addItemTag(langKey, this.tagInput.current.value));
     this.tagInput.current.value = "";
   }
-}
-
-class TagAddButton extends React.Component {
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
-    var { onClick } = this.props;
-    return <IconButton icon="add_circle" onClick={onClick} />;
+    return (
+      <GridCell phone="4" tablet="8" desktop="12" className="tag-cell tag-cell--input">
+        <div className="mdc-text-field-wrapper">
+          <TextField dense label="Add a new tag" ref={this.tagInput} />
+        </div>
+        <TagAddButton onClick={this.onTagAddClick} />
+      </GridCell>
+    );
   }
 }
 
