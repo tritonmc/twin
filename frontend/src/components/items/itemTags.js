@@ -13,19 +13,19 @@ class ItemTags extends PureComponent {
   }
 
   render() {
-    var { dispatch, langKey } = this.props;
+    var { dispatch, langKey, universal, sign, bungee } = this.props;
     return (
       <GridCell
         phone="4"
-        tablet={this.props.universal === true ? "8" : "4"}
-        desktop={this.props.universal === true ? "12" : "6"}>
+        tablet={universal === true || !bungee || sign ? "8" : "4"}
+        desktop={(universal === true || !bungee) && !sign ? "12" : "6"}>
         <GridInner>
           <span style={{ fontSize: "1.5em" }}>Tags</span>
           {this.props.tags &&
             this.props.tags.map((tag) => (
               <TagItem key={tag} value={tag} onClick={this.onTagRemoveClick} />
             ))}
-          <TagInput dispatch={dispatch} langKey={langKey} />
+          <TagInput dispatch={dispatch} langKey={langKey} tags={this.props.tags} />
         </GridInner>
       </GridCell>
     );

@@ -22,7 +22,7 @@ class ItemServers extends PureComponent {
             this.props.servers.map((server) => (
               <ServerItem key={server} value={server} onClick={this.onServerRemoveClick} />
             ))}
-          <ServerInput dispatch={dispatch} langKey={langKey} />
+          <ServerInput dispatch={dispatch} langKey={langKey} servers={this.props.servers} />
         </GridInner>
       </GridCell>
     );

@@ -1,16 +1,11 @@
 import * as types from "../constants/ActionTypes";
 
-export const setData = (data, tritonVersion, availableLanguages) => ({
+export const setData = (data, tritonVersion, bungee, availableLanguages) => ({
   type: types.SET_DATA,
   data,
   tritonVersion,
+  bungee,
   availableLanguages,
-});
-export const changeItemType = (id, newType) => ({
-  type: types.CHANGE_ITEM_TYPE,
-  oldType: "text",
-  id,
-  newType,
 });
 export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
@@ -25,25 +20,21 @@ export const changeItemDescription = (id, description) =>
   changeItemField("description", id, description);
 export const addItemTag = (id, tag) => ({
   type: types.ADD_ITEM_TAG,
-  oldType: "text",
   tag,
   id,
 });
 export const removeItemTag = (id, tag) => ({
   type: types.REMOVE_ITEM_TAG,
-  oldType: "text",
   tag,
   id,
 });
 export const addItemServer = (id, server) => ({
   type: types.ADD_ITEM_SERVER,
-  oldType: "text",
   server,
   id,
 });
 export const removeItemServer = (id, server) => ({
   type: types.REMOVE_ITEM_SERVER,
-  oldType: "text",
   server,
   id,
 });
@@ -52,4 +43,28 @@ export const changeItemText = (id, language, text) => ({
   language,
   text,
   id,
+});
+export const changeSignCoordinate = (id, coordinateId, field, value) => ({
+  type: types.CHANGE_SIGN_COORDINATE,
+  id,
+  coordinateId,
+  field,
+  value,
+});
+export const removeSignCoordinate = (id, coordinateId) => ({
+  type: types.REMOVE_SIGN_COORDINATE,
+  id,
+  coordinateId,
+});
+export const addSignCoordinate = (id, location) => ({
+  type: types.ADD_SIGN_COORDINATE,
+  id,
+  location,
+});
+export const changeSignLine = (id, lang, index, value) => ({
+  type: types.CHANGE_SIGN_LINE,
+  id,
+  lang,
+  index,
+  value,
 });

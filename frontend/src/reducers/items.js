@@ -9,6 +9,7 @@ function itemListRoot(state = Map(), action) {
         data: action.data,
         defaultData: action.data,
         tritonVersion: action.tritonVersion,
+        bungee: action.bungee,
         availableLanguages: action.availableLanguages,
       });
     case types.CHANGE_ITEM_FIELD:
@@ -82,7 +83,40 @@ function itemListRoot(state = Map(), action) {
       });
       if (indexText === -1) return state;
       return state.setIn(["data", indexText, "languages", action.language], action.text);
-
+    case types.CHANGE_SIGN_COORDINATE:
+      var indexSignCoordinate = state.get("data").findIndex((item) => {
+        return item.get("key") === action.id;
+      });
+      if (indexSignCoordinate === -1) return state;
+      return state.setIn(
+        ["data", indexSignCoordinate, "locations", action.coordinateId, action.field],
+        action.value
+      );
+    case types.REMOVE_SIGN_COORDINATE:
+      var indexSignCoordinate2 = state.get("data").findIndex((item) => {
+        return item.get("key") === action.id;
+      });
+      if (indexSignCoordinate2 === -1) return state;
+      return state.updateIn(["data", indexSignCoordinate2, "locations"], (locations) =>
+        locations.delete(action.coordinateId)
+      );
+    case types.ADD_SIGN_COORDINATE:
+      var indexSignCoordinate3 = state.get("data").findIndex((item) => {
+        return item.get("key") === action.id;
+      });
+      if (indexSignCoordinate3 === -1) return state;
+      return state.updateIn(["data", indexSignCoordinate3, "locations"], (locations) =>
+        locations.push(action.location)
+      );
+    case types.CHANGE_SIGN_LINE:
+      var indexSignCoordinate4 = state.get("data").findIndex((item) => {
+        return item.get("key") === action.id;
+      });
+      if (indexSignCoordinate4 === -1) return state;
+      return state.setIn(
+        ["data", indexSignCoordinate4, "lines", action.lang, action.index],
+        action.value
+      );
     default:
       return state;
   }

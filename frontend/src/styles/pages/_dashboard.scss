@@ -60,42 +60,6 @@
       height: calc(100vh - #{$main-container-margin} * 2 - #{$main-container-padding} * 2);
       .language-item {
         text-align: left;
-        .tag-cell {
-          padding: 0 10px;
-          border-radius: 10px;
-          span {
-            display: inline-block;
-            width: calc(100% - 48px);
-            overflow: auto;
-            line-height: 48px;
-          }
-          button {
-            float: right;
-            &:hover {
-              color: $mdc-theme-accent;
-            }
-          }
-          &:not(.tag-cell--input):hover {
-            background-color: rgba(0, 0, 0, 0.4);
-          }
-          &.tag-cell--input {
-            display: flex;
-            .mdc-text-field-wrapper {
-              width: calc(100% - 48px);
-            }
-            .mdc-text-field {
-              width: 100%;
-              height: 48px;
-              background-color: transparent;
-              .mdc-floating-label {
-                top: 12px;
-              }
-              &::before {
-                background-color: transparent;
-              }
-            }
-          }
-        }
       }
     }
     &.dashboard-content--loading {
@@ -103,4 +67,50 @@
       height: initial;
     }
   }
+}
+
+.tag-cell {
+  padding: 0 10px;
+  border-radius: 10px;
+  span {
+    display: inline-block;
+    width: calc(100% - 48px);
+    overflow: auto;
+    line-height: 48px;
+  }
+  button {
+    float: right;
+    &:hover {
+      color: $mdc-theme-accent;
+    }
+  }
+  &:not(.tag-cell--input):hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+.tag-cell--input,
+.coordinates--input {
+  display: flex;
+  .mdc-text-field-wrapper {
+    width: calc(100% - 48px);
+  }
+  .mdc-text-field {
+    width: 100%;
+    height: 48px;
+    background-color: transparent;
+    .mdc-floating-label {
+      top: 12px;
+    }
+    &::before {
+      background-color: transparent;
+    }
+  }
+  button:hover {
+    color: $mdc-theme-accent;
+  }
+}
+
+.accent-hover-button:hover {
+  color: $mdc-theme-accent;
 }

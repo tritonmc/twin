@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import TextItem from "./items";
+import { TextItem, SignItem } from "./items";
 
 class ItemList extends PureComponent {
   constructor(props) {
@@ -27,7 +27,20 @@ class ItemList extends PureComponent {
             tags={data.get("tags")}
             servers={data.get("servers")}
             blacklist={data.get("blacklist")}
-            availableLanguages={this.props.availableLanguages}
+            bungee={this.props.bungee}
+            isDuplicateKey={this.isDuplicateKey}
+          />
+        );
+      } else if (data.get("type") === "sign") {
+        result.push(
+          <SignItem
+            key={data.get("key")}
+            lines={data.get("lines")}
+            locations={data.get("locations")}
+            langKey={data.get("key")}
+            description={data.get("description")}
+            tags={data.get("tags")}
+            bungee={this.props.bungee}
             isDuplicateKey={this.isDuplicateKey}
           />
         );
@@ -50,7 +63,7 @@ const mapStateToProps = (state) => {
   return {
     data: root.get("data"),
     tritonVersion: root.get("tritonVersion"),
-    availableLanguages: root.get("availableLanguages"),
+    bungee: root.get("bungee"),
   };
 };
 

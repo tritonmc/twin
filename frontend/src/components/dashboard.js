@@ -23,7 +23,12 @@ class Dashboard extends Component {
     try {
       var response = await axios.get("/api/v1/get/" + this.state.id);
       this.props.dispatch(
-        setData(response.data.data, response.data.tritonv, response.data.languages)
+        setData(
+          response.data.data,
+          response.data.tritonv,
+          response.data.bungee,
+          response.data.languages
+        )
       );
       this.setState({
         loading: false,
