@@ -13,110 +13,113 @@ function itemListRoot(state = Map(), action) {
         availableLanguages: action.availableLanguages,
       });
     case types.CHANGE_ITEM_FIELD:
+    case types.ADD_ITEM_TAG:
+    case types.REMOVE_ITEM_TAG:
+    case types.ADD_ITEM_SERVER:
+    case types.REMOVE_ITEM_SERVER:
+    case types.CHANGE_ITEM_TEXT:
+    case types.CHANGE_SIGN_COORDINATE:
+    case types.REMOVE_SIGN_COORDINATE:
+    case types.ADD_SIGN_COORDINATE:
+    case types.CHANGE_SIGN_LINE:
+    case types.ADD_ITEM:
+      return state.update("data", (data) => itemListData(data, action));
+    default:
+      return state;
+  }
+}
+
+function itemListData(state = List(), action) {
+  switch (action.type) {
+    case types.CHANGE_ITEM_FIELD:
       if (
         action.fieldName === "key" &&
-        state.get("data").findIndex((item) => {
+        state.findIndex((item) => {
           return item.get("key") === action.value;
         }) !== -1
       )
         return state;
-      var index = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (index !== -1) return state.setIn(["data", index, action.fieldName], action.value);
-      return state;
+    // falls through
     case types.ADD_ITEM_TAG:
-      var indexTag = state.get("data").findIndex((item) => {
+    case types.REMOVE_ITEM_TAG:
+    case types.ADD_ITEM_SERVER:
+    case types.REMOVE_ITEM_SERVER:
+    case types.CHANGE_ITEM_TEXT:
+    case types.CHANGE_SIGN_COORDINATE:
+    case types.REMOVE_SIGN_COORDINATE:
+    case types.ADD_SIGN_COORDINATE:
+    case types.CHANGE_SIGN_LINE:
+      let index = state.findIndex((item) => {
         return item.get("key") === action.id;
       });
-      if (indexTag === -1) return state;
-      if (!state.hasIn(["data", indexTag, "tags"]))
-        state = state.setIn(["data", indexTag, "tags"], new List());
+      if (index === -1) return state;
+      return state.update(index, (item) => itemListItem(item, action));
+    case types.ADD_ITEM:
       if (
-        state.getIn(["data", indexTag, "tags"]).findIndex((item) => {
+        state.findIndex((item) => {
+          return item.get("key") === "";
+        }) !== -1
+      )
+        return state;
+      let item;
+      switch (action.itemType) {
+        case "text":
+          item = { key: "", type: "text" };
+          break;
+        case "sign":
+          item = { key: "", type: "sign" };
+          break;
+        default:
+          item = {};
+      }
+      return state.push(Map(item));
+    default:
+      return state;
+  }
+}
+
+function itemListItem(state = Map(), action) {
+  switch (action.type) {
+    case types.CHANGE_ITEM_FIELD:
+      return state.set(action.fieldName, action.value);
+    case types.ADD_ITEM_TAG:
+      if (
+        state.get("tags", List()).findIndex((item) => {
           return item === action.tag;
         }) !== -1
       )
         return state;
-      return state.updateIn(["data", indexTag, "tags"], (tags) => tags.push(action.tag));
+      return state.update("tags", List(), (tags) => tags.push(action.tag));
     case types.REMOVE_ITEM_TAG:
-      var indexTag2 = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexTag2 === -1) return state;
-      var tagIndex = state.getIn(["data", indexTag2, "tags"]).findIndex((item) => {
+      var tagIndex = state.get("tags").findIndex((item) => {
         return item === action.tag;
       });
       if (tagIndex === -1) return state;
-      return state.updateIn(["data", indexTag2, "tags"], (tags) => tags.delete(tagIndex));
+      return state.update("tags", (tags) => tags.delete(tagIndex));
     case types.ADD_ITEM_SERVER:
-      var indexServer = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexServer === -1) return state;
-      if (!state.hasIn(["data", indexServer, "servers"]))
-        state = state.setIn(["data", indexServer, "servers"], new List());
       if (
-        state.getIn(["data", indexServer, "servers"]).findIndex((item) => {
+        state.get("servers", List()).findIndex((item) => {
           return item === action.server;
         }) !== -1
       )
         return state;
-      return state.updateIn(["data", indexServer, "servers"], (servers) =>
-        servers.push(action.server)
-      );
+      return state.update("servers", List(), (servers) => servers.push(action.server));
     case types.REMOVE_ITEM_SERVER:
-      var indexServer2 = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexServer2 === -1) return state;
-      var serverIndex = state.getIn(["data", indexServer2, "servers"]).findIndex((item) => {
+      var serverIndex = state.get("servers").findIndex((item) => {
         return item === action.server;
       });
       if (serverIndex === -1) return state;
-      return state.updateIn(["data", indexServer2, "servers"], (servers) =>
-        servers.delete(serverIndex)
-      );
+      return state.update("servers", (servers) => servers.delete(serverIndex));
     case types.CHANGE_ITEM_TEXT:
-      var indexText = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexText === -1) return state;
-      return state.setIn(["data", indexText, "languages", action.language], action.text);
+      return state.setIn(["languages", action.language], action.text);
     case types.CHANGE_SIGN_COORDINATE:
-      var indexSignCoordinate = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexSignCoordinate === -1) return state;
-      return state.setIn(
-        ["data", indexSignCoordinate, "locations", action.coordinateId, action.field],
-        action.value
-      );
+      return state.setIn(["locations", action.coordinateId, action.field], action.value);
     case types.REMOVE_SIGN_COORDINATE:
-      var indexSignCoordinate2 = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexSignCoordinate2 === -1) return state;
-      return state.updateIn(["data", indexSignCoordinate2, "locations"], (locations) =>
-        locations.delete(action.coordinateId)
-      );
+      return state.update("locations", (locations) => locations.delete(action.coordinateId));
     case types.ADD_SIGN_COORDINATE:
-      var indexSignCoordinate3 = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexSignCoordinate3 === -1) return state;
-      return state.updateIn(["data", indexSignCoordinate3, "locations"], (locations) =>
-        locations.push(action.location)
-      );
+      return state.update("locations", List(), (locations) => locations.push(action.location));
     case types.CHANGE_SIGN_LINE:
-      var indexSignCoordinate4 = state.get("data").findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (indexSignCoordinate4 === -1) return state;
-      return state.setIn(
-        ["data", indexSignCoordinate4, "lines", action.lang, action.index],
-        action.value
-      );
+      return state.setIn(["lines", action.lang, action.index], action.value);
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import { TextField } from "@rmwc/textfield";
 import { GridCell, GridInner } from "@rmwc/grid";
 import { changeSignLine } from "../../actions/items";
 import { connect } from "react-redux";
+import { List } from "immutable";
 
 class ItemLines extends PureComponent {
   render() {
@@ -18,7 +19,7 @@ class ItemLines extends PureComponent {
                 langKey={langKey}
                 dispatch={dispatch}
                 lang={lang}
-                value={this.props.languages && this.props.languages.get(lang)}
+                value={(this.props.languages && this.props.languages.get(lang)) || List()}
               />
             ))
           ) : (

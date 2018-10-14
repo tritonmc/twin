@@ -39,11 +39,11 @@
       margin: 10px;
     }
     padding: $main-container-padding;
+    padding-top: $main-container-padding / 4;
     padding-right: $main-container-padding - $scrollbar-width;
     margin: $main-container-margin;
     background: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.85);
-    //background: white;
     border-radius: 10px;
     text-align: center;
     width: calc(100vw - #{$main-container-margin} * 2);
@@ -57,7 +57,11 @@
     .language-items-container {
       padding-right: $scrollbar-width;
       overflow: hidden auto;
-      height: calc(100vh - #{$main-container-margin} * 2 - #{$main-container-padding} * 2);
+      //height: calc(100vh - #{$main-container-margin} * 2 - #{$main-container-padding} * 2);
+      height: calc(
+        100vh - #{$main-container-margin * 2 + $main-container-padding + $main-container-padding / 4 +
+          $toolbar-height}
+      );
       .language-item {
         text-align: left;
       }
@@ -65,6 +69,7 @@
     &.dashboard-content--loading {
       width: initial;
       height: initial;
+      padding: $main-container-padding;
     }
   }
 }
@@ -113,4 +118,26 @@
 
 .accent-hover-button:hover {
   color: $mdc-theme-accent;
+}
+
+#toolbar {
+  height: $toolbar-height;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  span {
+    font-family: "Open Sans", sans-serif;
+  }
+  .brand-name {
+    font-weight: bold;
+    font-size: $toolbar-height / 2;
+  }
+  .subbrand-name {
+    font-size: $toolbar-height / 4;
+    padding-left: 3px;
+  }
+  .controls {
+    margin-left: auto;
+    display: flex;
+  }
 }

@@ -68,3 +68,7 @@ export const changeSignLine = (id, lang, index, value) => ({
   index,
   value,
 });
+export const addItem = (type) => ({
+  type: types.ADD_ITEM,
+  itemType: type,
+});

@@ -13,6 +13,7 @@
     "@rmwc/grid": "^2.2.0",
     "@rmwc/icon": "^2.2.2",
     "@rmwc/icon-button": "^2.2.2",
+    "@rmwc/menu": "^3.0.4",
     "@rmwc/snackbar": "^2.2.2",
     "@rmwc/textfield": "^2.2.2",
     "axios": "^0.18.0",

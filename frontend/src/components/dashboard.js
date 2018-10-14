@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import { Elevation } from "@rmwc/elevation";
 //TODO search import { TextField } from "@rmwc/textfield";
-//import { Button } from "@rmwc/button";
 import { Redirect } from "react-router-dom";
 import { CircularProgress } from "@rmwc/circular-progress";
 import { connect } from "react-redux";
 import axios from "axios";
 import { setData } from "../actions/items";
+import { setLoading } from "../actions/main";
 import ItemList from "./itemList";
+import Toolbar from "./toolbar";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: false,
-      loading: true,
       id: this.props.match.params.id,
     };
   }
@@ -30,9 +30,7 @@ class Dashboard extends Component {
           response.data.languages
         )
       );
-      this.setState({
-        loading: false,
-      });
+      this.props.dispatch(setLoading(false));
     } catch (ex) {
       this.setState({ error: true });
     }
@@ -48,12 +46,25 @@ class Dashboard extends Component {
         <Elevation
           z="3"
           id="dashboard-content"
-          className={this.state.loading ? "dashboard-content--loading" : ""}>
-          {this.state.loading ? <CircularProgress size="xlarge" /> : <ItemList />}
+          className={this.props.loading ? "dashboard-content--loading" : ""}>
+          {this.props.loading ? (
+            <CircularProgress size="xlarge" />
+          ) : (
+            <React.Fragment>
+              <Toolbar />
+              <ItemList />
+            </React.Fragment>
+          )}
         </Elevation>
       </div>
     );
   }
 }
 
-export default connect()(Dashboard);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.main.get("loading"),
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);

@@ -9,6 +9,7 @@ import ItemServers from "./items/itemServers";
 import ItemLanguages from "./items/itemLanguages";
 import ItemLocations from "./items/itemLocations";
 import ItemLines from "./items/itemLines";
+import { Map } from "immutable";
 
 class TextItem extends PureComponent {
   render() {
@@ -52,7 +53,7 @@ class SignItem extends PureComponent {
             bungee={bungee}
           />
           <ItemLocations langKey={langKey} value={this.props.locations} bungee={bungee} />
-          <ItemLines langKey={langKey} languages={this.props.lines} />
+          <ItemLines langKey={langKey} languages={this.props.lines || Map()} />
         </Grid>
       </div>
     );
