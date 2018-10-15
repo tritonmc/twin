@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
+const path = require("path");
 const bodyParser = require("body-parser");
 
 app.disable("x-powered-by");
 //app.set("view engine", "ejs");
 
-//app.use(express.static("public", { extensions: ["html"] }));
+app.use(express.static(path.join(__dirname, "../frontend/build"), { extensions: ["html"] }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require("express-bearer-token")());
@@ -29,6 +30,9 @@ fs.readdir("./api/modules/", (err, files) => {
 
   //require("./views.js")(app, config);
 
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+  });
   var port = process.env.PORT || 5000;
   app.listen(port);
   console.log("Listening on port " + port);
