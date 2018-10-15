@@ -23,6 +23,7 @@ function itemListRoot(state = Map(), action) {
     case types.ADD_SIGN_COORDINATE:
     case types.CHANGE_SIGN_LINE:
     case types.ADD_ITEM:
+    case types.DELETE_ITEM:
       return state.update("data", (data) => itemListData(data, action));
     default:
       return state;
@@ -72,7 +73,13 @@ function itemListData(state = List(), action) {
         default:
           item = {};
       }
-      return state.push(Map(item));
+      return state.insert(0, Map(item));
+    case types.DELETE_ITEM:
+      let index2 = state.findIndex((item) => {
+        return item.get("key") === action.id;
+      });
+      if (index2 === -1) return state;
+      return state.remove(index2);
     default:
       return state;
   }

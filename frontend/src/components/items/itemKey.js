@@ -7,12 +7,13 @@ import { connect } from "react-redux";
 
 class ItemKey extends PureComponent {
   render() {
-    var { dispatch, langKey, sign, bungee } = this.props;
+    var { dispatch, langKey, sign, bungee, disabled } = this.props;
     return (
-      <GridCell desktop={sign || !bungee ? "12" : "6"} phone="4" tablet="8">
+      <GridCell desktop={sign || !bungee || disabled ? "11" : "5"} phone="3" tablet="7">
         <TextField
           style={{ width: "100%" }}
           defaultValue={langKey}
+          disabled={disabled}
           onBlur={(evt) => {
             if (this.props.langKey === evt.target.value) return;
             if (!this.props.isDuplicateKey(evt.target.value))
@@ -31,12 +32,14 @@ class ItemKey extends PureComponent {
           withLeadingIcon="vpn_key"
           label={sign ? "Sign Key" : "Item Key"}
         />
-        <TextFieldHelperText>
-          {"This is a Unique Identifier of this " +
-            (sign
-              ? "sign. It will be used in-game to create new signs."
-              : "item. It will be used in-game to get the correct text.")}
-        </TextFieldHelperText>
+        {!disabled && (
+          <TextFieldHelperText>
+            {"This is a Unique Identifier of this " +
+              (sign
+                ? "sign. It will be used in-game to create new signs."
+                : "item. It will be used in-game to get the correct text.")}
+          </TextFieldHelperText>
+        )}
       </GridCell>
     );
   }

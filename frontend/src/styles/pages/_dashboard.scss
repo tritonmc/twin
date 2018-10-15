@@ -54,18 +54,6 @@
       border-color: rgba(255, 255, 255, 0.75);
     }
 
-    .language-items-container {
-      padding-right: $scrollbar-width;
-      overflow: hidden auto;
-      //height: calc(100vh - #{$main-container-margin} * 2 - #{$main-container-padding} * 2);
-      height: calc(
-        100vh - #{$main-container-margin * 2 + $main-container-padding + $main-container-padding / 4 +
-          $toolbar-height}
-      );
-      .language-item {
-        text-align: left;
-      }
-    }
     &.dashboard-content--loading {
       width: initial;
       height: initial;
@@ -139,5 +127,30 @@
   .controls {
     margin-left: auto;
     display: flex;
+  }
+}
+
+.language-items-container {
+  padding-right: $scrollbar-width;
+  overflow: hidden auto;
+  height: calc(
+    100vh - #{$main-container-margin * 2 + $main-container-padding + $main-container-padding / 4 +
+      $toolbar-height}
+  );
+}
+
+.language-item {
+  text-align: left;
+  &.language-item--collapsed {
+    .mdc-layout-grid {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .mdc-text-field--disabled {
+      background-color: rgba(8, 8, 8, 0.4);
+      .mdc-text-field__input {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
   }
 }

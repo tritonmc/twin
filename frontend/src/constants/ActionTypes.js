@@ -12,3 +12,4 @@ export const ADD_SIGN_COORDINATE = "ADD_SIGN_COORDINATE";
 export const CHANGE_SIGN_LINE = "CHANGE_SIGN_LINE";
 export const SET_LOADING = "SET_LOADING";
 export const ADD_ITEM = "ADD_ITEM";
+export const DELETE_ITEM = "DELETE_ITEM";

@@ -72,3 +72,7 @@ export const addItem = (type) => ({
   type: types.ADD_ITEM,
   itemType: type,
 });
+export const deleteItem = (id) => ({
+  type: types.DELETE_ITEM,
+  id,
+});
