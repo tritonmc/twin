@@ -29,6 +29,7 @@ class ItemList extends PureComponent {
             blacklist={data.get("blacklist")}
             bungee={this.props.bungee}
             isDuplicateKey={this.isDuplicateKey}
+            expanded={data.get("expanded", false)}
           />
         );
       } else if (data.get("type") === "sign") {
@@ -42,6 +43,7 @@ class ItemList extends PureComponent {
             tags={data.get("tags")}
             bungee={this.props.bungee}
             isDuplicateKey={this.isDuplicateKey}
+            expanded={data.get("expanded", false)}
           />
         );
       }
@@ -61,7 +63,7 @@ class ItemList extends PureComponent {
 const mapStateToProps = (state) => {
   var root = state.items.itemListRoot;
   return {
-    data: root.get("data"),
+    data: root.get("data").get("present"),
     tritonVersion: root.get("tritonVersion"),
     bungee: root.get("bungee"),
   };

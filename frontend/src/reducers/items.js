@@ -1,37 +1,27 @@
 import * as types from "../constants/ActionTypes";
-import { List, Map } from "immutable";
+import Immutable, { List, Map } from "immutable";
 import { combineReducers } from "redux";
+import undoable from "redux-undo-immutable";
 
 function itemListRoot(state = Map(), action) {
   switch (action.type) {
     case types.SET_DATA:
-      return state.merge({
-        data: action.data,
+      state = state.merge({
         defaultData: action.data,
         tritonVersion: action.tritonVersion,
         bungee: action.bungee,
         availableLanguages: action.availableLanguages,
       });
-    case types.CHANGE_ITEM_FIELD:
-    case types.ADD_ITEM_TAG:
-    case types.REMOVE_ITEM_TAG:
-    case types.ADD_ITEM_SERVER:
-    case types.REMOVE_ITEM_SERVER:
-    case types.CHANGE_ITEM_TEXT:
-    case types.CHANGE_SIGN_COORDINATE:
-    case types.REMOVE_SIGN_COORDINATE:
-    case types.ADD_SIGN_COORDINATE:
-    case types.CHANGE_SIGN_LINE:
-    case types.ADD_ITEM:
-    case types.DELETE_ITEM:
-      return state.update("data", (data) => itemListData(data, action));
+    // falls through
     default:
-      return state;
+      return state.update("data", (data) => itemListDataUndoable(data, action));
   }
 }
 
 function itemListData(state = List(), action) {
   switch (action.type) {
+    case types.SET_DATA:
+      return Immutable.fromJS(action.data);
     case types.CHANGE_ITEM_FIELD:
       if (
         action.fieldName === "key" &&
@@ -50,6 +40,7 @@ function itemListData(state = List(), action) {
     case types.REMOVE_SIGN_COORDINATE:
     case types.ADD_SIGN_COORDINATE:
     case types.CHANGE_SIGN_LINE:
+    case types.TOGGLE_EXPAND:
       let index = state.findIndex((item) => {
         return item.get("key") === action.id;
       });
@@ -84,6 +75,10 @@ function itemListData(state = List(), action) {
       return state;
   }
 }
+
+var itemListDataUndoable = undoable(itemListData, {
+  actionFilter: (action) => action.type !== types.TOGGLE_EXPAND && action.type !== types.SET_DATA,
+});
 
 function itemListItem(state = Map(), action) {
   switch (action.type) {
@@ -127,6 +122,8 @@ function itemListItem(state = Map(), action) {
       return state.update("locations", List(), (locations) => locations.push(action.location));
     case types.CHANGE_SIGN_LINE:
       return state.setIn(["lines", action.lang, action.index], action.value);
+    case types.TOGGLE_EXPAND:
+      return state.update("expanded", false, (expanded) => !expanded);
     default:
       return state;
   }

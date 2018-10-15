@@ -11,38 +11,26 @@ import ItemLocations from "./items/itemLocations";
 import ItemLines from "./items/itemLines";
 import { Map } from "immutable";
 import { IconButton } from "@rmwc/icon-button";
-import { deleteItem } from "../actions/items";
+import { deleteItem, toggleExpand } from "../actions/items";
 import { connect } from "react-redux";
 
 class TextItem extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: false,
-    };
-    this.toggleExpanded = this.toggleExpanded.bind(this);
-  }
-
-  toggleExpanded() {
-    this.setState({ expanded: !this.state.expanded });
-  }
-
   render() {
     var { langKey, isDuplicateKey, bungee } = this.props;
     return (
       <div
         className={
-          "language-item text-item" + (!this.state.expanded ? " language-item--collapsed" : "")
+          "language-item text-item" + (!this.props.expanded ? " language-item--collapsed" : "")
         }>
         <Grid>
-          <ExpandButton checked={this.state.expanded} onClick={this.toggleExpanded} />
+          <ExpandButton checked={this.props.expanded} langKey={langKey} />
           <ItemKey
             langKey={langKey}
             isDuplicateKey={isDuplicateKey}
             bungee={bungee}
-            disabled={!this.state.expanded}
+            disabled={!this.props.expanded}
           />
-          {this.state.expanded && (
+          {this.props.expanded && (
             <React.Fragment>
               <ItemUniversal langKey={langKey} value={this.props.universal} />
               <ItemBlacklist langKey={langKey} value={this.props.blacklist} />
@@ -67,35 +55,23 @@ class TextItem extends PureComponent {
 }
 
 class SignItem extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: false,
-    };
-    this.toggleExpanded = this.toggleExpanded.bind(this);
-  }
-
-  toggleExpanded() {
-    this.setState({ expanded: !this.state.expanded });
-  }
-
   render() {
     var { langKey, isDuplicateKey, bungee } = this.props;
     return (
       <div
         className={
-          "language-item sign-item" + (!this.state.expanded ? " language-item--collapsed" : "")
+          "language-item sign-item" + (!this.props.expanded ? " language-item--collapsed" : "")
         }>
         <Grid>
-          <ExpandButton checked={this.state.expanded} onClick={this.toggleExpanded} />
+          <ExpandButton checked={this.props.expanded} langKey={langKey} />
           <ItemKey
             langKey={langKey}
             isDuplicateKey={isDuplicateKey}
             bungee={bungee}
             sign
-            disabled={!this.state.expanded}
+            disabled={!this.props.expanded}
           />
-          {this.state.expanded && (
+          {this.props.expanded && (
             <React.Fragment>
               <ItemDescription langKey={langKey} value={this.props.description} />
               <ItemTags
@@ -116,20 +92,24 @@ class SignItem extends PureComponent {
   }
 }
 
-class ExpandButton extends PureComponent {
-  render() {
-    return (
-      <GridCell span="1">
-        <IconButton
-          icon="expand_less"
-          onIcon="expand_more"
-          checked={this.props.checked}
-          onClick={this.props.onClick}
-        />
-      </GridCell>
-    );
+const ExpandButton = connect()(
+  class ExpandButton extends PureComponent {
+    render() {
+      return (
+        <GridCell span="1">
+          <IconButton
+            icon="expand_less"
+            onIcon="expand_more"
+            checked={this.props.checked}
+            onClick={() => {
+              this.props.dispatch(toggleExpand(this.props.langKey));
+            }}
+          />
+        </GridCell>
+      );
+    }
   }
-}
+);
 
 const DeleteItem = connect()(
   class DeleteButton extends React.Component {

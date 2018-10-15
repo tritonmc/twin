@@ -1,6 +1,7 @@
 import React from "react";
 import { IconButton } from "@rmwc/icon-button";
 import { connect } from "react-redux";
+import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
 import { setLoading } from "../actions/main";
 import { addItem } from "../actions/items";
 import { showSnack } from "react-redux-snackbar";
@@ -38,13 +39,14 @@ class Toolbar extends React.Component {
       <div id="toolbar">
         <span className="brand-name hide-on-small">
           Triton Web Interface
-          <span className="subbrand-name">by Rexcantor64</span>
+          <span className="subbrand-name">BETA</span>
         </span>
         <span className="brand-name show-on-small-only">
           TWIN
-          <span className="subbrand-name">by Rexcantor64</span>
+          <span className="subbrand-name">BETA</span>
         </span>
         <div className="controls">
+          <UndoRedo />
           <SimpleMenu
             handle={<IconButton icon="add" />}
             onSelect={this.onMenuClick}
@@ -58,6 +60,33 @@ class Toolbar extends React.Component {
     );
   }
 }
+
+const UndoRedo = connect(
+  (state) => {
+    return {
+      canUndo: state.items.itemListRoot.get("data").get("past").size > 0,
+      canRedo: state.items.itemListRoot.get("data").get("future").size > 0,
+    };
+  },
+  (dispatch) => {
+    return {
+      onUndo: () => dispatch(UndoActionCreators.undo()),
+      onRedo: () => dispatch(UndoActionCreators.redo()),
+    };
+  }
+)(
+  class UndoRedo extends React.PureComponent {
+    render() {
+      var { canUndo, onUndo, canRedo, onRedo } = this.props;
+      return (
+        <React.Fragment>
+          {canUndo && <IconButton icon="undo" onClick={onUndo} />}
+          {canRedo && <IconButton icon="redo" onClick={onRedo} />}
+        </React.Fragment>
+      );
+    }
+  }
+);
 
 const mapStateToProps = (state) => {
   var root = state.items.itemListRoot;

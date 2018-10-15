@@ -76,3 +76,7 @@ export const deleteItem = (id) => ({
   type: types.DELETE_ITEM,
   id,
 });
+export const toggleExpand = (id) => ({
+  type: types.TOGGLE_EXPAND,
+  id,
+});
