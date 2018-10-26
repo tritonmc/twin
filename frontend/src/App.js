@@ -11,9 +11,9 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route path="/:id" component={Dashboard} />
-            <Route path="/error/:id" component={Home} />
             <Route path="/saved" component={Saved} />
+            <Route path="/error/:id" component={Home} />
+            <Route path="/:id" component={Dashboard} />
             <Route component={Home} />
           </Switch>
           <Snackbar />

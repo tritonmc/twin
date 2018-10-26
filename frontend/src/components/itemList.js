@@ -60,13 +60,4 @@ class ItemList extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  var root = state.items.itemListRoot;
-  return {
-    data: root.get("data").get("present"),
-    tritonVersion: root.get("tritonVersion"),
-    bungee: root.get("bungee"),
-  };
-};
-
-export default connect(mapStateToProps)(ItemList);
+export default connect()(ItemList);

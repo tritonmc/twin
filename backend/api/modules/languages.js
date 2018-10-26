@@ -19,9 +19,8 @@ const getConfig = async (req, res) => {
 const upload = async (req, res) => {
   try {
     if (!req.is("application/json")) return res.send(400);
-    /*var response = await axios.post("https://hastebin.com/documents", req.body);
-    res.end(Buffer.from(response.data.key + ".json", "ascii").toString("base64"));*/
-    res.end("test123");
+    var response = await axios.post("https://hastebin.com/documents", req.body);
+    res.end(Buffer.from(response.data.key + ".json", "ascii").toString("base64"));
   } catch (ex) {
     console.error(ex);
     res.sendStatus(500);

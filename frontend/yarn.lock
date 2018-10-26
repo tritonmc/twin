@@ -260,6 +260,15 @@
     hyperform "^0.9.9"
     mutation-observer "^1.0.3"
 
+"@rmwc/base@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@rmwc/base/-/base-3.0.7.tgz#3b0b0452372384d8a0cd106d0493c9df66f9994c"
+  integrity sha512-0SIjlGdlMLgHzilwZCs+eCaFRsc3qas6p2txD0Ja2LzvjR2Aad21sIJlcEZsH267Lix1w6tDWuKh8FAkLSHZFg==
+  dependencies:
+    classnames "^2.2.5"
+    hyperform "^0.9.9"
+    mutation-observer "^1.0.3"
+
 "@rmwc/button@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@rmwc/button/-/button-2.2.2.tgz#5c5c6fba802bf321d1772e8d47ebbd3afaaac220"
@@ -351,6 +360,16 @@
     classnames "^2.2.5"
     prop-types "^15.6.1"
 
+"@rmwc/icon@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@rmwc/icon/-/icon-3.0.7.tgz#b78f96707667c8a31101c4ec3e87ccc7786c6810"
+  integrity sha512-8+iyEZvyOL/GgZ7H4EgANiQCL1FlKW3CkPVv/AlUrloQHiQmtjZPL9pG1OWYWd2/wmtAKuM8r7MGyvDaYeY/SQ==
+  dependencies:
+    "@rmwc/base" "^3.0.7"
+    "@rmwc/provider" "^3.0.6"
+    classnames "^2.2.5"
+    prop-types "^15.6.1"
+
 "@rmwc/line-ripple@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@rmwc/line-ripple/-/line-ripple-2.2.0.tgz#a330421eeee134cb926509d280d671ba6c23e990"
@@ -400,6 +419,13 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@rmwc/provider/-/provider-3.0.3.tgz#71df798b6cf8d2f35f47d1f5c0a8baa3b4573ede"
   integrity sha512-YQNZ88JdF8qg7vU4aCWiinBeUxNT0cvQhvMyhrLUTyK0kKxtv8nY8ibsOGA5LJlnwdVppOYn5SqVqbqtjnKmCQ==
+  dependencies:
+    prop-types "^15.6.1"
+
+"@rmwc/provider@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@rmwc/provider/-/provider-3.0.6.tgz#17109eaff7a9c5a6eedeb6521d0daf45a3e37b08"
+  integrity sha512-O6ixPcLBDlwZ3q4069oA5an7Uwv68gZwGiXX8spATPPBFsz0XQZDZnUrC8P8XAGsfNffyFQsRR3aCuXkzL3ZzA==
   dependencies:
     prop-types "^15.6.1"
 
@@ -2351,6 +2377,13 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
+
+copy-to-clipboard@^3:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.0.8.tgz#f4e82f4a8830dce4666b7eb8ded0c9bcc313aba9"
+  integrity sha512-c3GdeY8qxCHGezVb1EFQfHYK/8NZRemgcTIzPq7PuxjHAf/raKibn2QdhHPb/y6q74PMgH6yizaDZlRmw6QyKw==
+  dependencies:
+    toggle-selection "^1.0.3"
 
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.5.7"
@@ -6908,7 +6941,7 @@ promise@8.0.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -7066,6 +7099,14 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-copy-to-clipboard@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.1.tgz#8eae107bb400be73132ed3b6a7b4fb156090208e"
+  integrity sha512-ELKq31/E3zjFs5rDWNCfFL4NvNFQvGRoJdAKReD/rUPA+xxiLPQmZBZBvy2vgH7V0GE9isIQpT9WXbwIVErYdA==
+  dependencies:
+    copy-to-clipboard "^3"
+    prop-types "^15.5.8"
+
 react-dev-utils@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.2.tgz#7bb68d2c4f6ffe7ed1184c5b0124fcad692774d2"
@@ -7104,6 +7145,11 @@ react-error-overlay@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
   integrity sha512-xXUbDAZkU08aAkjtUvldqbvI04ogv+a1XdHxvYuHPYKIVk/42BIOD0zSKTHAWV4+gDy3yGm283z2072rA2gdtw==
+
+react-redux-snackbar@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-redux-snackbar/-/react-redux-snackbar-1.1.0.tgz#079485a46d021fd9cce4036c255d04333349487e"
+  integrity sha512-qTDXEXWwVbi8qw8IK2Zwc6hPR5zdOkrXNavzOTSeeb+TocMzFQIlGMe99xWC3AJWhTqHBNUMilOFRyIiaE8ACQ==
 
 react-redux@^5.0.7:
   version "5.0.7"
@@ -8438,6 +8484,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+toggle-selection@^1.0.3:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
+  integrity sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
 
 toposort@^1.0.0:
   version "1.0.7"
