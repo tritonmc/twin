@@ -6,27 +6,52 @@ import { setLoading } from "../actions/main";
 import { addItem } from "../actions/items";
 import { showSnack } from "react-redux-snackbar";
 import { SimpleMenu, MenuItem } from "@rmwc/menu";
+import save from "../utils/save";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 
-class Toolbar extends React.Component {
+class Toolbar extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onSave = this.onSave.bind(this);
     this.onMenuClick = this.onMenuClick.bind(this);
+    this.state = {};
   }
-  onSave() {
-    var { dispatch, data, defaultData } = this.props;
+  async onSave() {
+    var { dispatch, data, defaultData, bungee, id } = this.props;
     dispatch(setLoading(true));
-    if (data.equals(defaultData)) {
+    var changedData = save(data, defaultData, bungee);
+    console.log(changedData);
+    if (
+      changedData.deleted.length === 0 &&
+      changedData.added.length === 0 &&
+      Object.keys(changedData.modified).length === 0
+    ) {
       dispatch(
         showSnack("", {
           label: "Nothing has changed! Start editing!",
           timeout: 3000,
-          action: "OK, GOT IT",
+          button: { label: "OK, GOT IT" },
         })
       );
       dispatch(setLoading(false));
       return;
     }
+
+    changedData["origin"] = id;
+
+    console.log(changedData);
+    var response = await axios.post("/api/v1/save", changedData);
+    console.log(response.data);
+    dispatch(
+      showSnack("", {
+        label: "Something has changed!",
+        timeout: 3000,
+        button: { label: "OK, GOT IT" },
+      })
+    );
+    dispatch(setLoading(false));
+    this.setState({ saved: response.data });
   }
 
   onMenuClick(evt) {
@@ -35,6 +60,8 @@ class Toolbar extends React.Component {
   }
 
   render() {
+    if (this.state.saved)
+      return <Redirect to={{ pathname: "/saved", state: { id: this.state.saved } }} />;
     return (
       <div id="toolbar">
         <span className="brand-name hide-on-small">
@@ -91,7 +118,7 @@ const UndoRedo = connect(
 const mapStateToProps = (state) => {
   var root = state.items.itemListRoot;
   return {
-    data: root.get("data"),
+    data: root.get("data").get("present"),
     //TODO tritonVersion: root.get("tritonVersion"),
     bungee: root.get("bungee"),
     defaultData: root.get("defaultData"),

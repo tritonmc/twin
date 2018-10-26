@@ -51,7 +51,7 @@ class Dashboard extends Component {
             <CircularProgress size="xlarge" />
           ) : (
             <React.Fragment>
-              <Toolbar />
+              <Toolbar id={this.state.id} />
               <ItemList />
             </React.Fragment>
           )}
