@@ -5,7 +5,7 @@ const getConfig = async (req, res) => {
   try {
     var id = Buffer.from(req.params.id, "base64").toString("ascii");
     var response = await axios.get("https://hastebin.com/raw/" + id);
-    if (!(response.data instanceof Object) || !response.data.tritonv) {
+    if (!(response.data instanceof Object)) {
       res.sendStatus(404);
       return;
     }
