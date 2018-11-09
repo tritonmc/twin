@@ -10,7 +10,14 @@ app.disable("x-powered-by");
 app.use(express.static(path.join(__dirname, "../frontend/build"), { extensions: ["html"] }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require("express-bearer-token")());
+app.use(
+  require("express-bearer-token")({
+    bodyKey: "access_token",
+    queryKey: "access_token",
+    headerKey: "Triton",
+    reqKey: "token",
+  })
+);
 //app.use(require("./redirect.js"));
 
 // Setup config

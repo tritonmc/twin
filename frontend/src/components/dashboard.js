@@ -70,7 +70,7 @@ class Dashboard extends Component {
   }
 
   async onSave() {
-    var { dispatch, data, defaultData, bungee, id } = this.props;
+    var { dispatch, data, defaultData, bungee } = this.props;
     dispatch(setLoading(true));
     var changedData = save(data, defaultData, bungee);
     if (
@@ -89,7 +89,7 @@ class Dashboard extends Component {
       return;
     }
 
-    changedData["origin"] = id;
+    changedData["origin"] = this.state.id;
 
     var response = await axios.post("/api/v1/save", changedData);
     dispatch(setLoading(false));
