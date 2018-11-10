@@ -1,4 +1,5 @@
 const axios = require("axios");
+const db = require("../lib/db");
 var config = {};
 
 const getConfig = async (req, res) => {
@@ -21,12 +22,14 @@ const upload = async (req, res) => {
     if (!req.is("application/json")) return res.send(400);
     var body = req.body;
     if (body.origin == undefined) {
-      // TODO Check on DB
-      if (req.token !== "token123") {
-        res.send(401);
+      try {
+        body.user = await db.getTokenUser(req.token);
+      } catch (e) {
+        res.sendStatus(401);
+        return;
       }
     }
-    var response = await axios.post("https://hastebin.com/documents", req.body);
+    var response = await axios.post("https://hastebin.com/documents", body);
     res.end(Buffer.from(response.data.key + ".json", "ascii").toString("base64"));
   } catch (ex) {
     console.error(ex);
