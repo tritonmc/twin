@@ -5,7 +5,7 @@ var config = {};
 const getConfig = async (req, res) => {
   try {
     var id = Buffer.from(req.params.id, "base64").toString("ascii");
-    var response = await axios.get("https://hastebin.com/raw/" + id);
+    var response = await axios.get("https://bytebin.lucko.me/" + id);
     if (!(response.data instanceof Object)) {
       res.sendStatus(404);
       return;
@@ -29,8 +29,8 @@ const upload = async (req, res) => {
         return;
       }
     }
-    var response = await axios.post("https://hastebin.com/documents", body);
-    res.end(Buffer.from(response.data.key + ".json", "ascii").toString("base64"));
+    var response = await axios.post("https://bytebin.lucko.me/post", body);
+    res.end(Buffer.from(response.data.key, "ascii").toString("base64"));
   } catch (ex) {
     console.error(ex);
     res.sendStatus(500);
