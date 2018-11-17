@@ -18,10 +18,10 @@ class ItemCoordinate extends PureComponent {
         desktop={
           bungee
             ? field === "Server" || field === "World"
-              ? "6"
-              : field === "Y"
-                ? "3"
-                : "4"
+              ? field === "Server"
+                ? "2"
+                : "3"
+              : "2"
             : field === "World"
               ? "5"
               : "2"

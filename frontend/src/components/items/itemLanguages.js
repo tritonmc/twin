@@ -6,20 +6,14 @@ import { connect } from "react-redux";
 
 class ItemLanguages extends PureComponent {
   render() {
-    var { dispatch, langKey } = this.props;
+    var { id } = this.props;
     return (
       <GridCell phone="4" tablet="8" desktop="12">
         <GridInner>
           <span style={{ fontSize: "1.5em" }}>Text</span>
           {this.props.availableLanguages ? (
             this.props.availableLanguages.map((lang) => (
-              <LanguageText
-                key={lang}
-                langKey={langKey}
-                dispatch={dispatch}
-                lang={lang}
-                value={this.props.languages && this.props.languages.get(lang)}
-              />
+              <LanguageText key={lang} id={id} lang={lang} />
             ))
           ) : (
             <p>Please add languages to your config.yml first.</p>
@@ -30,29 +24,38 @@ class ItemLanguages extends PureComponent {
   }
 }
 
-class LanguageText extends PureComponent {
-  render() {
-    return (
-      <GridCell key={this.props.lang} phone="4" tablet="8" desktop="12">
-        <TextField
-          outlined
-          style={{ width: "100%" }}
-          label={this.props.lang}
-          defaultValue={this.props.value}
-          onBlur={(evt) => {
-            this.props.dispatch(
-              changeItemText(this.props.langKey, this.props.lang, evt.target.value)
-            );
-          }}
-        />
-      </GridCell>
-    );
+const LanguageText = connect((state, ownProps) => ({
+  value: state.items.getIn(["data", "present", ownProps.id, "languages", ownProps.lang], ""),
+}))(
+  class LanguageText extends PureComponent {
+    constructor() {
+      super();
+      this.onBlur = this.onBlur.bind(this);
+    }
+
+    onBlur(evt) {
+      this.props.dispatch(changeItemText(this.props.id, this.props.lang, evt.target.value));
+    }
+
+    render() {
+      return (
+        <GridCell phone="4" tablet="8" desktop="12">
+          <TextField
+            outlined
+            style={{ width: "100%" }}
+            label={this.props.lang}
+            defaultValue={this.props.value}
+            onBlur={this.onBlur}
+          />
+        </GridCell>
+      );
+    }
   }
-}
+);
 
 const mapStateToProps = (state) => {
   return {
-    availableLanguages: state.items.itemListRoot.get("availableLanguages"),
+    availableLanguages: state.items.get("availableLanguages"),
   };
 };
 

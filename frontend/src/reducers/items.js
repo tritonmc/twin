@@ -1,16 +1,24 @@
 import * as types from "../constants/ActionTypes";
 import Immutable, { List, Map } from "immutable";
-import { combineReducers } from "redux";
 import undoable from "redux-undo-immutable";
+import uuid from "uuid/v4";
 
 function itemListRoot(state = Map(), action) {
   switch (action.type) {
+    case types.SET_ACTIVE_ITEM:
+      return state.set("activeItem", action.item);
+    case types.ADD_ITEM:
+      return state
+        .set("activeItem", 0)
+        .update("data", (data) => itemListDataUndoable(data, action));
     case types.SET_DATA:
       state = state.merge({
         defaultData: action.data,
         tritonVersion: action.tritonVersion,
         bungee: action.bungee,
         availableLanguages: action.availableLanguages,
+        previewLanguage: action.availableLanguages[0],
+        activeItem: undefined,
       });
     // falls through
     default:
@@ -22,15 +30,8 @@ function itemListData(state = List(), action) {
   switch (action.type) {
     case types.SET_DATA:
       return Immutable.fromJS(action.data);
-    case types.CHANGE_ITEM_FIELD:
-      if (
-        action.fieldName === "key" &&
-        state.findIndex((item) => {
-          return item.get("key") === action.value;
-        }) !== -1
-      )
-        return state;
     // falls through
+    case types.CHANGE_ITEM_FIELD:
     case types.ADD_ITEM_TAG:
     case types.REMOVE_ITEM_TAG:
     case types.ADD_ITEM_SERVER:
@@ -41,9 +42,7 @@ function itemListData(state = List(), action) {
     case types.ADD_SIGN_COORDINATE:
     case types.CHANGE_SIGN_LINE:
     case types.TOGGLE_EXPAND:
-      let index = state.findIndex((item) => {
-        return item.get("key") === action.id;
-      });
+      let index = action.id;
       if (index === -1) return state;
       return state.update(index, (item) => itemListItem(item, action));
     case types.ADD_ITEM:
@@ -56,21 +55,17 @@ function itemListData(state = List(), action) {
       let item;
       switch (action.itemType) {
         case "text":
-          item = { key: "", type: "text" };
+          item = { key: "", type: "text", uuid: uuid() };
           break;
         case "sign":
-          item = { key: "", type: "sign" };
+          item = { key: "", type: "sign", uuid: uuid() };
           break;
         default:
           item = {};
       }
       return state.insert(0, Map(item));
     case types.DELETE_ITEM:
-      let index2 = state.findIndex((item) => {
-        return item.get("key") === action.id;
-      });
-      if (index2 === -1) return state;
-      return state.remove(index2);
+      return state.remove(action.id);
     default:
       return state;
   }
@@ -119,7 +114,9 @@ function itemListItem(state = Map(), action) {
     case types.REMOVE_SIGN_COORDINATE:
       return state.update("locations", (locations) => locations.delete(action.coordinateId));
     case types.ADD_SIGN_COORDINATE:
-      return state.update("locations", List(), (locations) => locations.push(action.location));
+      return state.update("locations", List(), (locations) =>
+        locations.push(action.location.merge({ uuid: uuid() }))
+      );
     case types.CHANGE_SIGN_LINE:
       return state.setIn(["lines", action.lang, action.index], action.value);
     case types.TOGGLE_EXPAND:
@@ -129,6 +126,4 @@ function itemListItem(state = Map(), action) {
   }
 }
 
-export default combineReducers({
-  itemListRoot,
-});
+export default itemListRoot;

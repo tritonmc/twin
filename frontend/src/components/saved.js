@@ -4,6 +4,7 @@ import { Button } from "@rmwc/button";
 import { Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { showSnack } from "react-redux-snackbar";
+import { setSaved } from "../actions/main";
 import { connect } from "react-redux";
 
 class Home extends Component {
@@ -12,6 +13,10 @@ class Home extends Component {
     this.state = {
       configId: (this.props.location.state && this.props.location.state.id) || undefined,
     };
+  }
+
+  componentDidMount() {
+    this.props.dispatch(setSaved());
   }
 
   render() {

@@ -1,49 +1,38 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { TextItem, SignItem } from "./items";
+import ItemPreview from "./items/itemPreview";
+import { Grid } from "@rmwc/grid";
+import { List, Map } from "immutable";
 
-class ItemList extends PureComponent {
+class ItemList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.isDuplicateKey = this.isDuplicateKey.bind(this);
   }
 
   render() {
-    return <div className="language-items-container">{this.getItemList()}</div>;
+    return <Grid className="language-items-container">{this.getItemList()}</Grid>;
   }
 
   getItemList() {
     var result = [];
     this.props.data.forEach((data, i) => {
-      if (i !== 0) result.push(<hr key={i} />);
       if (data.get("type") === "text") {
         result.push(
-          <TextItem
-            key={data.get("key")}
-            languages={data.get("languages")}
-            langKey={data.get("key")}
-            description={data.get("description")}
-            universal={data.get("universal")}
-            tags={data.get("tags")}
-            servers={data.get("servers")}
-            blacklist={data.get("blacklist")}
-            bungee={this.props.bungee}
-            isDuplicateKey={this.isDuplicateKey}
-            expanded={data.get("expanded", false)}
+          <ItemPreview
+            key={data.get("uuid")}
+            title={data.get("key")}
+            id={i}
+            description={data.get("preview", undefined)}
           />
         );
       } else if (data.get("type") === "sign") {
         result.push(
-          <SignItem
-            key={data.get("key")}
-            lines={data.get("lines")}
-            locations={data.get("locations")}
-            langKey={data.get("key")}
-            description={data.get("description")}
-            tags={data.get("tags")}
-            bungee={this.props.bungee}
-            isDuplicateKey={this.isDuplicateKey}
-            expanded={data.get("expanded", false)}
+          <ItemPreview
+            key={data.get("uuid")}
+            title={data.get("key")}
+            id={i}
+            description={data.get("preview", undefined)}
           />
         );
       }
@@ -60,4 +49,20 @@ class ItemList extends PureComponent {
   }
 }
 
-export default connect()(ItemList);
+const mapStateToProps = (state) => {
+  var lang = state.items.get("previewLanguage");
+  return {
+    data: state.items.getIn(["data", "present"], List()).map((v) =>
+      Map({
+        uuid: v.get("uuid"),
+        type: v.get("type"),
+        key: v.get("key"),
+        preview: v.getIn([v.get("type") === "sign" ? "lines" : "languages", lang]),
+      })
+    ),
+    tritonVersion: state.items.get("tritonVersion"),
+    bungee: state.items.get("bungee"),
+  };
+};
+
+export default connect(mapStateToProps)(ItemList);

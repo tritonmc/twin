@@ -4,8 +4,15 @@ $mdc-theme-accent: #d32f2f; // Red 700
 $mdc-theme-background: black;
 $mdc-theme-surface: rgba(0, 0, 0, 0.8);
 
+// Dialog
+$dialog-scrim-color: rgb(0, 0, 0);
+$dialog-scrim-opacity: 0.6;
+$dialog-background-color: rgb(10, 10, 10);
+$dialog-margin: 16px;
+$dialog-max-width: 1250px;
+
 // Dimentions
-$main-container-margin: 15px;
-$main-container-padding: 20px;
+$main-container-margin: 10px;
+$main-container-padding: 15px;
 $toolbar-height: 48px;
 $scrollbar-width: 7px;

@@ -21,8 +21,11 @@
 @import "@material/menu/mdc-menu";
 @import "@material/menu-surface/mdc-menu-surface";
 @import "@material/list/mdc-list";
+@import "@material/card/mdc-card";
+@import "@material/dialog/mdc-dialog";
 
 // Import partials
+@import "partials/dialog";
 @import "partials/forms";
 @import "partials/main";
 @import "partials/typography";

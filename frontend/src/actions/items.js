@@ -13,11 +13,6 @@ export const changeItemField = (fieldName, id, value) => ({
   fieldName,
   value,
 });
-export const changeItemKey = (oldKey, newKey) => changeItemField("key", oldKey, newKey);
-export const changeItemUniversal = (id, universal) => changeItemField("universal", id, universal);
-export const changeItemBlacklist = (id, blacklist) => changeItemField("blacklist", id, blacklist);
-export const changeItemDescription = (id, description) =>
-  changeItemField("description", id, description);
 export const addItemTag = (id, tag) => ({
   type: types.ADD_ITEM_TAG,
   tag,
@@ -79,4 +74,8 @@ export const deleteItem = (id) => ({
 export const toggleExpand = (id) => ({
   type: types.TOGGLE_EXPAND,
   id,
+});
+export const setActiveItem = (item) => ({
+  type: types.SET_ACTIVE_ITEM,
+  item,
 });

@@ -5,6 +5,7 @@ import { IconButton } from "@rmwc/icon-button";
 import { addItemTag, removeItemTag } from "../../actions/items";
 import { showSnack } from "react-redux-snackbar";
 import { connect } from "react-redux";
+import { Map, List } from "immutable";
 
 class ItemTags extends PureComponent {
   constructor(props) {
@@ -13,26 +14,26 @@ class ItemTags extends PureComponent {
   }
 
   render() {
-    var { dispatch, langKey, universal, sign, bungee } = this.props;
+    var { dispatch, id, universal, bungee } = this.props;
     return (
       <GridCell
         phone="4"
-        tablet={universal === true || !bungee || sign ? "8" : "4"}
-        desktop={(universal === true || !bungee) && !sign ? "12" : "6"}>
+        tablet={universal === true || !bungee ? "8" : "4"}
+        desktop={universal === true || !bungee ? "12" : "6"}>
         <GridInner>
           <span style={{ fontSize: "1.5em" }}>Tags</span>
           {this.props.tags &&
             this.props.tags.map((tag) => (
               <TagItem key={tag} value={tag} onClick={this.onTagRemoveClick} />
             ))}
-          <TagInput dispatch={dispatch} langKey={langKey} tags={this.props.tags} />
+          <TagInput dispatch={dispatch} langKey={id} tags={this.props.tags} />
         </GridInner>
       </GridCell>
     );
   }
   onTagRemoveClick(value) {
-    var { dispatch, langKey } = this.props;
-    dispatch(removeItemTag(langKey, value));
+    var { dispatch, id } = this.props;
+    dispatch(removeItemTag(id, value));
   }
 }
 
@@ -107,4 +108,14 @@ class TagInput extends React.Component {
   }
 }
 
-export default connect()(ItemTags);
+const mapStateToProps = (store, ownProps) => {
+  var id = ownProps.id;
+  var item = store.items.getIn(["data", "present", id], Map());
+  return {
+    tags: item.get("tags", List()),
+    universal: item.get("universal", false),
+    bungee: store.items.get("bungee", false),
+  };
+};
+
+export default connect(mapStateToProps)(ItemTags);

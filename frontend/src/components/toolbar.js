@@ -4,18 +4,9 @@ import { connect } from "react-redux";
 import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
 import { addItem } from "../actions/items";
 import { SimpleMenu, MenuItem } from "@rmwc/menu";
+import saveAll from "../actions/saving";
 
 class Toolbar extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.onMenuClick = this.onMenuClick.bind(this);
-  }
-
-  onMenuClick(evt) {
-    var { dispatch } = this.props;
-    dispatch(addItem(evt.detail.index === 0 ? "text" : "sign"));
-  }
-
   render() {
     return (
       <div id="toolbar">
@@ -27,17 +18,7 @@ class Toolbar extends React.PureComponent {
           TWIN
           <span className="subbrand-name">BETA</span>
         </span>
-        <div className="controls">
-          <UndoRedo />
-          <SimpleMenu
-            handle={<IconButton icon="add" />}
-            onSelect={this.onMenuClick}
-            anchorCorner="topRight">
-            <MenuItem>Text</MenuItem>
-            <MenuItem>Sign</MenuItem>
-          </SimpleMenu>
-          <IconButton icon="save" onClick={this.props.onSave} />
-        </div>
+        <ToolbarControls />
       </div>
     );
   }
@@ -46,15 +27,13 @@ class Toolbar extends React.PureComponent {
 const UndoRedo = connect(
   (state) => {
     return {
-      canUndo: state.items.itemListRoot.get("data").get("past").size > 0,
-      canRedo: state.items.itemListRoot.get("data").get("future").size > 0,
+      canUndo: state.items.get("data").get("past").size > 0,
+      canRedo: state.items.get("data").get("future").size > 0,
     };
   },
-  (dispatch) => {
-    return {
-      onUndo: () => dispatch(UndoActionCreators.undo()),
-      onRedo: () => dispatch(UndoActionCreators.redo()),
-    };
+  {
+    onUndo: UndoActionCreators.undo,
+    onRedo: UndoActionCreators.redo,
   }
 )(
   class UndoRedo extends React.PureComponent {
@@ -66,6 +45,39 @@ const UndoRedo = connect(
           {canRedo && <IconButton icon="redo" onClick={onRedo} />}
         </React.Fragment>
       );
+    }
+  }
+);
+
+const ToolbarControls = connect(
+  null,
+  { saveAll }
+)(
+  class ToolbarControls extends React.PureComponent {
+    constructor(props) {
+      super(props);
+      this.onMenuClick = this.onMenuClick.bind(this);
+    }
+
+    render() {
+      return (
+        <div className="controls">
+          <UndoRedo />
+          <SimpleMenu
+            handle={<IconButton icon="add" />}
+            onSelect={this.onMenuClick}
+            anchorCorner="topRight">
+            <MenuItem>Text</MenuItem>
+            <MenuItem>Sign</MenuItem>
+          </SimpleMenu>
+          <IconButton icon="save" onClick={this.props.saveAll} />
+        </div>
+      );
+    }
+
+    onMenuClick(evt) {
+      var { dispatch } = this.props;
+      dispatch(addItem(evt.detail.index === 0 ? "text" : "sign"));
     }
   }
 );

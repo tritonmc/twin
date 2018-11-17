@@ -5,6 +5,7 @@ import { IconButton } from "@rmwc/icon-button";
 import { addItemServer, removeItemServer } from "../../actions/items";
 import { showSnack } from "react-redux-snackbar";
 import { connect } from "react-redux";
+import { Map, List } from "immutable";
 
 class ItemServers extends PureComponent {
   constructor(props) {
@@ -13,7 +14,8 @@ class ItemServers extends PureComponent {
   }
 
   render() {
-    var { dispatch, langKey } = this.props;
+    var { dispatch, id, universal, bungee } = this.props;
+    if (!bungee || universal) return null;
     return (
       <GridCell phone="4" tablet="4" desktop="6">
         <GridInner>
@@ -22,14 +24,14 @@ class ItemServers extends PureComponent {
             this.props.servers.map((server) => (
               <ServerItem key={server} value={server} onClick={this.onServerRemoveClick} />
             ))}
-          <ServerInput dispatch={dispatch} langKey={langKey} servers={this.props.servers} />
+          <ServerInput dispatch={dispatch} langKey={id} servers={this.props.servers} />
         </GridInner>
       </GridCell>
     );
   }
   onServerRemoveClick(value) {
-    var { dispatch, langKey } = this.props;
-    dispatch(removeItemServer(langKey, value));
+    var { dispatch, id } = this.props;
+    dispatch(removeItemServer(id, value));
   }
 }
 
@@ -104,4 +106,14 @@ class ServerInput extends React.Component {
   }
 }
 
-export default connect()(ItemServers);
+const mapStateToProps = (store, ownProps) => {
+  var id = ownProps.id;
+  var item = store.items.getIn(["data", "present", id], Map());
+  return {
+    servers: item.get("servers", List()),
+    universal: item.get("universal", false),
+    bungee: store.items.get("bungee", false),
+  };
+};
+
+export default connect(mapStateToProps)(ItemServers);

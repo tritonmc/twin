@@ -1,17 +1,26 @@
 import React, { PureComponent } from "react";
 import { Checkbox } from "@rmwc/checkbox";
-import { changeItemUniversal } from "../../actions/items";
+import { changeItemField } from "../../actions/items";
 import { connect } from "react-redux";
 import { GridCell } from "@rmwc/grid";
+import { Map } from "immutable";
 
 class ItemUniversal extends PureComponent {
+  constructor() {
+    super();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(evt) {
+    this.props.changeItemField("universal", this.props.id, evt.target.checked);
+  }
+
   render() {
-    var { dispatch, langKey } = this.props;
+    var { bungee } = this.props;
+    if (!bungee) return null;
     return (
       <GridCell phone="4" tablet="4" desktop="2">
-        <Checkbox
-          checked={this.props.value || false}
-          onChange={(evt) => dispatch(changeItemUniversal(langKey, evt.target.checked))}>
+        <Checkbox checked={this.props.value || false} onChange={this.onChange}>
           <strong>Universal</strong>
         </Checkbox>
       </GridCell>
@@ -19,4 +28,20 @@ class ItemUniversal extends PureComponent {
   }
 }
 
-export default connect()(ItemUniversal);
+const mapStateToProps = (store, ownProps) => {
+  var id = ownProps.id;
+  var item = store.items.getIn(["data", "present", id], Map());
+  return {
+    value: item.get("universal"),
+    bungee: store.items.get("bungee", false),
+  };
+};
+
+const mapDispatchToProps = {
+  changeItemField,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemUniversal);

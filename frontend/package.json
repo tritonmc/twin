@@ -7,8 +7,10 @@
     "@material/theme": "^0.39.1",
     "@material/typography": "^0.39.0",
     "@rmwc/button": "^2.2.2",
+    "@rmwc/card": "^3.0.9",
     "@rmwc/checkbox": "^2.2.0",
     "@rmwc/circular-progress": "^2.2.0",
+    "@rmwc/dialog": "^3.0.9",
     "@rmwc/elevation": "^2.2.0",
     "@rmwc/grid": "^2.2.0",
     "@rmwc/icon": "^3.0.7",
@@ -27,7 +29,9 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
-    "redux-undo-immutable": "^0.2.0"
+    "redux-thunk": "^2.3.0",
+    "redux-undo-immutable": "^0.2.0",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/styles/ -o src/styles/",

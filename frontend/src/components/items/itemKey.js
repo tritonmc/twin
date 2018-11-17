@@ -1,48 +1,56 @@
 import React, { PureComponent } from "react";
 import { TextField, TextFieldHelperText } from "@rmwc/textfield";
 import { GridCell } from "@rmwc/grid";
-import { changeItemKey } from "../../actions/items";
-import { showSnack } from "react-redux-snackbar";
+import { changeItemField } from "../../actions/items";
 import { connect } from "react-redux";
+import { Map } from "immutable";
 
 class ItemKey extends PureComponent {
+  constructor() {
+    super();
+    this.onBlur = this.onBlur.bind(this);
+  }
+
+  onBlur(evt) {
+    this.props.changeItemField("key", this.props.id, evt.target.value);
+  }
+
   render() {
-    var { dispatch, langKey, sign, bungee, disabled } = this.props;
+    var { langKey, sign, bungee } = this.props;
     return (
-      <GridCell desktop={sign || !bungee || disabled ? "11" : "5"} phone="3" tablet="7">
+      <GridCell desktop={sign || !bungee ? "12" : "6"} phone="4" tablet="8">
         <TextField
           style={{ width: "100%" }}
           defaultValue={langKey}
-          disabled={disabled}
-          onBlur={(evt) => {
-            if (this.props.langKey === evt.target.value) return;
-            if (!this.props.isDuplicateKey(evt.target.value))
-              dispatch(changeItemKey(langKey, evt.target.value));
-            else {
-              dispatch(
-                showSnack("", {
-                  label: "Duplicate key! Please choose another one!",
-                  timeout: 7000,
-                  button: { label: "OK, GOT IT" },
-                })
-              );
-              evt.target.value = langKey;
-            }
-          }}
+          onBlur={this.onBlur}
           withLeadingIcon="vpn_key"
           label={sign ? "Sign Key" : "Item Key"}
         />
-        {!disabled && (
-          <TextFieldHelperText>
-            {"This is a Unique Identifier of this " +
-              (sign
-                ? "sign. It will be used in-game to create new signs."
-                : "item. It will be used in-game to get the correct text.")}
-          </TextFieldHelperText>
-        )}
+        <TextFieldHelperText>
+          {"This is a Unique Identifier of this " +
+            (sign
+              ? "sign. It will be used in-game to create new signs."
+              : "item. It will be used in-game to get the correct text.")}
+        </TextFieldHelperText>
       </GridCell>
     );
   }
 }
 
-export default connect()(ItemKey);
+const mapStateToProps = (store, ownProps) => {
+  var id = ownProps.id;
+  var item = store.items.getIn(["data", "present", id], Map());
+  return {
+    langKey: item.get("key"),
+    bungee: store.items.get("bungee", false),
+  };
+};
+
+const mapDispatchToProps = {
+  changeItemField,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemKey);
