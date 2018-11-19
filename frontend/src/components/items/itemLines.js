@@ -64,7 +64,6 @@ const LanguageLine = connect((state, ownProps) => ({
       return (
         <GridCell phone="4" tablet="4" desktop="3">
           <TextField
-            outlined
             style={{ width: "100%" }}
             label={"Line " + (index + 1)}
             defaultValue={value}

@@ -41,7 +41,6 @@ const LanguageText = connect((state, ownProps) => ({
       return (
         <GridCell phone="4" tablet="8" desktop="12">
           <TextField
-            outlined
             style={{ width: "100%" }}
             label={this.props.lang}
             defaultValue={this.props.value}
