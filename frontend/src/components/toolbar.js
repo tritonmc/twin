@@ -51,7 +51,7 @@ const UndoRedo = connect(
 
 const ToolbarControls = connect(
   null,
-  { saveAll }
+  { saveAll, addItem }
 )(
   class ToolbarControls extends React.PureComponent {
     constructor(props) {
@@ -76,8 +76,7 @@ const ToolbarControls = connect(
     }
 
     onMenuClick(evt) {
-      var { dispatch } = this.props;
-      dispatch(addItem(evt.detail.index === 0 ? "text" : "sign"));
+      this.props.addItem(evt.detail.index === 0 ? "text" : "sign");
     }
   }
 );

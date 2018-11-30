@@ -16,9 +16,10 @@ class ItemPreview extends PureComponent {
   }
 
   render() {
-    var { title, description } = this.props;
+    var { title, description, style } = this.props;
     return (
-      <GridCell desktop="3" tablet="2" phone="4" className="item-preview">
+      //<GridCell desktop="3" tablet="2" phone="4" className="item-preview">
+      <div className="item-preview" style={style}>
         <Card>
           <CardPrimaryAction onClick={this.onClick}>
             <span className="title">{title}</span>
@@ -35,7 +36,8 @@ class ItemPreview extends PureComponent {
             </span>
           </CardPrimaryAction>
         </Card>
-      </GridCell>
+      </div>
+      //</GridCell>
     );
   }
 }
