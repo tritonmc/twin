@@ -19,10 +19,10 @@ class TextItem extends PureComponent {
           <ItemKey id={id} />
           <ItemUniversal id={id} />
           <ItemBlacklist id={id} />
-          <ItemDescription id={id} />
           <ItemTags id={id} />
           <ItemServers id={id} />
           <ItemLanguages id={id} />
+          <ItemDescription id={id} />
         </Grid>
       </div>
     );
@@ -36,10 +36,10 @@ class SignItem extends PureComponent {
       <div className="language-item sign-item">
         <Grid>
           <ItemKey id={id} sign />
-          <ItemDescription id={id} />
           <ItemTags id={id} />
           <ItemLocations id={id} />
           <ItemLines id={id} />
+          <ItemDescription id={id} />
         </Grid>
       </div>
     );

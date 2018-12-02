@@ -5,20 +5,24 @@ import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
 import { addItem } from "../actions/items";
 import { SimpleMenu, MenuItem } from "@rmwc/menu";
 import saveAll from "../actions/saving";
+import ToolbarSearch from "./toolbarSearch";
 
 class Toolbar extends React.PureComponent {
   render() {
     return (
       <div id="toolbar">
-        <span className="brand-name hide-on-small">
-          Triton Web Interface
-          <span className="subbrand-name">BETA</span>
-        </span>
-        <span className="brand-name show-on-small-only">
-          TWIN
-          <span className="subbrand-name">BETA</span>
-        </span>
-        <ToolbarControls />
+        <div className="toolbar-top">
+          <span className="brand-name hide-on-small">
+            Triton Web Interface
+            <span className="subbrand-name">BETA</span>
+          </span>
+          <span className="brand-name show-on-small-only">
+            TWIN
+            <span className="subbrand-name">BETA</span>
+          </span>
+          <ToolbarControls />
+        </div>
+        <ToolbarSearch />
       </div>
     );
   }
