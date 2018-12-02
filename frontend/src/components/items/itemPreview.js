@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { Card, CardPrimaryAction } from "@rmwc/card";
-import { GridCell } from "@rmwc/grid";
 import { List } from "immutable";
 import { setActiveItem } from "../../actions/items";
 
@@ -18,7 +17,6 @@ class ItemPreview extends PureComponent {
   render() {
     var { title, description, style } = this.props;
     return (
-      //<GridCell desktop="3" tablet="2" phone="4" className="item-preview">
       <div className="item-preview" style={style}>
         <Card>
           <CardPrimaryAction onClick={this.onClick}>
@@ -37,7 +35,6 @@ class ItemPreview extends PureComponent {
           </CardPrimaryAction>
         </Card>
       </div>
-      //</GridCell>
     );
   }
 }
