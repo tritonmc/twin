@@ -45,11 +45,14 @@ class Dashboard extends React.PureComponent {
         <Redirect to={{ pathname: "/", state: { error: true, id: this.props.match.params.id } }} />
       );
     return (
-      <div id="dashboard">
+      <div className="dashboard">
         <Elevation
           z="3"
-          id="dashboard-content"
-          className={this.props.loading ? "dashboard-content--loading" : ""}>
+          className={
+            this.props.loading
+              ? "dashboard-content dashboard-content--loading"
+              : "dashboard-content"
+          }>
           {this.props.loading ? (
             <CircularProgress size="xlarge" />
           ) : (

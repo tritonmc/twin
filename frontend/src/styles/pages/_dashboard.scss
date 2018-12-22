@@ -1,4 +1,4 @@
-#dashboard {
+.dashboard {
   width: 100vw;
   height: 100vh;
   overflow: auto;
@@ -21,7 +21,7 @@
     border-radius: 20px;
   }
 
-  #dashboard-content {
+  .dashboard-content {
     position: relative;
     &::before {
       top: 0;
