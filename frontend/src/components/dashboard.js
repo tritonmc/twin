@@ -1,5 +1,4 @@
 import React from "react";
-import { Elevation } from "@rmwc/elevation";
 import { Redirect } from "react-router-dom";
 import { CircularProgress } from "@rmwc/circular-progress";
 import { connect } from "react-redux";
@@ -8,6 +7,7 @@ import { setData } from "../actions/items";
 import { setLoading, setId } from "../actions/main";
 import ItemList from "./itemList";
 import Toolbar from "./toolbar";
+//import Sidebar from "./sidebar";
 import { showSnack } from "react-redux-snackbar";
 import ItemEditor from "./itemEditor";
 import { fromJS } from "immutable";
@@ -46,8 +46,7 @@ class Dashboard extends React.PureComponent {
       );
     return (
       <div className="dashboard">
-        <Elevation
-          z="3"
+        <div
           className={
             this.props.loading
               ? "dashboard-content dashboard-content--loading"
@@ -58,11 +57,12 @@ class Dashboard extends React.PureComponent {
           ) : (
             <React.Fragment>
               <Toolbar />
+              {/*<Sidebar />*/}
               <ItemList />
               <ItemEditor />
             </React.Fragment>
           )}
-        </Elevation>
+        </div>
       </div>
     );
   }

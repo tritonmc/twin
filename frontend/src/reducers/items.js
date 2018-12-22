@@ -118,7 +118,9 @@ function itemListItem(state = Map(), action) {
         locations.push(action.location.merge({ uuid: uuid() }))
       );
     case types.CHANGE_SIGN_LINE:
-      return state.setIn(["lines", action.lang, action.index], action.value);
+      return state.updateIn(["lines", action.lang], List(), (list) =>
+        list.set(action.index, action.value)
+      );
     case types.TOGGLE_EXPAND:
       return state.update("expanded", false, (expanded) => !expanded);
     default:

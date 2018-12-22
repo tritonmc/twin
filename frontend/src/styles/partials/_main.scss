@@ -3,7 +3,7 @@ body {
 }
 
 body {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
   &:before {
     content: "";
     right: 0;
@@ -43,4 +43,8 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.ReactVirtualized__Grid {
+  outline: none;
 }
