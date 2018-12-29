@@ -71,7 +71,7 @@ class ServerInput extends React.Component {
   }
   onServerAddClick() {
     var { dispatch, langKey } = this.props;
-    if (!this.serverInput || !this.serverInput.current.value) {
+    if (!this.serverInput || !this.serverInput.current.input_.value) {
       dispatch(
         showSnack("", {
           label: "You can't add an empty server!",
@@ -81,7 +81,7 @@ class ServerInput extends React.Component {
       );
       return;
     }
-    if (this.props.servers && this.props.servers.includes(this.serverInput.current.value)) {
+    if (this.props.servers && this.props.servers.includes(this.serverInput.current.input_.value)) {
       dispatch(
         showSnack("", {
           label: "Server already exists!",
@@ -91,8 +91,8 @@ class ServerInput extends React.Component {
       );
       return;
     }
-    dispatch(addItemServer(langKey, this.serverInput.current.value));
-    this.serverInput.current.value = "";
+    dispatch(addItemServer(langKey, this.serverInput.current.input_.value));
+    this.serverInput.current.input_.value = "";
   }
   render() {
     return (

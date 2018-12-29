@@ -73,7 +73,7 @@ class TagInput extends React.Component {
   }
   onTagAddClick() {
     var { dispatch, langKey } = this.props;
-    if (!this.tagInput || !this.tagInput.current.value) {
+    if (!this.tagInput || !this.tagInput.current.input_.value) {
       dispatch(
         showSnack("", {
           label: "You can't add an empty tag!",
@@ -83,7 +83,7 @@ class TagInput extends React.Component {
       );
       return;
     }
-    if (this.props.tags && this.props.tags.includes(this.tagInput.current.value)) {
+    if (this.props.tags && this.props.tags.includes(this.tagInput.current.input_.value)) {
       dispatch(
         showSnack("", {
           label: "Tag already exists!",
@@ -93,8 +93,8 @@ class TagInput extends React.Component {
       );
       return;
     }
-    dispatch(addItemTag(langKey, this.tagInput.current.value));
-    this.tagInput.current.value = "";
+    dispatch(addItemTag(langKey, this.tagInput.current.input_.value));
+    this.tagInput.current.input_.value = "";
   }
   render() {
     return (

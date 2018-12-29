@@ -19,9 +19,11 @@ class ItemList extends React.PureComponent {
   constructor(props) {
     super(props);
     this._columnCount = 0;
+    this._rowCount = 0;
     this._cellWidth = 0;
     this._width = 1000;
     this._gridRef = React.createRef();
+    this._autoSizerRef = React.createRef();
 
     this._cellRenderer = this._cellRenderer.bind(this);
     this._noContentRenderer = this._noContentRenderer.bind(this);
@@ -35,7 +37,13 @@ class ItemList extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    this._gridRef.current.forceUpdate();
+    var newRowCount = Math.ceil(this.props.data.size / this._columnCount);
+    if (newRowCount !== this._rowCount) {
+      this._rowCount = newRowCount;
+      this._autoSizerRef.current.forceUpdate();
+    } else {
+      this._gridRef.current.forceUpdate();
+    }
   }
 
   _calculateColumnCount() {
@@ -77,7 +85,11 @@ class ItemList extends React.PureComponent {
   }
 
   _renderAutoSizer() {
-    return <AutoSizer onResize={this._onResize}>{this._renderGrid}</AutoSizer>;
+    return (
+      <AutoSizer ref={this._autoSizerRef} onResize={this._onResize}>
+        {this._renderGrid}
+      </AutoSizer>
+    );
   }
 
   _noContentRenderer() {
@@ -88,6 +100,7 @@ class ItemList extends React.PureComponent {
     this._width = width - 7;
 
     this._calculateColumnCount();
+    this._rowCount = Math.ceil(this.props.data.size / this._columnCount);
 
     return (
       <Grid
@@ -99,7 +112,7 @@ class ItemList extends React.PureComponent {
         noContentRenderer={this._noContentRenderer}
         overscanRowCount={2}
         rowHeight={COLUMN_HEIGH}
-        rowCount={Math.ceil(this.props.data.size / this._columnCount)}
+        rowCount={this._rowCount}
         width={width}
       />
     );
