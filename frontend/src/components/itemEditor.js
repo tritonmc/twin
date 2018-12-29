@@ -18,9 +18,9 @@ class ItemEditor extends PureComponent {
   }
 
   render() {
-    var { activeItem, type } = this.props;
+    var { activeItem, activeItemUUID, type } = this.props;
     return (
-      <Dialog className="item-editor" open={activeItem !== undefined} onClose={this.onClose}>
+      <Dialog className="item-editor" open={activeItemUUID !== undefined} onClose={this.onClose}>
         <DialogTitle>Editing {type}</DialogTitle>
         <DialogContent>
           {type === "text" ? (
@@ -47,6 +47,7 @@ const mapStateToProps = (store) => {
   return {
     activeItem: activeItem,
     type: store.items.getIn(["data", "present", activeItem, "type"], "unknown"),
+    activeItemUUID: store.items.getIn(["data", "present", activeItem, "uuid"]),
   };
 };
 
