@@ -15,6 +15,8 @@ class ItemBlacklist extends PureComponent {
     this.props.changeItemField("blacklist", this.props.id, evt.target.checked);
   }
   render() {
+    var { bungee } = this.props;
+    if (!bungee) return null;
     return (
       <GridCell phone="4" tablet="4" desktop="4">
         <Checkbox checked={this.props.value || false} onChange={this.onChange}>
