@@ -41,7 +41,7 @@ class Home extends Component {
         <Elevation z="3" id="resource-input">
           <h4>Please enter your config ID</h4>
           <p className="thin-text">
-            You can get your config ID by doing <code>/triton web</code> in-game
+            You can get your config ID by doing <code>/twin</code> in-game
           </p>
           {this.state.notFound && <p className="error">That config ID does not exist!</p>}
           <TextField
