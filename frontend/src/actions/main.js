@@ -5,7 +5,7 @@ export const setLoading = (loading) => ({
   loading,
 });
 
-export const setId = (id) => ({
+/*export const setId = (id) => ({
   type: types.SET_ID,
   id,
 });
@@ -13,4 +13,9 @@ export const setId = (id) => ({
 export const setSaved = (id) => ({
   type: types.SET_SAVED,
   id,
+});*/
+
+export const setTheme = (theme) => ({
+  type: types.SET_THEME,
+  theme,
 });

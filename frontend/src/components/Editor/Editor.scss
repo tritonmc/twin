@@ -1,0 +1,7 @@
+:local(.body) {
+  top: 64px;
+  overflow: hidden;
+  height: calc(100vh - 64px);
+  position: absolute;
+  box-sizing: content-box;
+}
