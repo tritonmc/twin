@@ -1,4 +1,4 @@
-/*export const SET_DATA = "SET_DATA";
+/*
 export const CHANGE_ITEM_TYPE = "CHANGE_ITEM_TYPE";
 export const CHANGE_ITEM_FIELD = "CHANGE_ITEM_FIELD";
 export const ADD_ITEM_TAG = "ADD_ITEM_TAG";
@@ -16,7 +16,12 @@ export const TOGGLE_EXPAND = "TOGGLE_EXPAND";
 export const SET_ACTIVE_ITEM = "SET_ACTIVE_ITEM";
 export const SET_SAVED = "SET_SAVED";
 export const SET_SEARCH = "SET_SEARCH";*/
+
+// main
 export const SET_THEME = "SET_THEME";
 export const SET_LOADING = "SET_LOADING";
 export const SET_ID = "SET_ID";
 export const SET_DRAWER_STATE = "SET_DRAWER_STATE";
+
+// items
+export const SET_DATA = "SET_DATA";

@@ -7,7 +7,7 @@ export const setData = (data, tritonVersion, bungee, availableLanguages) => ({
   bungee,
   availableLanguages,
 });
-export const changeItemField = (fieldName, id, value) => ({
+/*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
   id,
   fieldName,
@@ -78,4 +78,4 @@ export const toggleExpand = (id) => ({
 export const setActiveItem = (item) => ({
   type: types.SET_ACTIVE_ITEM,
   item,
-});
+});*/

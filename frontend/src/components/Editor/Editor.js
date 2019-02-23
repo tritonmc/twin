@@ -5,7 +5,8 @@ import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { setLoading, setId, setDrawerState } from "../../actions/main";
-import { fromJS } from "immutable";
+import { setData } from "../../actions/items";
+import { fromJS, Map } from "immutable";
 import uuid from "uuid/v4";
 import Loading from "../Loading/Loading";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -53,12 +54,7 @@ class Editor extends React.PureComponent {
       this.props.setLoading(true);
       var response = await axios.get("/api/v1/get/" + this.props.match.params.id);
       this.props.setId(this.props.match.params.id);
-      /*this.props.setData(
-        this.processData(response.data.data),
-        response.data.tritonv,
-        response.data.bungee,
-        response.data.languages
-      );*/
+      this.props.setData(response.data);
       this.props.setLoading(false);
     } catch (ex) {
       this.setState({ error: true });
@@ -89,18 +85,23 @@ class Editor extends React.PureComponent {
       </div>
     );
   }
-
-  processData(data) {
-    data = fromJS(data);
-    return data.map((v) => {
-      if (v.get("type") === "sign")
-        return v
-          .set("uuid", uuid())
-          .update("locations", (loc) => loc.map((v) => v.set("uuid", uuid())));
-      return v.set("uuid", uuid());
-    });
-  }
 }
+
+const processData = (data) => {
+  data = fromJS(data);
+  var result = Map();
+  data.forEach((item) => {
+    result = result.set(uuid(), item);
+  });
+  return result;
+  /*return data.map((v) => {
+    if (v.get("type") === "sign")
+      return v
+        .set("uuid", uuid())
+        .update("locations", (loc) => loc.map((v) => v.set("uuid", uuid())));
+    return v.set("uuid", uuid());
+  });*/
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -115,6 +116,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch((dispatch, getState) => {
       dispatch(setDrawerState(!getState().main.get("drawerState", false)));
     }),
+  setData: (data) =>
+    dispatch(setData(processData(data.data), data.trionv, data.bungee, data.languages)),
 });
 
 export default connect(
