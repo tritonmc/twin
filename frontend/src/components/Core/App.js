@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import styles from "./App.scss";
 import Home from "../Home/Home";
 //import Dashboard from "./components/dashboard.js";
 //import Saved from "./components/saved";
@@ -7,61 +6,76 @@ import Home from "../Home/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-import { ThemeProvider } from "@rmwc/theme";
-import "@material/theme/dist/mdc.theme.css";
-import TopAppBar from "./TopAppBar/TopAppBar";
+import TopAppBar from "./TopAppBar";
 import Editor from "../Editor/Editor";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const THEMES = [
+  createMuiTheme({
+    palette: {
+      primary: { main: "#008ff8" },
+      secondary: { main: "#173753" },
+    },
+    typography: {
+      useNextVariants: true,
+      fontFamily: ['"Lato"', "sans-serif"].join(","),
+    },
+  }),
+  createMuiTheme({
+    palette: {
+      type: "dark",
+      primary: { main: "#00bafa" },
+      secondary: { main: "#207CA0" },
+      background: { paper: "#14223f", default: "#151836" },
+    },
+    typography: {
+      useNextVariants: true,
+      fontFamily: ['"Lato"', "sans-serif"].join(","),
+    },
+    overrides: {
+      MuiAppBar: {
+        colorPrimary: {
+          backgroundColor: "#14223f",
+          color: "#fff",
+        },
+      },
+    },
+  }),
+];
 
 class App extends Component {
   render() {
     return (
-      <ThemeProvider options={THEMES[this.props.theme]}>
+      <MuiThemeProvider theme={THEMES[this.props.theme]}>
         <Router>
-          <div className={styles.body}>
-            <TopAppBar />
+          <div>
+            <TopAppBar theme={this.props.theme} />
             <Switch>
               <Route path="/:id" component={Editor} />
               <Route component={Home} />
             </Switch>
           </div>
         </Router>
-      </ThemeProvider>
+      </MuiThemeProvider>
     );
   }
 }
+/*
+<Switch>
+  <Route path="/:id" component={Editor} />
+  <Route component={Home} />
+</Switch>
+*/
 /*<Route path="/migrate" component={Migrate} />
 <Route path="/saved" component={Saved} />
 <Route path="/error/:id" component={Home} />
 <Route path="/:id" component={Dashboard} />*/
 
-const TEXT_DEFAULTS = {
-  "--mdc-theme-on-primary": "#fff",
-  "--mdc-theme-on-secondary": "#fff",
-  "--mdc-theme-on-surface": "#000",
-  "--mdc-theme-on-error": "#fff",
-  "--mdc-theme-text-primary-on-background": "rgba(0, 0, 0, 0.87)",
-  "--mdc-theme-text-secondary-on-background": "rgba(0, 0, 0, 0.54)",
-  "--mdc-theme-text-hint-on-background": "rgba(0, 0, 0, 0.38)",
-  "--mdc-theme-text-disabled-on-background": "rgba(0, 0, 0, 0.38)",
-  "--mdc-theme-text-icon-on-background": "rgba(0, 0, 0, 0.38)",
-  "--mdc-theme-text-primary-on-light": "rgba(0, 0, 0, 0.87)",
-  "--mdc-theme-text-secondary-on-light": "rgba(0, 0, 0, 0.54)",
-  "--mdc-theme-text-hint-on-light": "rgba(0, 0, 0, 0.38)",
-  "--mdc-theme-text-disabled-on-light": "rgba(0, 0, 0, 0.38)",
-  "--mdc-theme-text-icon-on-light": "rgba(0, 0, 0, 0.38)",
-  "--mdc-theme-text-primary-on-dark": "white",
-  "--mdc-theme-text-secondary-on-dark": "rgba(255, 255, 255, 0.7)",
-  "--mdc-theme-text-hint-on-dark": "rgba(255, 255, 255, 0.5)",
-  "--mdc-theme-text-disabled-on-dark": "rgba(255, 255, 255, 0.5)",
-  "--mdc-theme-text-icon-on-dark": "rgba(255, 255, 255, 0.5)",
-};
-
-const THEMES = [
+/*const THEMES2 = [
   {
     name: "Light",
     "--mdc-theme-primary": "#008ff8",
     "--mdc-theme-secondary": "#173753",
-    ...TEXT_DEFAULTS,
   },
   {
     name: "Dark",
@@ -83,7 +97,7 @@ const THEMES = [
     "--mdc-theme-on-primary": "rgba(255,255,255,.87)",
     "--mdc-theme-on-secondary": "rgba(255,255,255,.87)",
   },
-];
+];*/
 
 const mapStateToProps = (state, ownProps) => ({
   theme: state.main.get("theme", ownProps.cookies.get("theme")) || 0,

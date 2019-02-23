@@ -1,17 +1,46 @@
 import React from "react";
-import styles from "./Editor.scss";
 import { Redirect } from "react-router-dom";
-import { CircularProgress } from "@rmwc/circular-progress";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { setLoading } from "../../actions/main";
+import { setLoading, setId, setDrawerState } from "../../actions/main";
 import { fromJS } from "immutable";
 import uuid from "uuid/v4";
 import Loading from "../Loading/Loading";
-import Sidebar from "./Sidebar/Sidebar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import classNames from "classnames";
+import Sidebar from "./Sidebar";
 import ItemList from "./ItemList/ItemList";
 
-class Dashboard extends React.PureComponent {
+const drawerWidth = 240;
+
+const styles = (theme) => ({
+  root: {
+    display: "flex",
+    paddingTop: "64px",
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: 0,
+    },
+  },
+});
+
+class Editor extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,9 +50,10 @@ class Dashboard extends React.PureComponent {
 
   async componentDidMount() {
     try {
+      this.props.setLoading(true);
       var response = await axios.get("/api/v1/get/" + this.props.match.params.id);
-      /*this.props.setId(this.props.match.params.id);
-      this.props.setData(
+      this.props.setId(this.props.match.params.id);
+      /*this.props.setData(
         this.processData(response.data.data),
         response.data.tritonv,
         response.data.bungee,
@@ -45,32 +75,19 @@ class Dashboard extends React.PureComponent {
     if (this.props.loading) {
       return <Loading />;
     }
+    const { classes } = this.props;
     return (
-      <div className={styles.body}>
-        <Sidebar />
-        <ItemList />
+      <div className={classes.root}>
+        <CssBaseline />
+        <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
+        <main
+          className={classNames(classes.content, {
+            [classes.contentShift]: this.props.drawerOpen,
+          })}>
+          <ItemList />
+        </main>
       </div>
     );
-    /*return (
-      <div className="dashboard">
-        <div
-          className={
-            this.props.loading
-              ? "dashboard-content dashboard-content--loading"
-              : "dashboard-content"
-          }>
-          {this.props.loading ? (
-            <CircularProgress size="xlarge" />
-          ) : (
-            <React.Fragment>
-              <Toolbar />
-              <ItemList />
-              <ItemEditor />
-            </React.Fragment>
-          )}
-        </div>
-      </div>
-    );*/
   }
 
   processData(data) {
@@ -86,12 +103,21 @@ class Dashboard extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  return { loading: state.main.get("loading", false) };
+  return {
+    loading: state.main.get("loading", false),
+    drawerOpen: state.main.get("drawerState", false),
+  };
 };
 
-const mapDispatchToProps = { setLoading };
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators({ setLoading, setId }, dispatch),
+  toggleDrawer: () =>
+    dispatch((dispatch, getState) => {
+      dispatch(setDrawerState(!getState().main.get("drawerState", false)));
+    }),
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard);
+)(withStyles(styles)(Editor));

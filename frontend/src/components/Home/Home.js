@@ -1,17 +1,26 @@
 import React, { Component } from "react";
-import InputDialog from "./InputDialog/InputDialog";
-import { CircularProgress } from "@rmwc/circular-progress";
-import "@rmwc/circular-progress/circular-progress.css";
-import styles from "./Home.scss";
+import InputDialog from "./InputDialog";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  root: {
+    display: "flex",
+    height: "calc(100vh - 64px)",
+    alignItems: "center",
+  },
+};
 
 class Home extends Component {
   render() {
+    const { classes } = this.props;
     return (
-      <div className={styles.body}>
+      <div className={classes.root}>
+        <CssBaseline />
         <InputDialog />
       </div>
     );
   }
 }
 
-export default Home;
+export default withStyles(styles)(Home);

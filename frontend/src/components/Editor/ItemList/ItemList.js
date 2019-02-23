@@ -1,22 +1,11 @@
 import React, { Component } from "react";
-import {
-  Drawer,
-  DrawerHeader,
-  DrawerContent,
-  DrawerTitle,
-  DrawerSubtitle,
-  DrawerAppContent,
-} from "@rmwc/drawer";
+import Typography from "@material-ui/core/Typography";
 
 class ItemList extends Component {
   render() {
     return (
-      <DrawerAppContent
-        style={{
-          padding: "100px",
-          color: "var(--mdc-theme-text-primary-on-background)",
-        }}>
-        <p>
+      <>
+        <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius rutrum dictum.
           Morbi et lectus lorem. Donec molestie mi ac pellentesque pellentesque. Quisque tincidunt
           lectus sed ipsum rutrum imperdiet. Praesent mattis sit amet velit non imperdiet.
@@ -28,9 +17,9 @@ class ItemList extends Component {
           lorem pulvinar, aliquam felis vitae, consectetur nibh. Suspendisse sapien nisi, bibendum
           id quam sed, laoreet iaculis erat. Sed vel risus id elit lacinia dictum. Aenean fermentum
           neque eget est congue, cursus luctus quam molestie.
-        </p>
+        </Typography>
 
-        <p>
+        <Typography paragraph>
           Phasellus suscipit elit dapibus, efficitur arcu eget, fermentum eros. Nunc luctus lacus
           quis interdum euismod. Nam ut cursus augue, quis hendrerit nibh. Maecenas a fermentum
           diam, ac condimentum eros. Proin facilisis velit in nisl elementum, vel accumsan mauris
@@ -42,8 +31,8 @@ class ItemList extends Component {
           orci, consequat in accumsan eu, fermentum at nisl. Aliquam tempor suscipit varius. Morbi
           in nisl eu lorem gravida blandit quis varius elit. Sed pharetra eros leo, et eleifend
           sapien convallis sed. Nunc mattis erat magna.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Cras in purus et quam iaculis mollis eget quis nunc. Praesent posuere ligula nibh, a
           viverra lorem aliquet faucibus. Nulla sed orci vel turpis aliquet ultrices. Pellentesque
           at ligula ligula. Etiam tincidunt ligula vitae risus posuere, sit amet malesuada dui
@@ -53,8 +42,8 @@ class ItemList extends Component {
           Sed hendrerit luctus imperdiet. Duis ut purus in arcu porttitor vehicula. Etiam sit amet
           feugiat mauris, sit amet pretium metus. Cras et euismod est. Proin sapien metus,
           pellentesque id elementum et, cursus at lacus.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           In hac habitasse platea dictumst. Praesent elementum finibus dignissim. Quisque porta,
           nulla et suscipit vulputate, risus sem malesuada tortor, quis tempus orci ipsum id est.
           Pellentesque erat elit, placerat et tristique euismod, gravida a dui. Nullam at tristique
@@ -67,8 +56,8 @@ class ItemList extends Component {
           ultrices augue ultrices. Ut sed ex pulvinar, rutrum leo a, feugiat tortor. Sed varius,
           dolor sit amet interdum vehicula, quam augue venenatis tortor, id elementum augue turpis
           id lectus.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Duis ut tellus sed felis consectetur convallis. Aenean pulvinar, arcu pulvinar cursus
           suscipit, odio felis pellentesque felis, sed pulvinar erat orci et augue. Pellentesque
           scelerisque mollis risus non vestibulum. Praesent nec est sed ante eleifend vehicula.
@@ -79,15 +68,15 @@ class ItemList extends Component {
           amet, consectetur adipiscing elit. Vivamus lobortis et nulla vitae volutpat. Quisque ut
           nunc ac dui ornare condimentum. Nulla at feugiat lacus, ac pharetra mauris. Sed convallis
           commodo pretium.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Sed maximus sit amet lorem ut laoreet. Sed nec libero sem. Aliquam sagittis tincidunt
           sapien quis elementum. In facilisis varius dapibus. Nullam eget mattis nibh. Cras
           facilisis bibendum venenatis. Nulla odio massa, blandit nec porttitor ac, porta eget
           justo. Ut a quam dolor. Maecenas ornare orci massa, at iaculis purus iaculis in. Nulla
           rhoncus maximus sapien. Mauris at mauris ac arcu mattis scelerisque.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Nam non mi dignissim, tempor ipsum nec, convallis lectus. Vivamus sit amet ipsum
           tincidunt, pellentesque risus suscipit, dignissim magna. Vestibulum malesuada erat non
           enim consequat aliquet. Nunc pulvinar, magna tempor convallis iaculis, ligula quam
@@ -95,30 +84,30 @@ class ItemList extends Component {
           ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas ultrices
           gravida nisl blandit laoreet. Fusce et lorem rutrum nisl gravida blandit. Cras elementum
           dictum neque sed finibus.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Duis at tincidunt ex. Nulla suscipit vitae nunc id scelerisque. Nunc luctus et eros nec
           cursus. Nulla feugiat vulputate leo in congue. Proin hendrerit lacinia magna vitae auctor.
           Donec in consequat erat, vitae convallis tellus. Duis rhoncus vulputate erat vel egestas.
           Phasellus aliquet ex in massa bibendum tristique. Phasellus mattis tempor purus quis
           convallis. Donec rhoncus ligula nec massa vehicula lobortis.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Pellentesque sagittis dapibus vehicula. Suspendisse potenti. Vivamus semper velit tortor,
           et interdum enim blandit eget. Pellentesque sit amet aliquet leo, non aliquam quam.
           Suspendisse sed consequat est. Cras efficitur pretium dictum. Praesent auctor tempor nunc
           at porttitor. Donec id sem vitae sem volutpat pharetra. Aenean at ligula augue. Nam id dui
           mollis, sollicitudin purus quis, aliquet lectus. Interdum et malesuada fames ac ante ipsum
           primis in faucibus. Aenean eu rutrum tortor.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Aenean eu ante dictum, tempor elit in, posuere leo. Donec a diam tortor. Proin at mattis
           sapien, in tincidunt nibh. Vivamus ante sapien, luctus id eros eget, vestibulum tempor
           nisl. Suspendisse congue vitae erat ac feugiat. In pellentesque velit commodo, ullamcorper
           quam sit amet, consectetur massa. Donec vitae lectus eget est pharetra condimentum nec et
           est. Duis in volutpat est. Phasellus id metus et nisi varius molestie.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Vestibulum sagittis nisl diam. Duis sit amet nulla porta, dapibus velit at, placerat est.
           Morbi lobortis aliquet urna, eget auctor felis eleifend nec. Donec imperdiet dui ac urna
           tincidunt, eu sagittis ipsum posuere. Aenean pharetra, turpis non euismod fermentum, nisl
@@ -129,22 +118,22 @@ class ItemList extends Component {
           molestie. Ut eget nibh et eros lobortis porttitor. Nullam suscipit dolor a elit convallis,
           ut dapibus arcu commodo. Sed scelerisque, mauris quis lobortis dictum, justo tellus
           feugiat tortor, id lobortis nunc tellus id nunc.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Sed vitae tortor a felis blandit luctus ac eu augue. Maecenas posuere, quam posuere auctor
           scelerisque, ipsum nisl vehicula turpis, vitae ultricies orci massa eu elit. Sed suscipit
           lectus in felis tristique, a auctor ligula ornare. Maecenas lobortis tincidunt diam non
           elementum. Fusce dapibus fermentum erat, id suscipit massa lobortis sed. Sed mattis
           euismod aliquam. Mauris sit amet nibh eu felis porta tincidunt.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Phasellus ac arcu neque. Phasellus posuere faucibus lorem, id porta eros auctor ut.
           Vestibulum sollicitudin ut lorem quis tempus. Donec vitae tempor arcu. Aenean ligula
           magna, rhoncus at turpis vel, euismod laoreet elit. Mauris eu dolor at est maximus dictum.
           In non aliquam turpis, et semper justo. Mauris orci libero, consequat at fringilla eu,
           mollis non ante. Curabitur feugiat urna enim, non consequat lectus interdum vitae.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Sed erat ligula, ultricies ac pellentesque vitae, venenatis aliquet metus. Morbi mollis
           dui arcu, vitae interdum orci accumsan at. Duis commodo ex imperdiet sem malesuada, sed
           pellentesque nibh tincidunt. Maecenas id viverra sapien. Nulla commodo consectetur neque.
@@ -155,8 +144,8 @@ class ItemList extends Component {
           eleifend dui commodo nec. Nunc id fermentum erat, et interdum nulla. Vivamus nisl justo,
           suscipit id convallis eget, ornare ut lectus. Suspendisse posuere purus tortor, at viverra
           orci viverra pretium. Donec sed mattis massa.
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           Nulla non hendrerit mauris. Integer eget mauris placerat tortor vehicula cursus quis eget
           ex. Nullam vulputate varius erat. Nulla efficitur quam imperdiet purus ultricies
           tincidunt. Ut interdum egestas euismod. Curabitur risus enim, lacinia eu tincidunt quis,
@@ -166,8 +155,8 @@ class ItemList extends Component {
           in pharetra quam. Pellentesque aliquet dignissim lacus at finibus. Pellentesque non
           consectetur sem. Phasellus fringilla vel metus sed imperdiet. Suspendisse egestas pulvinar
           mi ut commodo.
-        </p>
-      </DrawerAppContent>
+        </Typography>
+      </>
     );
   }
 }

@@ -5,12 +5,17 @@ export const setLoading = (loading) => ({
   loading,
 });
 
-/*export const setId = (id) => ({
+export const setId = (id) => ({
   type: types.SET_ID,
   id,
 });
 
-export const setSaved = (id) => ({
+export const setDrawerState = (state) => ({
+  type: types.SET_DRAWER_STATE,
+  state,
+});
+
+/*export const setSaved = (id) => ({
   type: types.SET_SAVED,
   id,
 });*/
