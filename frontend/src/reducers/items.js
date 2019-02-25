@@ -1,17 +1,14 @@
 import * as types from "../constants/ActionTypes";
-import { Map } from "immutable";
+import { List } from "immutable";
+import undoable from "redux-undo-immutable";
 
-function itemReducer(state = Map(), action) {
+function itemReducer(state = List(), action) {
   switch (action.type) {
-    case types.SET_DATA:
-      return state
-        .set("data", action.data)
-        .set("tritonVersion", action.tritonVersion)
-        .set("bungee", action.bungee)
-        .set("availableLanguages", action.availableLanguages);
+    case types.SET_ITEMS:
+      return action.data;
     default:
       return state;
   }
 }
 
-export default itemReducer;
+export default undoable(itemReducer);

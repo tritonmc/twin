@@ -11,6 +11,11 @@ function mainReducer(state = Map({ loading: false, drawerState: false }), action
       return state.set("drawerState", action.state);
     case types.SET_LOADING:
       return state.set("loading", action.loading);
+    case types.SET_DATA:
+      return state
+        .set("tritonVersion", action.tritonVersion)
+        .set("bungee", action.bungee)
+        .set("availableLanguages", action.availableLanguages);
     default:
       return state;
   }

@@ -24,3 +24,10 @@ export const setTheme = (theme) => ({
   type: types.SET_THEME,
   theme,
 });
+
+export const setData = (tritonVersion, bungee, availableLanguages) => ({
+  type: types.SET_DATA,
+  tritonVersion,
+  bungee,
+  availableLanguages,
+});

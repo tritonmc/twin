@@ -20,6 +20,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
     "react-virtualized": "^9.21.0",
+    "react-virtualized-auto-sizer": "^1.0.2",
+    "react-window": "^1.5.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "redux-undo-immutable": "^0.2.0",

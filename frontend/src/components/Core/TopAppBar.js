@@ -13,6 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import classnames from "classnames";
 
 const styles = (theme) => ({
   root: {
@@ -96,7 +97,11 @@ class TopAppBar extends Component {
                 <MenuIcon />
               </IconButton>
             )}
-            <Typography variant="h6" color="inherit" className={classes.title} noWrap>
+            <Typography
+              variant="h6"
+              color="inherit"
+              className={classnames({ [classes.title]: this.props.showHamburger })}
+              noWrap>
               TWIN
             </Typography>
             {this.props.showHamburger && (

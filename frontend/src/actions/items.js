@@ -1,11 +1,8 @@
 import * as types from "../constants/ActionTypes";
 
-export const setData = (data, tritonVersion, bungee, availableLanguages) => ({
-  type: types.SET_DATA,
+export const setItems = (data) => ({
+  type: types.SET_ITEMS,
   data,
-  tritonVersion,
-  bungee,
-  availableLanguages,
 });
 /*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,

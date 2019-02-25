@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { setLoading, setId, setDrawerState } from "../../actions/main";
-import { setData } from "../../actions/items";
-import { fromJS, Map } from "immutable";
+import { setLoading, setId, setDrawerState, setData } from "../../actions/main";
+import { setItems } from "../../actions/items";
+import { fromJS, Map, List } from "immutable";
 import uuid from "uuid/v4";
 import Loading from "../Loading/Loading";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import classNames from "classnames";
 import Sidebar from "./Sidebar";
-import ItemList from "./ItemList/ItemList";
+import ItemList from "./Dashboard/ItemList";
 
 const drawerWidth = 240;
 
@@ -20,6 +20,7 @@ const styles = (theme) => ({
   root: {
     display: "flex",
     paddingTop: "64px",
+    height: "100%",
   },
   content: {
     flexGrow: 1,
@@ -29,6 +30,7 @@ const styles = (theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
+    display: "flex",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -57,6 +59,7 @@ class Editor extends React.PureComponent {
       this.props.setData(response.data);
       this.props.setLoading(false);
     } catch (ex) {
+      console.error(ex);
       this.setState({ error: true });
     }
   }
@@ -89,18 +92,18 @@ class Editor extends React.PureComponent {
 
 const processData = (data) => {
   data = fromJS(data);
-  var result = Map();
-  data.forEach((item) => {
-    result = result.set(uuid(), item);
-  });
-  return result;
-  /*return data.map((v) => {
-    if (v.get("type") === "sign")
-      return v
-        .set("uuid", uuid())
-        .update("locations", (loc) => loc.map((v) => v.set("uuid", uuid())));
-    return v.set("uuid", uuid());
-  });*/
+  return data.map((item) =>
+    item
+      .update("_twin", Map(), (metadata) =>
+        metadata.mergeWith((oldVal) => oldVal, {
+          id: uuid(),
+          dateCreated: Date.now(),
+          dateUpdated: Date.now(),
+          tags: item.get("tags", List()),
+        })
+      )
+      .remove("tags")
+  );
 };
 
 const mapStateToProps = (state) => {
@@ -116,8 +119,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch((dispatch, getState) => {
       dispatch(setDrawerState(!getState().main.get("drawerState", false)));
     }),
-  setData: (data) =>
-    dispatch(setData(processData(data.data), data.trionv, data.bungee, data.languages)),
+  setData: (data) => {
+    dispatch(setData(data.tritonv, data.bungee, data.languages));
+    dispatch(setItems(processData(data.data)));
+  },
 });
 
 export default connect(
