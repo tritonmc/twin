@@ -77,23 +77,13 @@ const InnerList = withStyles(styles)(
       );
     }
     _getItemKey(index, data) {
-      return data.getIn([index, "id"]);
+      return data.get(index);
     }
   }
 );
 
 const mapStateToProps = (state) => ({
-  data: state.items.get("present", IList()).map((item) =>
-    Map({
-      id: item.getIn(["_twin", "id"]),
-      title: item.get("key"),
-      description:
-        item.get("type", "") === "sign"
-          ? item.getIn(["lines", state.editor.get("previewLanguage")]).join(", ")
-          : item.getIn(["languages", state.editor.get("previewLanguage")]),
-      tags: item.getIn(["_twin", "tags"], IList()),
-    })
-  ),
+  data: state.items.get("present", IList()).map((item) => item.getIn(["_twin", "id"])),
 });
 
 export default connect(mapStateToProps)(ItemList);
