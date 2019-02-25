@@ -26,3 +26,6 @@ export const SET_DATA = "SET_DATA";
 
 // items
 export const SET_ITEMS = "SET_ITEMS";
+
+// editor
+export const SET_PREVIEW_LANGUAGE = "SET_PREVIEW_LANGUAGE";

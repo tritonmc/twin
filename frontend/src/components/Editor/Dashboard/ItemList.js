@@ -16,6 +16,7 @@ const styles = (theme) => ({
     borderRadius: theme.shape.borderRadius,
     "&::-webkit-scrollbar": {
       width: 7,
+      height: 7,
     },
     "&::-webkit-scrollbar-track": {
       borderRadius: theme.shape.borderRadius,
@@ -86,7 +87,10 @@ const mapStateToProps = (state) => ({
     Map({
       id: item.getIn(["_twin", "id"]),
       title: item.get("key"),
-      description: "Lorem ipsum",
+      description:
+        item.get("type", "") === "sign"
+          ? item.getIn(["lines", state.editor.get("previewLanguage")]).join(", ")
+          : item.getIn(["languages", state.editor.get("previewLanguage")]),
       tags: item.getIn(["_twin", "tags"], IList()),
     })
   ),

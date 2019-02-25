@@ -5,6 +5,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
 
 const styles = (theme) => ({
   root: {
@@ -18,6 +19,22 @@ const styles = (theme) => ({
   },
   description: {
     flexGrow: 1,
+  },
+  chip: {
+    backgroundColor: theme.palette.secondary.main,
+    borderColor: theme.palette.secondary.main,
+    height: "100%",
+    borderRadius: 4,
+    boxSizing: "border-box",
+    marginRight: 6,
+    color: theme.palette.secondary.contrastText,
+  },
+  chipLabel: {
+    border: "none",
+    height: "100%",
+    borderRadius: 4,
+    boxSizing: "border-box",
+    padding: "0 4px",
   },
 });
 
@@ -42,6 +59,14 @@ class ItemRow extends Component {
             </Typography>
           </div>
           <div className={classes.description}>
+            {item.get("tags").map((tag) => (
+              <Chip
+                className={classes.chip}
+                classes={{ label: classes.chipLabel }}
+                key={tag}
+                label={tag}
+              />
+            ))}
             <Typography inline noWrap>
               {item.get("description", "")}
             </Typography>

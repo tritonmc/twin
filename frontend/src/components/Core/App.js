@@ -25,7 +25,7 @@ const THEMES = [
     palette: {
       type: "dark",
       primary: { main: "#00bafa" },
-      secondary: { main: "#207CA0" },
+      secondary: { main: "#ff0056" },
       background: { paper: "#14223f", default: "#151836" },
     },
     typography: {
