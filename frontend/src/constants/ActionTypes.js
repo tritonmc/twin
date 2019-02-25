@@ -15,7 +15,7 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const TOGGLE_EXPAND = "TOGGLE_EXPAND";
 export const SET_ACTIVE_ITEM = "SET_ACTIVE_ITEM";
 export const SET_SAVED = "SET_SAVED";
-export const SET_SEARCH = "SET_SEARCH";*/
+*/
 
 // main
 export const SET_THEME = "SET_THEME";
@@ -29,3 +29,4 @@ export const SET_ITEMS = "SET_ITEMS";
 
 // editor
 export const SET_PREVIEW_LANGUAGE = "SET_PREVIEW_LANGUAGE";
+export const SET_SEARCH = "SET_SEARCH";

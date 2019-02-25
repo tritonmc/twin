@@ -42,7 +42,11 @@ const styles = (theme) => ({
 
 class ItemRow extends Component {
   shouldComponentUpdate = (nextProps, nextState) => {
-    return nextProps.id !== this.props.id || nextProps.classes !== this.props.classes;
+    return (
+      nextProps.id !== this.props.id ||
+      nextProps.classes !== this.props.classes ||
+      nextProps.index !== this.props.index
+    );
   };
 
   render() {

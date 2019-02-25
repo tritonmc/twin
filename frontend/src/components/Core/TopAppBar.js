@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { setTheme, setDrawerState } from "../../actions/main";
+import { setSearch } from "../../actions/editor";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -115,6 +116,7 @@ class TopAppBar extends Component {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
+                  onChange={this.props.updateSearch}
                 />
               </div>
             )}
@@ -151,6 +153,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch((dispatch, getState) => {
       dispatch(setDrawerState(!getState().main.get("drawerState", false)));
     }),
+  updateSearch: (evt) => dispatch(setSearch(evt.target.value)),
 });
 
 export default withStyles(styles)(

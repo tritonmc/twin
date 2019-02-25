@@ -1,5 +1,5 @@
 import * as types from "../constants/ActionTypes";
-import { Map } from "immutable";
+import { Map, List } from "immutable";
 
 function mainReducer(state = Map({ loading: false, drawerState: false }), action) {
   switch (action.type) {
@@ -15,7 +15,7 @@ function mainReducer(state = Map({ loading: false, drawerState: false }), action
       return state
         .set("tritonVersion", action.tritonVersion)
         .set("bungee", action.bungee)
-        .set("availableLanguages", action.availableLanguages);
+        .set("availableLanguages", List(action.availableLanguages));
     default:
       return state;
   }
