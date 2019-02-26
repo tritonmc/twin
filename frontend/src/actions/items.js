@@ -4,6 +4,14 @@ export const setItems = (data) => ({
   type: types.SET_ITEMS,
   data,
 });
+
+export const updateField = (id, path, value) => ({
+  type: types.UPDATE_FIELD,
+  id,
+  path,
+  value,
+});
+
 /*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
   id,

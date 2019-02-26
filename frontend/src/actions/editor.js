@@ -9,3 +9,12 @@ export const setSearch = (search) => ({
   type: types.SET_SEARCH,
   search,
 });
+
+export const openEditor = (item) => ({
+  type: types.OPEN_EDITOR,
+  item,
+});
+
+export const closeEditor = () => ({
+  type: types.CLOSE_EDITOR,
+});

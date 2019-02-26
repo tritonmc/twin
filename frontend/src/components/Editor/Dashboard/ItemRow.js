@@ -8,6 +8,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import { connect } from "react-redux";
 import { List } from "immutable";
+import { openEditor } from "../../../actions/editor";
 
 const styles = (theme) => ({
   root: {
@@ -41,6 +42,11 @@ const styles = (theme) => ({
 });
 
 class ItemRow extends Component {
+  constructor() {
+    super();
+    this.openEditor = this.openEditor.bind(this);
+  }
+
   shouldComponentUpdate = (nextProps, nextState) => {
     return (
       nextProps.id !== this.props.id ||
@@ -49,10 +55,14 @@ class ItemRow extends Component {
     );
   };
 
+  openEditor() {
+    this.props.openEditor(this.props.id);
+  }
+
   render() {
     const { style, title, description, tags, classes } = this.props;
     return (
-      <ListItem button style={style} className={classes.root}>
+      <ListItem button style={style} className={classes.root} onClick={this.openEditor}>
         <Checkbox checked={false} tabIndex={-1} disableRipple />
         <ListItemText disableTypography className={classes.itemText}>
           <div className={classes.title}>
@@ -93,4 +103,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(ItemRow));
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  openEditor: (id) => dispatch(openEditor(id)),
+});
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ItemRow)
+);

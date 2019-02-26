@@ -26,7 +26,10 @@ export const SET_DATA = "SET_DATA";
 
 // items
 export const SET_ITEMS = "SET_ITEMS";
+export const UPDATE_FIELD = "UPDATE_FIELD";
 
 // editor
 export const SET_PREVIEW_LANGUAGE = "SET_PREVIEW_LANGUAGE";
 export const SET_SEARCH = "SET_SEARCH";
+export const OPEN_EDITOR = "OPEN_EDITOR";
+export const CLOSE_EDITOR = "CLOSE_EDITOR";

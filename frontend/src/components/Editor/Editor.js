@@ -13,6 +13,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import classNames from "classnames";
 import Sidebar from "./Sidebar";
 import ItemList from "./Dashboard/ItemList";
+import EditorDialog from "./EditorDialog";
 
 const drawerWidth = 240;
 
@@ -85,6 +86,7 @@ class Editor extends React.PureComponent {
           })}>
           <ItemList />
         </main>
+        <EditorDialog />
       </div>
     );
   }
