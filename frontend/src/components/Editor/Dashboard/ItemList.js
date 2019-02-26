@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import { List as IList, Map } from "immutable";
+import { List as IList } from "immutable";
 import { FixedSizeList as VirtualList } from "react-window";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
