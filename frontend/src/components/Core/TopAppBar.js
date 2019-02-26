@@ -127,7 +127,7 @@ class TopAppBar extends Component {
                 aria-haspopup="true"
                 onClick={this.props.toggleTheme}
                 color="inherit">
-                {this.props.theme === 0 ? <LightbulbOn /> : <Lightbulb />}
+                {parseInt(this.props.theme) === 0 ? <LightbulbOn /> : <Lightbulb />}
               </IconButton>
             </div>
           </Toolbar>
