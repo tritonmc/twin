@@ -10,7 +10,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { connect } from "react-redux";
 import KeyField from "./EditorFields/KeyField";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteButton from "./EditorFields/DeleteButton";
 
 const styles = (theme) => ({
   appBar: {
@@ -50,9 +50,7 @@ class EditorDialog extends Component {
             <Typography variant="h6" color="inherit" className={classes.flex}>
               Editing Language Item
             </Typography>
-            <IconButton color="inherit" onClick={close} aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
+            <DeleteButton item={id} />
           </Toolbar>
         </AppBar>
         <form className={classes.container} noValidate autoComplete="off">

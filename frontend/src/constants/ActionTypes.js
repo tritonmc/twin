@@ -11,7 +11,6 @@ export const REMOVE_SIGN_COORDINATE = "REMOVE_SIGN_COORDINATE";
 export const ADD_SIGN_COORDINATE = "ADD_SIGN_COORDINATE";
 export const CHANGE_SIGN_LINE = "CHANGE_SIGN_LINE";
 export const ADD_ITEM = "ADD_ITEM";
-export const DELETE_ITEM = "DELETE_ITEM";
 export const TOGGLE_EXPAND = "TOGGLE_EXPAND";
 export const SET_ACTIVE_ITEM = "SET_ACTIVE_ITEM";
 export const SET_SAVED = "SET_SAVED";
@@ -27,6 +26,7 @@ export const SET_DATA = "SET_DATA";
 // items
 export const SET_ITEMS = "SET_ITEMS";
 export const UPDATE_FIELD = "UPDATE_FIELD";
+export const DELETE_ITEM = "DELETE_ITEM";
 
 // editor
 export const SET_PREVIEW_LANGUAGE = "SET_PREVIEW_LANGUAGE";

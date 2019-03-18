@@ -12,6 +12,8 @@ function itemReducer(state = List(), action) {
           return item.setIn(action.path, action.value).setIn(["_twin", "dateUpdated"], Date.now());
         return item;
       });
+    case types.DELETE_ITEM:
+      return state.delete(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id));
     default:
       return state;
   }

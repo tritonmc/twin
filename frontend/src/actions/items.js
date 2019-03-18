@@ -12,6 +12,11 @@ export const updateField = (id, path, value) => ({
   value,
 });
 
+export const deleteItem = (id) => ({
+  type: types.DELETE_ITEM,
+  id,
+});
+
 /*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
   id,
@@ -72,10 +77,7 @@ export const addItem = (type) => ({
   type: types.ADD_ITEM,
   itemType: type,
 });
-export const deleteItem = (id) => ({
-  type: types.DELETE_ITEM,
-  id,
-});
+
 export const toggleExpand = (id) => ({
   type: types.TOGGLE_EXPAND,
   id,
