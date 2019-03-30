@@ -26,6 +26,10 @@ const styles = (theme) => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
+    maxWidth: 1200,
+    width: "100%",
+    marginRight: "auto",
+    marginLeft: "auto",
   },
 });
 
@@ -55,6 +59,7 @@ class EditorDialog extends Component {
         </AppBar>
         <form className={classes.container} noValidate autoComplete="off">
           <KeyField id={id} />
+          <Typography variant="h6">Text</Typography>
         </form>
       </Dialog>
     );
