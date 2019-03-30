@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { updateField } from "../../../actions/items";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 

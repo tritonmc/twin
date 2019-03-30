@@ -1,35 +1,57 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Map } from "immutable";
+import { Map, List, Set } from "immutable";
 import LanguageField from "./LanguageField";
 import { updateField } from "../../../actions/items";
+import LinesField from "./LinesField";
+import Typography from "@material-ui/core/Typography";
 
 export class TextFieldsSection extends Component {
   render() {
-    const { type, languages } = this.props;
-    if (type === "text") {
-      var result = [];
-      languages.forEach((value, language) => {
-        result.push(
-          <LanguageField
-            key={language}
-            language={language}
-            value={value}
-            updateField={this.props.updateField}
-          />
-        );
-      });
-      return <>{result}</>;
+    const { type, languages, availableLanguages } = this.props;
+    var keys = Set();
+    availableLanguages.forEach((v) => (keys = keys.add(v)));
+    languages.keySeq().forEach((v) => (keys = keys.add(v)));
+    if (keys.size === 0) {
+      return (
+        <Typography color="error" variant="body2">
+          There are no languages available. Please add them in your <code>config.yml</code> and try
+          again.
+        </Typography>
+      );
+    } else if (type === "text") {
+      return (
+        <>
+          {keys.map((language) => (
+            <LanguageField
+              key={language}
+              language={language}
+              value={languages.get(language, "")}
+              updateField={this.props.updateLanguage}
+            />
+          ))}
+        </>
+      );
+    } else if (type === "sign") {
+      return (
+        <>
+          {keys.map((language) => (
+            <LinesField
+              key={language}
+              language={language}
+              value={languages.get(language, "")}
+              updateField={this.props.updateLine}
+            />
+          ))}
+        </>
+      );
+    } else {
+      return (
+        <Typography color="error" variant="body2">
+          An error occurred. Unknown item type.
+        </Typography>
+      );
     }
-    return (
-      <>
-        <LanguageField
-          language="en_GB"
-          value={this.props.languages.get("en_GB", "")}
-          updateField={this.props.updateField}
-        />
-      </>
-    );
   }
 }
 
@@ -41,12 +63,15 @@ const mapStateToProps = (state, ownProps) => {
   return {
     type,
     languages: item.get(type === "text" ? "languages" : "lines", Map()),
+    availableLanguages: state.main.get("availableLanguages", List()),
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateField: (language, value) =>
+  updateLanguage: (language, value) =>
     dispatch(updateField(ownProps.id, ["languages", language], value)),
+  updateLine: (language, line, value) =>
+    dispatch(updateField(ownProps.id, ["lines", language, parseInt(line)], value)),
 });
 
 export default connect(
