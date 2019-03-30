@@ -11,6 +11,7 @@ import Slide from "@material-ui/core/Slide";
 import { connect } from "react-redux";
 import KeyField from "./EditorFields/KeyField";
 import DeleteButton from "./EditorFields/DeleteButton";
+import TextFieldsSection from "./EditorFields/TextFieldsSection";
 
 const styles = (theme) => ({
   appBar: {
@@ -30,6 +31,10 @@ const styles = (theme) => ({
     width: "100%",
     marginRight: "auto",
     marginLeft: "auto",
+    padding: "0 15px",
+  },
+  sectionHeader: {
+    width: "100%",
   },
 });
 
@@ -59,7 +64,10 @@ class EditorDialog extends Component {
         </AppBar>
         <form className={classes.container} noValidate autoComplete="off">
           <KeyField id={id} />
-          <Typography variant="h6">Text</Typography>
+          <Typography variant="h6" className={classes.sectionHeader}>
+            Text
+          </Typography>
+          <TextFieldsSection id={id} />
         </form>
       </Dialog>
     );
