@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import KeyField from "./EditorFields/KeyField";
 import DeleteButton from "./EditorFields/DeleteButton";
 import TextFieldsSection from "./EditorFields/TextFieldsSection";
+import MetaSection from "./EditorFields/MetaSection";
 
 const styles = (theme) => ({
   appBar: {
@@ -64,10 +65,14 @@ class EditorDialog extends Component {
         </AppBar>
         <form className={classes.container} noValidate autoComplete="off">
           <KeyField id={id} />
-          <Typography variant="h6" className={classes.sectionHeader}>
+          <Typography variant="h5" className={classes.sectionHeader}>
             Text
           </Typography>
           <TextFieldsSection id={id} />
+          <Typography variant="h5" className={classes.sectionHeader}>
+            Meta
+          </Typography>
+          <MetaSection id={id} />
         </form>
       </Dialog>
     );

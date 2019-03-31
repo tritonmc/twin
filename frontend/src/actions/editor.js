@@ -18,3 +18,8 @@ export const openEditor = (item) => ({
 export const closeEditor = () => ({
   type: types.CLOSE_EDITOR,
 });
+
+export const addTag = (tag) => ({
+  type: types.ADD_TAG,
+  tag,
+});
