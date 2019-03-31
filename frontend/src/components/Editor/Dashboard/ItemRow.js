@@ -21,6 +21,12 @@ const styles = (theme) => ({
   },
   description: {
     flexGrow: 1,
+    display: "flex",
+    minWidth: 0,
+  },
+  descriptionText: {
+    flex: "1 1 auto",
+    width: 0,
   },
   chip: {
     backgroundColor: theme.palette.secondary.main,
@@ -78,7 +84,7 @@ class ItemRow extends Component {
                 label={tag}
               />
             ))}
-            <Typography inline noWrap>
+            <Typography inline noWrap className={classes.descriptionText}>
               {description}
             </Typography>
           </div>
