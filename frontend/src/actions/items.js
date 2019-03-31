@@ -17,6 +17,14 @@ export const deleteItem = (id) => ({
   id,
 });
 
+export const updateSignLine = (id, language, line, value) => ({
+  type: types.UPDATE_SIGN_LINE,
+  id,
+  language,
+  line,
+  value,
+});
+
 /*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
   id,

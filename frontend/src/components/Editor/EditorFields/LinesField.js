@@ -13,15 +13,35 @@ const styles = (theme) => ({
 
 class LinesField extends Component {
   render() {
-    const { language, value } = this.props;
+    const { classes, language, value } = this.props;
     return (
       <>
         <Typography variant="subtitle1">{language}</Typography>
-        <Grid container spacing={16}>
-          <LineField line={0} {...this.props} value={value.get(0, "")} />
-          <LineField line={1} {...this.props} value={value.get(1, "")} />
-          <LineField line={2} {...this.props} value={value.get(2, "")} />
-          <LineField line={3} {...this.props} value={value.get(3, "")} />
+        <Grid container spacing={16} className={classes.textField}>
+          <LineField
+            line={0}
+            language={this.props.language}
+            updateField={this.props.updateField}
+            value={value.get(0, "")}
+          />
+          <LineField
+            line={1}
+            language={this.props.language}
+            updateField={this.props.updateField}
+            value={value.get(1, "")}
+          />
+          <LineField
+            line={2}
+            language={this.props.language}
+            updateField={this.props.updateField}
+            value={value.get(2, "")}
+          />
+          <LineField
+            line={3}
+            language={this.props.language}
+            updateField={this.props.updateField}
+            value={value.get(3, "")}
+          />
         </Grid>
       </>
     );
@@ -34,13 +54,12 @@ class LineField extends Component {
   };
 
   render() {
-    const { classes, language, value, line } = this.props;
+    const { language, value, line } = this.props;
     return (
       <Grid item xs={12} sm={6} md={3}>
         <TextField
           id={"editor-language-field-" + language + "-" + line}
           label={"Line " + (line + 1)}
-          className={classes.textField}
           defaultValue={value}
           onBlur={this.updateField}
           margin="normal"

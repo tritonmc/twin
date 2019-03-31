@@ -12,6 +12,16 @@ function itemReducer(state = List(), action) {
           return item.setIn(action.path, action.value).setIn(["_twin", "dateUpdated"], Date.now());
         return item;
       });
+    case types.UPDATE_SIGN_LINE:
+      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
+        if (item.getIn(["lines", action.language, action.line]) !== action.value)
+          return item
+            .updateIn(["lines", action.language], List(), (list) =>
+              list.set(action.line, action.value)
+            )
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        return item;
+      });
     case types.DELETE_ITEM:
       return state.delete(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id));
     default:

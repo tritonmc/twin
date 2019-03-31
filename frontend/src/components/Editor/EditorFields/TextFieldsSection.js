@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Map, List, Set } from "immutable";
 import LanguageField from "./LanguageField";
-import { updateField } from "../../../actions/items";
+import { updateField, updateSignLine } from "../../../actions/items";
 import LinesField from "./LinesField";
 import Typography from "@material-ui/core/Typography";
 
@@ -39,7 +39,7 @@ export class TextFieldsSection extends Component {
             <LinesField
               key={language}
               language={language}
-              value={languages.get(language, "")}
+              value={languages.get(language, List())}
               updateField={this.props.updateLine}
             />
           ))}
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   updateLanguage: (language, value) =>
     dispatch(updateField(ownProps.id, ["languages", language], value)),
   updateLine: (language, line, value) =>
-    dispatch(updateField(ownProps.id, ["lines", language, parseInt(line)], value)),
+    dispatch(updateSignLine(ownProps.id, language, parseInt(line), value)),
 });
 
 export default connect(

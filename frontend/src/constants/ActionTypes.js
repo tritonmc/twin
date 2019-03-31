@@ -27,6 +27,7 @@ export const SET_DATA = "SET_DATA";
 export const SET_ITEMS = "SET_ITEMS";
 export const UPDATE_FIELD = "UPDATE_FIELD";
 export const DELETE_ITEM = "DELETE_ITEM";
+export const UPDATE_SIGN_LINE = "UPDATE_SIGN_LINE";
 
 // editor
 export const SET_PREVIEW_LANGUAGE = "SET_PREVIEW_LANGUAGE";
