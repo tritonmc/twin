@@ -58,7 +58,7 @@ export class TextFieldsSection extends Component {
 const mapStateToProps = (state, ownProps) => {
   const item = state.items
     .get("present")
-    .find((item) => item.getIn(["_twin", "id"]) === ownProps.id);
+    .find((item) => item.getIn(["_twin", "id"]) === ownProps.id, undefined, Map());
   const type = item.get("type", "text");
   return {
     type,
