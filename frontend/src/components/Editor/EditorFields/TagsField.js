@@ -18,7 +18,7 @@ import { List, Map } from "immutable";
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    height: 250,
+    /*height: 250,*/
   },
   input: {
     display: "flex",
@@ -53,7 +53,7 @@ const styles = (theme) => ({
   },
   paper: {
     position: "absolute",
-    zIndex: 1,
+    zIndex: 999,
     marginTop: theme.spacing.unit,
     left: 0,
     right: 0,
