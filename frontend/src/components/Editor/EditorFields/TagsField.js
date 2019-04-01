@@ -18,7 +18,6 @@ import { List, Map } from "immutable";
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    /*height: 250,*/
   },
   input: {
     display: "flex",
@@ -35,10 +34,7 @@ const styles = (theme) => ({
     margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
   },
   chipFocused: {
-    backgroundColor: emphasize(
-      theme.palette.type === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
-      0.08
-    ),
+    backgroundColor: emphasize(theme.palette.secondary.main, 0.08),
   },
   noOptionsMessage: {
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
@@ -137,6 +133,7 @@ function ValueContainer(props) {
 function MultiValue(props) {
   return (
     <Chip
+      color="secondary"
       tabIndex={-1}
       label={props.children}
       className={classNames(props.selectProps.classes.chip, {
