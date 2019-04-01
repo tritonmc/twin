@@ -13,6 +13,8 @@ import KeyField from "./EditorFields/KeyField";
 import DeleteButton from "./EditorFields/DeleteButton";
 import TextFieldsSection from "./EditorFields/TextFieldsSection";
 import MetaSection from "./EditorFields/MetaSection";
+import BungeeSection from "./EditorFields/BungeeSection";
+import { Map } from "immutable";
 
 const styles = (theme) => ({
   appBar: {
@@ -69,6 +71,14 @@ class EditorDialog extends Component {
             Text
           </Typography>
           <TextFieldsSection id={id} />
+          {this.props.type === "text" && this.props.bungee && (
+            <>
+              <Typography variant="h5" className={classes.sectionHeader}>
+                BungeeCord
+              </Typography>
+              <BungeeSection id={id} />
+            </>
+          )}
           <Typography variant="h5" className={classes.sectionHeader}>
             Meta
           </Typography>
@@ -80,9 +90,15 @@ class EditorDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const id = state.editor.get("activeItem");
+  const item = state.items
+    .get("present")
+    .find((item) => item.getIn(["_twin", "id"]) === id, undefined, Map());
   return {
     open: state.editor.get("editorOpen", false),
-    id: state.editor.get("activeItem"),
+    id,
+    type: item.get("type", "text"),
+    bungee: state.main.get("bungee", false),
   };
 };
 

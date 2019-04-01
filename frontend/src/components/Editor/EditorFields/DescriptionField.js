@@ -20,7 +20,7 @@ class KeyField extends Component {
         label="Description"
         className={classes.textField}
         value={this.props.itemDescription}
-        onChange={this.props.updateField}
+        onBlur={this.props.updateField}
         margin="normal"
         variant="outlined"
         fullWidth

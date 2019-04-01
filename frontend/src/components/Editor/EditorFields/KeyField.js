@@ -22,7 +22,7 @@ class KeyField extends Component {
         label="Item Key"
         className={classes.textField}
         value={this.props.itemKey}
-        onChange={this.props.updateField}
+        onBlur={this.props.updateField}
         margin="normal"
         variant="outlined"
         fullWidth
