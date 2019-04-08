@@ -94,8 +94,13 @@ class Editor extends React.PureComponent {
 
 const processData = (data) => {
   data = fromJS(data);
-  return data.map((item) =>
-    item
+  return data.map((item) => {
+    if (item.get("type", "text") === "sign") {
+      item = item.update("locations", List(), (locations) =>
+        locations.map((location) => location.mergeWith((oldVal) => oldVal, { id: uuid() }))
+      );
+    }
+    return item
       .update("_twin", Map(), (metadata) =>
         metadata.mergeWith((oldVal) => oldVal, {
           id: uuid(),
@@ -104,8 +109,8 @@ const processData = (data) => {
           tags: item.get("tags", List()),
         })
       )
-      .remove("tags")
-  );
+      .remove("tags");
+  });
 };
 
 const mapStateToProps = (state) => {

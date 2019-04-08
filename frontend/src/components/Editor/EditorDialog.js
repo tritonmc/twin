@@ -15,6 +15,7 @@ import TextFieldsSection from "./EditorFields/TextFieldsSection";
 import MetaSection from "./EditorFields/MetaSection";
 import BungeeSection from "./EditorFields/BungeeSection";
 import { Map } from "immutable";
+import LocationSection from "./EditorFields/LocationSection";
 
 const styles = (theme) => ({
   appBar: {
@@ -77,6 +78,14 @@ class EditorDialog extends Component {
                 BungeeCord
               </Typography>
               <BungeeSection id={id} />
+            </>
+          )}
+          {this.props.type === "sign" && (
+            <>
+              <Typography variant="h5" className={classes.sectionHeader}>
+                Sign Locations
+              </Typography>
+              <LocationSection id={id} />
             </>
           )}
           <Typography variant="h5" className={classes.sectionHeader}>
