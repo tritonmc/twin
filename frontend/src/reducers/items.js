@@ -1,6 +1,7 @@
-import * as types from "../constants/ActionTypes";
-import { List } from "immutable";
+import { List, Map } from "immutable";
 import undoable from "redux-undo-immutable";
+import uuid from "uuid/v4";
+import * as types from "../constants/ActionTypes";
 
 function itemReducer(state = List(), action) {
   switch (action.type) {
@@ -24,6 +25,37 @@ function itemReducer(state = List(), action) {
       });
     case types.DELETE_ITEM:
       return state.delete(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id));
+    case types.UPDATE_SIGN_COORDINATE:
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.itemId),
+        (item) => {
+          var locIndex = item.get("locations").findKey((v) => v.get("id") === action.locId);
+          if (item.getIn(["locations", locIndex, action.field]) !== action.value)
+            return item
+              .setIn(["locations", locIndex, action.field], action.value)
+              .setIn(["_twin", "dateUpdated"], Date.now());
+          return item;
+        }
+      );
+    case types.DELETE_SIGN_LOCATION:
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.itemId),
+        (item) => {
+          return item
+            .update("locations", (locs) => {
+              return locs.delete(locs.findKey((v) => v.get("id") === action.locId));
+            })
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        }
+      );
+    case types.ADD_SIGN_LOCATION:
+      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
+        return item
+          .update("locations", List(), (locs) => {
+            return locs.push(Map({ id: uuid() }));
+          })
+          .setIn(["_twin", "dateUpdated"], Date.now());
+      });
     default:
       return state;
   }

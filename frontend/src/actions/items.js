@@ -25,6 +25,25 @@ export const updateSignLine = (id, language, line, value) => ({
   value,
 });
 
+export const updateSignCoordinate = (itemId, locId, field, value) => ({
+  type: types.UPDATE_SIGN_COORDINATE,
+  itemId,
+  locId,
+  field,
+  value,
+});
+
+export const deleteSignLocation = (itemId, locId) => ({
+  type: types.DELETE_SIGN_LOCATION,
+  itemId,
+  locId,
+});
+
+export const addSignLocation = (id) => ({
+  type: types.ADD_SIGN_LOCATION,
+  id,
+});
+
 /*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
   id,
