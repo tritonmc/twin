@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import { connect } from "react-redux";
-import { List } from "immutable";
+import { List, is } from "immutable";
 import { openEditor } from "../../../actions/editor";
 
 const styles = (theme) => ({
@@ -56,7 +56,10 @@ class ItemRow extends Component {
     return (
       nextProps.id !== this.props.id ||
       nextProps.classes !== this.props.classes ||
-      nextProps.index !== this.props.index
+      nextProps.index !== this.props.index ||
+      !is(this.props.tags, nextProps.tags) ||
+      nextProps.title !== this.props.title ||
+      nextProps.description !== this.props.description
     );
   };
 
