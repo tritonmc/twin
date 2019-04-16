@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { List as IList } from "immutable";
-import { FixedSizeList as VirtualList } from "react-window";
-import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
-import ItemRow from "./ItemRow";
-import AutoSizer from "react-virtualized-auto-sizer";
+import { withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Fuse from "fuse-immutable";
+import { List as IList } from "immutable";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import AutoSizer from "react-virtualized-auto-sizer";
+import { FixedSizeList as VirtualList } from "react-window";
+import ItemRow from "./ItemRow";
 
 const styles = (theme) => ({
   root: {

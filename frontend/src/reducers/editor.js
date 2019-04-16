@@ -1,5 +1,5 @@
+import { List, Map, Set } from "immutable";
 import * as types from "../constants/ActionTypes";
-import { Map, Set, List } from "immutable";
 
 function mainReducer(state = Map({ search: "", editorOpen: false, tags: Set() }), action) {
   switch (action.type) {

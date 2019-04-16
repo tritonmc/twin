@@ -1,14 +1,14 @@
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import React, { Component } from "react";
-import Home from "../Home/Home";
+import { withCookies } from "react-cookie";
+import { connect } from "react-redux";
 //import Dashboard from "./components/dashboard.js";
 //import Saved from "./components/saved";
 //import Migrate from "./components/migrate";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { withCookies } from "react-cookie";
-import { connect } from "react-redux";
-import TopAppBar from "./TopAppBar";
 import Editor from "../Editor/Editor";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Home from "../Home/Home";
+import TopAppBar from "./TopAppBar";
 
 const THEMES = [
   createMuiTheme({

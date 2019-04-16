@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { withStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { Component } from "react";
 
 const styles = {
   root: {

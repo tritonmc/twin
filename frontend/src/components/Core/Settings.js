@@ -1,19 +1,19 @@
 import { Typography } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
+import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
+import CloseIcon from "@material-ui/icons/Close";
+import HeartIcon from "@material-ui/icons/Favorite";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { setSettingsState, setTheme } from "../../actions/main";
-import { withStyles } from "@material-ui/core/styles";
-import HeartIcon from "@material-ui/icons/Favorite";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 
 const styles = (theme) => ({
   versionInfo: {

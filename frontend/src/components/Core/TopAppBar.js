@@ -1,23 +1,23 @@
+import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import InputBase from "@material-ui/core/InputBase";
+import { withStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
+import RedoIcon from "@material-ui/icons/Redo";
+import SearchIcon from "@material-ui/icons/Search";
+import UndoIcon from "@material-ui/icons/Undo";
+import classnames from "classnames";
+import Lightbulb from "mdi-material-ui/Lightbulb";
+import LightbulbOn from "mdi-material-ui/LightbulbOn";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-import { setTheme, setDrawerState } from "../../actions/main";
-import { setSearch } from "../../actions/editor";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import MenuIcon from "@material-ui/icons/Menu";
-import Lightbulb from "mdi-material-ui/Lightbulb";
-import LightbulbOn from "mdi-material-ui/LightbulbOn";
-import { withStyles } from "@material-ui/core/styles";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
-import classnames from "classnames";
-import UndoIcon from "@material-ui/icons/Undo";
-import RedoIcon from "@material-ui/icons/Redo";
 import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
+import { setSearch } from "../../actions/editor";
+import { setDrawerState, setTheme } from "../../actions/main";
 
 const styles = (theme) => ({
   root: {

@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { withStyles } from "@material-ui/core/styles";
+import { is, List } from "immutable";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { List, is } from "immutable";
 import { openEditor } from "../../../actions/editor";
 
 const styles = (theme) => ({

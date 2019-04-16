@@ -1,11 +1,11 @@
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
 
 const styles = (theme) => ({
   root: {

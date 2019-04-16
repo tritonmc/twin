@@ -1,5 +1,5 @@
+import { List, Map } from "immutable";
 import * as types from "../constants/ActionTypes";
-import { Map, List } from "immutable";
 
 function mainReducer(state = Map({ loading: false, drawerState: false }), action) {
   switch (action.type) {

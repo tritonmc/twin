@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware, compose } from "redux";
+import Immutable from "immutable";
+import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers/rootReducer";
-import Immutable from "immutable";
 
 export default function configureStore() {
   const composeEnhancers =

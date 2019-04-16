@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { closeEditor } from "../../actions/editor";
-import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
+import Slide from "@material-ui/core/Slide";
+import { withStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import { connect } from "react-redux";
-import KeyField from "./EditorFields/KeyField";
-import DeleteButton from "./EditorFields/DeleteButton";
-import TextFieldsSection from "./EditorFields/TextFieldsSection";
-import MetaSection from "./EditorFields/MetaSection";
-import BungeeSection from "./EditorFields/BungeeSection";
 import { Map } from "immutable";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { closeEditor } from "../../actions/editor";
+import BungeeSection from "./EditorFields/BungeeSection";
+import DeleteButton from "./EditorFields/DeleteButton";
+import KeyField from "./EditorFields/KeyField";
 import LocationSection from "./EditorFields/LocationSection";
+import MetaSection from "./EditorFields/MetaSection";
+import TextFieldsSection from "./EditorFields/TextFieldsSection";
 
 const styles = (theme) => ({
   appBar: {

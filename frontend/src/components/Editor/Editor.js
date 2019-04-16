@@ -1,20 +1,20 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { setLoading, setId, setDrawerState, setData } from "../../actions/main";
-import { setItems } from "../../actions/items";
-import { fromJS, Map, List } from "immutable";
-import uuid from "uuid/v4";
-import Loading from "../Loading/Loading";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import classNames from "classnames";
-import Sidebar from "./Sidebar";
+import { fromJS, List, Map } from "immutable";
+import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import uuid from "uuid/v4";
+import { setItems } from "../../actions/items";
+import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
+import Settings from "../Core/Settings";
+import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
 import EditorDialog from "./EditorDialog";
-import Settings from "../Core/Settings";
+import Sidebar from "./Sidebar";
 
 const drawerWidth = 240;
 
