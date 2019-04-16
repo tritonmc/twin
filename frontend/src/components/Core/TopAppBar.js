@@ -15,6 +15,9 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import classnames from "classnames";
+import UndoIcon from "@material-ui/icons/Undo";
+import RedoIcon from "@material-ui/icons/Redo";
+import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
 
 const styles = (theme) => ({
   root: {
@@ -84,7 +87,7 @@ class TopAppBar extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, canUndo, canRedo, onUndo, onRedo } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
@@ -122,7 +125,16 @@ class TopAppBar extends Component {
             )}
             <div className={classes.grow} />
             <div>
-              {!this.props.showHamburger && (
+              {this.props.showHamburger ? (
+                <>
+                  <IconButton onClick={onUndo} disabled={!canUndo}>
+                    <UndoIcon />
+                  </IconButton>
+                  <IconButton onClick={onRedo} disabled={!canRedo}>
+                    <RedoIcon />
+                  </IconButton>
+                </>
+              ) : (
                 <IconButton
                   aria-owns={this.state.isMenuOpen ? "material-appbar" : undefined}
                   aria-haspopup="true"
@@ -140,7 +152,11 @@ class TopAppBar extends Component {
 }
 
 const mapStateToProps = (store) => {
-  return { showHamburger: store.main.get("id") !== undefined };
+  return {
+    showHamburger: store.main.get("id") !== undefined,
+    canUndo: store.items.get("past").size > 0,
+    canRedo: store.items.get("future").size > 0,
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -156,6 +172,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       dispatch(setDrawerState(!getState().main.get("drawerState", false)));
     }),
   updateSearch: (evt) => dispatch(setSearch(evt.target.value)),
+  onUndo: () => dispatch(UndoActionCreators.undo()),
+  onRedo: () => dispatch(UndoActionCreators.redo()),
 });
 
 export default withStyles(styles)(

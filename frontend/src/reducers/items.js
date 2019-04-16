@@ -61,4 +61,6 @@ function itemReducer(state = List(), action) {
   }
 }
 
-export default undoable(itemReducer);
+export default undoable(itemReducer, {
+  actionFilter: (action) => action.type !== types.SET_ITEMS,
+});
