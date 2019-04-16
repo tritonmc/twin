@@ -22,6 +22,7 @@ class LanguageField extends Component {
         label={language}
         className={classes.textField}
         defaultValue={value}
+        key={value}
         onBlur={this.updateField}
         margin="normal"
         variant="outlined"

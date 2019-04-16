@@ -10,6 +10,7 @@ import { Map } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { closeEditor } from "../../actions/editor";
+import UndoRedoButtons from "../Core/UndoRedoButtons";
 import BungeeSection from "./EditorFields/BungeeSection";
 import DeleteButton from "./EditorFields/DeleteButton";
 import KeyField from "./EditorFields/KeyField";
@@ -63,6 +64,7 @@ class EditorDialog extends Component {
             <Typography variant="h6" color="inherit" className={classes.flex}>
               Editing Language Item
             </Typography>
+            <UndoRedoButtons />
             <DeleteButton item={id} />
           </Toolbar>
         </AppBar>

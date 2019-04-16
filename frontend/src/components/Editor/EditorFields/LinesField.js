@@ -61,6 +61,7 @@ class LineField extends Component {
           id={"editor-language-field-" + language + "-" + line}
           label={"Line " + (line + 1)}
           defaultValue={value}
+          key={value}
           onBlur={this.updateField}
           margin="normal"
           variant="outlined"

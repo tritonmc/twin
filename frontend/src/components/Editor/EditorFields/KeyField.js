@@ -1,10 +1,10 @@
+import InputAdornment from "@material-ui/core/InputAdornment";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import VpnIcon from "@material-ui/icons/VpnKey";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateField } from "../../../actions/items";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { withStyles } from "@material-ui/core/styles";
-import VpnIcon from "@material-ui/icons/VpnKey";
 
 const styles = (theme) => ({
   textField: {
@@ -22,6 +22,7 @@ class KeyField extends Component {
         label="Item Key"
         className={classes.textField}
         defaultValue={this.props.itemKey}
+        key={this.props.itemKey}
         onBlur={this.props.updateField}
         margin="normal"
         variant="outlined"

@@ -19,7 +19,8 @@ class KeyField extends Component {
         id="editor-item-description"
         label="Description"
         className={classes.textField}
-        value={this.props.itemDescription}
+        defaultValue={this.props.itemDescription}
+        key={this.props.itemDescription}
         onBlur={this.props.updateField}
         margin="normal"
         variant="outlined"

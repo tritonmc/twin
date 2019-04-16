@@ -6,18 +6,16 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
-import RedoIcon from "@material-ui/icons/Redo";
 import SearchIcon from "@material-ui/icons/Search";
-import UndoIcon from "@material-ui/icons/Undo";
 import classnames from "classnames";
 import Lightbulb from "mdi-material-ui/Lightbulb";
 import LightbulbOn from "mdi-material-ui/LightbulbOn";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
 import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
+import UndoRedoButtons from "./UndoRedoButtons";
 
 const styles = (theme) => ({
   root: {
@@ -87,7 +85,7 @@ class TopAppBar extends Component {
   }
 
   render() {
-    const { classes, canUndo, canRedo, onUndo, onRedo } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
@@ -126,14 +124,7 @@ class TopAppBar extends Component {
             <div className={classes.grow} />
             <div>
               {this.props.showHamburger ? (
-                <>
-                  <IconButton onClick={onUndo} disabled={!canUndo}>
-                    <UndoIcon />
-                  </IconButton>
-                  <IconButton onClick={onRedo} disabled={!canRedo}>
-                    <RedoIcon />
-                  </IconButton>
-                </>
+                <UndoRedoButtons />
               ) : (
                 <IconButton
                   aria-owns={this.state.isMenuOpen ? "material-appbar" : undefined}
@@ -154,8 +145,6 @@ class TopAppBar extends Component {
 const mapStateToProps = (store) => {
   return {
     showHamburger: store.main.get("id") !== undefined,
-    canUndo: store.items.get("past").size > 0,
-    canRedo: store.items.get("future").size > 0,
   };
 };
 
@@ -172,8 +161,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       dispatch(setDrawerState(!getState().main.get("drawerState", false)));
     }),
   updateSearch: (evt) => dispatch(setSearch(evt.target.value)),
-  onUndo: () => dispatch(UndoActionCreators.undo()),
-  onRedo: () => dispatch(UndoActionCreators.redo()),
 });
 
 export default withStyles(styles)(
