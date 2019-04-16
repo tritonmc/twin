@@ -21,7 +21,7 @@ class KeyField extends Component {
         id="editor-item-key"
         label="Item Key"
         className={classes.textField}
-        value={this.props.itemKey}
+        defaultValue={this.props.itemKey}
         onBlur={this.props.updateField}
         margin="normal"
         variant="outlined"
