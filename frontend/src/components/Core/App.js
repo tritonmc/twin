@@ -49,7 +49,7 @@ class App extends Component {
       <MuiThemeProvider theme={THEMES[this.props.theme]}>
         <Router>
           <>
-            <TopAppBar theme={this.props.theme} />
+            <TopAppBar currentTheme={this.props.theme} />
             <Switch>
               <Route path="/:id" component={Editor} />
               <Route component={Home} />

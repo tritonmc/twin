@@ -7,12 +7,15 @@ import App from "./components/Core/App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={configureStore()}>
       <SnackbarProvider>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </SnackbarProvider>
     </Provider>
   </CookiesProvider>,

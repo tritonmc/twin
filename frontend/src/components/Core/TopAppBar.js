@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
 import UndoRedoButtons from "./UndoRedoButtons";
+import { Helmet } from "react-helmet-async";
 
 const styles = (theme) => ({
   root: {
@@ -83,9 +84,11 @@ class TopAppBar extends Component {
     super();
     this.state = { isMenuOpen: false };
   }
+  get = (p, o) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
 
   render() {
     const { classes } = this.props;
+    console.log("this.props.theme", this.props.theme);
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
@@ -131,12 +134,23 @@ class TopAppBar extends Component {
                   aria-haspopup="true"
                   onClick={this.props.toggleTheme}
                   color="inherit">
-                  {parseInt(this.props.theme) === 0 ? <LightbulbOn /> : <Lightbulb />}
+                  {parseInt(this.props.currentTheme) === 0 ? <LightbulbOn /> : <Lightbulb />}
                 </IconButton>
               )}
             </div>
           </Toolbar>
         </AppBar>
+        <Helmet>
+          <meta
+            name="theme-color"
+            content={
+              this.get(
+                ["overrides", "MuiAppBar", "colorPrimary", "backgroundColor"],
+                this.props.theme
+              ) || this.props.theme.palette.primary.main
+            }
+          />
+        </Helmet>
       </div>
     );
   }
@@ -163,7 +177,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   updateSearch: (evt) => dispatch(setSearch(evt.target.value)),
 });
 
-export default withStyles(styles)(
+export default withStyles(styles, { withTheme: true })(
   withCookies(
     connect(
       mapStateToProps,
