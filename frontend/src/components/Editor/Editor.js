@@ -15,6 +15,7 @@ import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
+import { Switch, Route } from "react-router";
 
 const drawerWidth = 240;
 
@@ -86,7 +87,14 @@ class Editor extends React.PureComponent {
           className={classNames(classes.content, {
             [classes.contentShift]: this.props.drawerOpen,
           })}>
-          <ItemList />
+          <Switch>
+            <Route path="/:id/archive">
+              <ItemList archivedOnly={true} />
+            </Route>
+            <Route>
+              <ItemList archivedOnly={false} />
+            </Route>
+          </Switch>
         </main>
         <EditorDialog />
       </div>

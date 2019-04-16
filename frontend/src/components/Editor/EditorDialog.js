@@ -11,6 +11,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { closeEditor } from "../../actions/editor";
 import UndoRedoButtons from "../Core/UndoRedoButtons";
+import ArchiveButton from "./EditorFields/ArchiveButton";
 import BungeeSection from "./EditorFields/BungeeSection";
 import DeleteButton from "./EditorFields/DeleteButton";
 import KeyField from "./EditorFields/KeyField";
@@ -49,7 +50,7 @@ function Transition(props) {
 
 class EditorDialog extends Component {
   render() {
-    const { classes, id, open, close } = this.props;
+    const { classes, id, open, close, archived } = this.props;
     return (
       <Dialog fullScreen open={open} onClose={close} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -65,6 +66,7 @@ class EditorDialog extends Component {
               Editing Language Item
             </Typography>
             <UndoRedoButtons />
+            <ArchiveButton archived={archived} id={id} />
             <DeleteButton item={id} />
           </Toolbar>
         </AppBar>
@@ -110,6 +112,7 @@ const mapStateToProps = (state) => {
     id,
     type: item.get("type", "text"),
     bungee: state.main.get("bungee", false),
+    archived: item.getIn(["_twin", "archived"], false),
   };
 };
 

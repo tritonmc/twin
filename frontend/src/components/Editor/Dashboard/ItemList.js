@@ -37,24 +37,25 @@ class ItemList extends Component {
 
   render() {
     return (
-      <AutoSizer defaultHeight={200} defaultWidth={300}>
+      <AutoSizer archivedOnly={this.props.archivedOnly} defaultHeight={200} defaultWidth={300}>
         {this._renderList}
       </AutoSizer>
     );
   }
 
   _renderList({ width, height }) {
-    return <InnerList height={height} width={width} />;
+    return <InnerList archivedOnly={this.props.archivedOnly} height={height} width={width} />;
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const search = state.editor.get("search", "");
-  var data;
-  if (search.length === 0)
-    data = state.items.get("present").map((item) => item.getIn(["_twin", "id"]));
+  var data = state.items
+    .get("present", IList())
+    .filter((item) => item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly);
+  if (search.length === 0) data = data.map((item) => item.getIn(["_twin", "id"]));
   else {
-    const fuse = new Fuse(state.items.get("present", IList()), {
+    const fuse = new Fuse(data, {
       ...fuseOptions,
       keys: [
         ...fuseOptions.keys,

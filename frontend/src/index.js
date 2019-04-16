@@ -1,3 +1,4 @@
+import { SnackbarProvider } from "notistack";
 import React from "react";
 import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom";
@@ -10,7 +11,9 @@ import configureStore from "./store";
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={configureStore()}>
-      <App />
+      <SnackbarProvider>
+        <App />
+      </SnackbarProvider>
     </Provider>
   </CookiesProvider>,
   document.getElementById("root")

@@ -56,6 +56,12 @@ function itemReducer(state = List(), action) {
           })
           .setIn(["_twin", "dateUpdated"], Date.now());
       });
+    case types.TOGGLE_ARCHIVE_STATE:
+      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
+        return item
+          .updateIn(["_twin", "archived"], false, (value) => !value)
+          .setIn(["_twin", "dateUpdated"], Date.now());
+      });
     default:
       return state;
   }
