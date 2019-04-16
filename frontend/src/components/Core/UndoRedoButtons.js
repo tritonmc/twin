@@ -1,4 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import RedoIcon from "@material-ui/icons/Redo";
 import UndoIcon from "@material-ui/icons/Undo";
 import React, { Component } from "react";
@@ -10,12 +11,16 @@ class UndoRedoButtons extends Component {
     const { onUndo, onRedo, canUndo, canRedo } = this.props;
     return (
       <>
-        <IconButton onClick={onUndo} disabled={!canUndo}>
-          <UndoIcon />
-        </IconButton>
-        <IconButton onClick={onRedo} disabled={!canRedo}>
-          <RedoIcon />
-        </IconButton>
+        <Tooltip title="Undo">
+          <IconButton onClick={onUndo} disabled={!canUndo}>
+            <UndoIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Redo">
+          <IconButton onClick={onRedo} disabled={!canRedo}>
+            <RedoIcon />
+          </IconButton>
+        </Tooltip>
       </>
     );
   }

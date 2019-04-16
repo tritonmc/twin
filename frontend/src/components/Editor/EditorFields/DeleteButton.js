@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { connect } from "react-redux";
-import { deleteItem } from "../../../actions/items";
-import { closeEditor } from "../../../actions/editor";
+import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteIcon from "@material-ui/icons/Delete";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { closeEditor } from "../../../actions/editor";
+import { deleteItem } from "../../../actions/items";
 
 const styles = (theme) => ({
   deleteConfirmButton: {
@@ -39,9 +40,11 @@ class DeleteButton extends Component {
   render() {
     return (
       <>
-        <IconButton color="inherit" onClick={this.handleClickOpen} aria-label="Delete">
-          <DeleteIcon />
-        </IconButton>
+        <Tooltip title="Delete">
+          <IconButton color="inherit" onClick={this.handleClickOpen} aria-label="Delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
         <Dialog
           open={this.state.dialogOpen}
           onClose={this.handleClose}
