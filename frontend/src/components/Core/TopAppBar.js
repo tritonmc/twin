@@ -122,13 +122,15 @@ class TopAppBar extends Component {
             )}
             <div className={classes.grow} />
             <div>
-              <IconButton
-                aria-owns={this.state.isMenuOpen ? "material-appbar" : undefined}
-                aria-haspopup="true"
-                onClick={this.props.toggleTheme}
-                color="inherit">
-                {parseInt(this.props.theme) === 0 ? <LightbulbOn /> : <Lightbulb />}
-              </IconButton>
+              {!this.props.showHamburger && (
+                <IconButton
+                  aria-owns={this.state.isMenuOpen ? "material-appbar" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.props.toggleTheme}
+                  color="inherit">
+                  {parseInt(this.props.theme) === 0 ? <LightbulbOn /> : <Lightbulb />}
+                </IconButton>
+              )}
             </div>
           </Toolbar>
         </AppBar>

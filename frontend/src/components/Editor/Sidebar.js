@@ -1,6 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -8,18 +11,16 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import DashboardIcon from "@material-ui/icons/Dashboard";
+import { withStyles } from "@material-ui/core/styles";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import AssistantIcon from "@material-ui/icons/Assistant";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import SettingsIcon from "@material-ui/icons/Settings";
 import LogoutIcon from "mdi-material-ui/Logout";
+import React from "react";
 import { connect } from "react-redux";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
-import { setId } from "../../actions/main";
+import { Link } from "react-router-dom";
+import { setId, setSettingsState } from "../../actions/main";
 
 const drawerWidth = 240;
 
@@ -57,7 +58,7 @@ class Sidebar extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, id, clearId } = this.props;
+    const { classes, theme, id, clearId, openSettings } = this.props;
     const drawer = (
       <div>
         <Hidden xsDown implementation="css">
@@ -68,14 +69,18 @@ class Sidebar extends React.PureComponent {
           <ListItemLink to={`/${id}/archive`} primary="Archive" icon={<ArchiveIcon />} />
           <ListItemLink to={`/${id}/suggestions`} primary="Suggestions" icon={<AssistantIcon />} />
           <Divider />
-          <li>
-            <ListItem button onClick={this.openDialog}>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Logout"} />
-            </ListItem>
-          </li>
+          <ListItem button onClick={openSettings}>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Settings"} />
+          </ListItem>
+          <ListItem button onClick={this.openDialog}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItem>
         </List>
         <Dialog
           open={this.state.dialogOpen}
@@ -155,6 +160,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   clearId: () => setId(),
+  openSettings: () => setSettingsState(true),
 };
 
 export default connect(

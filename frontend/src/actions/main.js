@@ -31,3 +31,8 @@ export const setData = (tritonVersion, bungee, availableLanguages) => ({
   bungee,
   availableLanguages,
 });
+
+export const setSettingsState = (open) => ({
+  type: types.SET_SETTINGS_STATE,
+  open,
+});

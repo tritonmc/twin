@@ -14,6 +14,7 @@ import classNames from "classnames";
 import Sidebar from "./Sidebar";
 import ItemList from "./Dashboard/ItemList";
 import EditorDialog from "./EditorDialog";
+import Settings from "../Core/Settings";
 
 const drawerWidth = 240;
 
@@ -80,6 +81,7 @@ class Editor extends React.PureComponent {
       <div className={classes.root}>
         <CssBaseline />
         <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
+        <Settings />
         <main
           className={classNames(classes.content, {
             [classes.contentShift]: this.props.drawerOpen,
