@@ -12,14 +12,18 @@ class UndoRedoButtons extends Component {
     return (
       <>
         <Tooltip title="Undo">
-          <IconButton onClick={onUndo} disabled={!canUndo}>
-            <UndoIcon />
-          </IconButton>
+          <span>
+            <IconButton onClick={onUndo} disabled={!canUndo}>
+              <UndoIcon />
+            </IconButton>
+          </span>
         </Tooltip>
         <Tooltip title="Redo">
-          <IconButton onClick={onRedo} disabled={!canRedo}>
-            <RedoIcon />
-          </IconButton>
+          <span>
+            <IconButton onClick={onRedo} disabled={!canRedo}>
+              <RedoIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </>
     );
