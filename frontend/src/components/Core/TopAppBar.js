@@ -88,7 +88,6 @@ class TopAppBar extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log("this.props.theme", this.props.theme);
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>

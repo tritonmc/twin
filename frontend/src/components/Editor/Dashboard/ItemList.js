@@ -1,6 +1,8 @@
+import { Paper, Typography } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import { withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import classNames from "classnames";
 import Fuse from "fuse-immutable";
 import { List as IList } from "immutable";
 import React, { Component } from "react";
@@ -26,6 +28,17 @@ const styles = (theme) => ({
       borderRadius: theme.shape.borderRadius,
       backgroundColor: theme.palette.primary.main,
     },
+  },
+  paper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  warningNoItems: {
+    fontSize: "calc(16px + 1vw)",
+    fontWeight: 300,
+    color: theme.palette.text.secondary,
+    textAlign: "center",
   },
 });
 
@@ -82,6 +95,17 @@ const InnerList = withStyles(styles)(
 
       render() {
         const { classes, height, width, data } = this.props;
+        if (data.size === 0) {
+          return (
+            <Paper className={classNames(classes.root, classes.paper)} style={{ height, width }}>
+              <Typography variant="body1" className={classes.warningNoItems}>
+                No items found
+                <br />
+                You can add an item by clicking the + button above
+              </Typography>
+            </Paper>
+          );
+        }
         return (
           <List
             className={classes.root}

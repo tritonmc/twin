@@ -67,7 +67,7 @@ class Sidebar extends React.PureComponent {
         <List>
           <ListItemLink to={`/${id}`} primary="Dashboard" icon={<DashboardIcon />} />
           <ListItemLink to={`/${id}/archive`} primary="Archive" icon={<ArchiveIcon />} />
-          <ListItemLink to={`/${id}/suggestions`} primary="Suggestions" icon={<AssistantIcon />} />
+          {/*<ListItemLink to={`/${id}/suggestions`} primary="Suggestions" icon={<AssistantIcon />} />*/}
           <Divider />
           <ListItem button onClick={openSettings}>
             <ListItemIcon>
