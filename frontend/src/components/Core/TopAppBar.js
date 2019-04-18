@@ -15,7 +15,7 @@ import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
-import UndoRedoButtons from "./UndoRedoButtons";
+import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
 import { Helmet } from "react-helmet-async";
 
 const styles = (theme) => ({

@@ -10,7 +10,7 @@ import { Map } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { closeEditor } from "../../actions/editor";
-import UndoRedoButtons from "../Core/UndoRedoButtons";
+import UndoRedoButtons from "./Dashboard/UndoRedoButtons";
 import ArchiveButton from "./EditorFields/ArchiveButton";
 import BungeeSection from "./EditorFields/BungeeSection";
 import DeleteButton from "./EditorFields/DeleteButton";
