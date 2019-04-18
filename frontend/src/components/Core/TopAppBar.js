@@ -17,6 +17,7 @@ import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
 import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
 import { Helmet } from "react-helmet-async";
+import AddItemButton from "../Editor/Dashboard/AddItemButton";
 
 const styles = (theme) => ({
   root: {
@@ -126,7 +127,10 @@ class TopAppBar extends Component {
             <div className={classes.grow} />
             <div>
               {this.props.showHamburger ? (
-                <UndoRedoButtons />
+                <>
+                  <UndoRedoButtons />
+                  <AddItemButton />
+                </>
               ) : (
                 <IconButton
                   aria-owns={this.state.isMenuOpen ? "material-appbar" : undefined}

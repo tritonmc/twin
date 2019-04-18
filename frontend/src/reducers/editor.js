@@ -20,6 +20,8 @@ function mainReducer(state = Map({ search: "", editorOpen: false, tags: Set() })
       );
     case types.ADD_TAG:
       return state.update("tags", (tags) => tags.add(action.tag));
+    case types.ADD_ITEM:
+      return state.set("activeItem", action.id).set("editorOpen", true);
     default:
       return state;
   }

@@ -49,6 +49,12 @@ export const toggleArchiveState = (id) => ({
   id,
 });
 
+export const addItem = (itemType, id) => ({
+  type: types.ADD_ITEM,
+  itemType,
+  id,
+});
+
 /*export const changeItemField = (fieldName, id, value) => ({
   type: types.CHANGE_ITEM_FIELD,
   id,

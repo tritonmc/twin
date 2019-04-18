@@ -13,7 +13,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
 import ArchiveIcon from "@material-ui/icons/Archive";
-import AssistantIcon from "@material-ui/icons/Assistant";
+//import AssistantIcon from "@material-ui/icons/Assistant";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import SettingsIcon from "@material-ui/icons/Settings";
 import LogoutIcon from "mdi-material-ui/Logout";
