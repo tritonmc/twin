@@ -14,6 +14,10 @@ import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { setSettingsState, setTheme } from "../../actions/main";
+import { setPreviewLanguage } from "../../actions/editor";
+import { List as IList } from "immutable";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 const styles = (theme) => ({
   versionInfo: {
@@ -52,6 +56,18 @@ class Settings extends Component {
                 <Switch checked={parseInt(theme) === 1} onChange={toggleTheme} value="darkTheme" />
               </ListItemSecondaryAction>
             </ListItem>
+            <ListItem>
+              <ListItemText primary="Preview language" />
+              <ListItemSecondaryAction>
+                <Select value={this.props.previewLanguage} onChange={this.props.setPreviewLanguage}>
+                  {this.props.availableLanguages.map((item) => (
+                    <MenuItem value={item} key={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </ListItemSecondaryAction>
+            </ListItem>
           </List>
           <Typography variant="caption" className={classes.versionInfo}>
             {`TWIN v${process.env.REACT_APP_VERSION} developed with `}
@@ -66,6 +82,8 @@ class Settings extends Component {
 const mapStateToProps = (state, ownProps) => ({
   isOpen: state.main.get("settingsOpen", false),
   theme: state.main.get("theme", ownProps.cookies.get("theme")) || 0,
+  previewLanguage: state.editor.get("previewLanguage"),
+  availableLanguages: state.main.get("availableLanguages", IList()),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -78,6 +96,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }),
   close: () => {
     dispatch(setSettingsState(false));
+  },
+  setPreviewLanguage: (evt) => {
+    dispatch(setPreviewLanguage(evt.target.value));
   },
 });
 
