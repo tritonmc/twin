@@ -9,6 +9,7 @@
     "axios": "^0.18.0",
     "fuse-immutable": "^2.0.0",
     "immutable": "^4.0.0-rc.12",
+    "immutablediff": "^0.4.4",
     "mdi-material-ui": "^5.9.0",
     "notistack": "^0.6.1",
     "react": "^16.5.2",

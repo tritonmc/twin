@@ -15,10 +15,10 @@ export const setDrawerState = (state) => ({
   state,
 });
 
-/*export const setSaved = (id) => ({
+export const setSaved = (id) => ({
   type: types.SET_SAVED,
   id,
-});*/
+});
 
 export const setTheme = (theme) => ({
   type: types.SET_THEME,

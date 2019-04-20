@@ -2,12 +2,12 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-//import Dashboard from "./components/dashboard.js";
-//import Saved from "./components/saved";
 //import Migrate from "./components/migrate";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Editor from "../Editor/Editor";
 import Home from "../Home/Home";
+//import Dashboard from "./components/dashboard.js";
+import Saved from "../Saved/Saved";
 import TopAppBar from "./TopAppBar";
 
 const THEMES = [
@@ -51,6 +51,7 @@ class App extends Component {
           <>
             <TopAppBar currentTheme={this.props.theme} />
             <Switch>
+              <Route path="/saved" component={Saved} />
               <Route path="/:id" component={Editor} />
               <Route component={Home} />
             </Switch>

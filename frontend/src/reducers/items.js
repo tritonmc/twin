@@ -64,8 +64,13 @@ function itemReducer(state = List(), action) {
       });
     case types.ADD_ITEM:
       return state.push(
-        Map({ type: action.itemType, _twin: { id: action.id, dateUpdated: Date.now() } })
+        Map({
+          type: action.itemType,
+          _twin: { id: action.id, dateUpdated: Date.now(), dateCreated: Date.now() },
+        })
       );
+    case types.SET_SAVED:
+      return List();
     default:
       return state;
   }
@@ -73,4 +78,5 @@ function itemReducer(state = List(), action) {
 
 export default undoable(itemReducer, {
   actionFilter: (action) => action.type !== types.SET_ITEMS,
+  clearHistoryType: types.SET_SAVED,
 });

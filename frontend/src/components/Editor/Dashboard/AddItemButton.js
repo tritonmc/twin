@@ -10,8 +10,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import NotesIcon from "@material-ui/icons/Notes";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addItem } from "../../../actions/items";
 import uuid from "uuid/v4";
+import { addItem } from "../../../actions/items";
 
 const styles = (theme) => ({
   button: {

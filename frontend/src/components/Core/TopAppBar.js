@@ -12,12 +12,13 @@ import Lightbulb from "mdi-material-ui/Lightbulb";
 import LightbulbOn from "mdi-material-ui/LightbulbOn";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
+import { Helmet } from "react-helmet-async";
 import { connect } from "react-redux";
 import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
-import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
-import { Helmet } from "react-helmet-async";
 import AddItemButton from "../Editor/Dashboard/AddItemButton";
+import SaveButton from "../Editor/Dashboard/SaveButton";
+import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
 
 const styles = (theme) => ({
   root: {
@@ -129,6 +130,7 @@ class TopAppBar extends Component {
               {this.props.showHamburger ? (
                 <>
                   <UndoRedoButtons />
+                  <SaveButton />
                   <AddItemButton />
                 </>
               ) : (

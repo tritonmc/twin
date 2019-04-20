@@ -18,6 +18,13 @@ function mainReducer(state = Map({ loading: false, drawerState: false }), action
         .set("availableLanguages", List(action.availableLanguages));
     case types.SET_SETTINGS_STATE:
       return state.set("settingsOpen", action.open);
+    case types.SET_SAVED:
+      return state
+        .remove("id")
+        .remove("tritonVersion")
+        .remove("bungee")
+        .remove("availableLanguages")
+        .set("savedId", action.id);
     default:
       return state;
   }

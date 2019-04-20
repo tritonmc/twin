@@ -5080,7 +5080,7 @@ immutable@4.0.0-rc.9:
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.9.tgz#1e6e0094e649013ec3742d2b5aeeca5eeda4f0bf"
   integrity sha512-uw4u9Jy3G2Y1qkIFtEGy9NgJxFJT1l3HKgeSFHfrvy91T8W54cJoQ+qK3fTwhil8XkEHuc2S+MI+fbD0vKObDA==
 
-immutable@^3.8.1:
+immutable@^3.2.1, immutable@^3.8.1:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
   integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
@@ -5089,6 +5089,13 @@ immutable@^4.0.0-rc.12:
   version "4.0.0-rc.12"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
   integrity sha512-0M2XxkZLx/mi3t8NVwIm1g8nHoEmM9p9UBl/G9k4+hm0kBgOVdMV/B3CY5dQ8qG8qc80NN4gDV4HQv6FTJ5q7A==
+
+immutablediff@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/immutablediff/-/immutablediff-0.4.4.tgz#a010e6948f700fe12436433f36c6e2ad86972ab1"
+  integrity sha1-oBDmlI9wD+EkNkM/NsbirYaXKrE=
+  dependencies:
+    immutable "^3.2.1"
 
 import-cwd@^2.0.0:
   version "2.1.0"

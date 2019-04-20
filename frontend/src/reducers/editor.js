@@ -14,14 +14,23 @@ function mainReducer(state = Map({ search: "", editorOpen: false, tags: Set() })
     case types.CLOSE_EDITOR:
       return state.set("editorOpen", false);
     case types.SET_ITEMS:
-      return state.set(
-        "tags",
-        action.data.reduce((set, v) => set.union(v.getIn(["_twin", "tags"], List())), Set())
-      );
+      return state
+        .set(
+          "tags",
+          action.data.reduce((set, v) => set.union(v.getIn(["_twin", "tags"], List())), Set())
+        )
+        .set("defaultData", action.data);
     case types.ADD_TAG:
       return state.update("tags", (tags) => tags.add(action.tag));
     case types.ADD_ITEM:
       return state.set("activeItem", action.id).set("editorOpen", true);
+    case types.SET_SAVED:
+      return state
+        .remove("tags")
+        .remove("search")
+        .remove("activeItem")
+        .remove("previewLanguage")
+        .remove("defaultData");
     default:
       return state;
   }

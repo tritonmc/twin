@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { fromJS, List, Map } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
+import { Route, Switch } from "react-router";
 import { Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import uuid from "uuid/v4";
@@ -15,7 +16,6 @@ import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
-import { Switch, Route } from "react-router";
 
 const drawerWidth = 240;
 
@@ -127,6 +127,7 @@ const mapStateToProps = (state) => {
   return {
     loading: state.main.get("loading", false),
     drawerOpen: state.main.get("drawerState", false),
+    saved: state.main.get("savedId"),
   };
 };
 
