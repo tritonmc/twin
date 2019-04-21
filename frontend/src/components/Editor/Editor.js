@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import uuid from "uuid/v4";
 import { setItems } from "../../actions/items";
 import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
+import { setPreviewLanguage } from "../../actions/editor";
 import Settings from "../Core/Settings";
 import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
@@ -139,6 +140,7 @@ const mapDispatchToProps = (dispatch) => ({
     }),
   setData: (data) => {
     dispatch(setData(data.tritonv, data.bungee, data.languages));
+    if (data.tritonv >= 2) dispatch(setPreviewLanguage(data.mainLanguage));
     dispatch(setItems(processData(data.data)));
   },
 });
