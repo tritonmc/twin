@@ -13,7 +13,7 @@ class SaveButton extends Component {
   render() {
     return (
       <Tooltip title="Save">
-        <IconButton aria-label="Save" onClick={this.props.save}>
+        <IconButton color="inherit" aria-label="Save" onClick={this.props.save}>
           <SaveIcon />
         </IconButton>
       </Tooltip>

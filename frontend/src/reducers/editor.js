@@ -1,7 +1,15 @@
 import { List, Map, Set } from "immutable";
 import * as types from "../constants/ActionTypes";
 
-function mainReducer(state = Map({ search: "", editorOpen: false, tags: Set() }), action) {
+function mainReducer(
+  state = Map({
+    search: "",
+    editorOpen: false,
+    tags: Set(),
+    sort: Map({ field: "_twin.dateUpdated", asc: false }),
+  }),
+  action
+) {
   switch (action.type) {
     case types.SET_PREVIEW_LANGUAGE:
       return state.set("previewLanguage", action.language);
@@ -31,6 +39,8 @@ function mainReducer(state = Map({ search: "", editorOpen: false, tags: Set() })
         .remove("activeItem")
         .remove("previewLanguage")
         .remove("defaultData");
+    case types.SET_SORT:
+      return state.setIn(["sort", "field"], action.field).setIn(["sort", "text"], action.text);
     default:
       return state;
   }

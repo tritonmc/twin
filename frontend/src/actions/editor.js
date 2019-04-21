@@ -23,3 +23,9 @@ export const addTag = (tag) => ({
   type: types.ADD_TAG,
   tag,
 });
+
+export const setSort = (field, text) => ({
+  type: types.SET_SORT,
+  field,
+  text,
+});

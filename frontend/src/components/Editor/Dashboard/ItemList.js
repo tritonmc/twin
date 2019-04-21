@@ -63,9 +63,16 @@ class ItemList extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const search = state.editor.get("search", "");
+  var sortField = state.editor.getIn(["sort", "field"]).split(".");
+  var sortText = state.editor.getIn(["sort", "text"]);
   var data = state.items
     .get("present", IList())
-    .filter((item) => item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly);
+    .filter((item) => item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly)
+    .sort((a, b) =>
+      sortText
+        ? a.getIn(sortField).localeCompare(b.getIn(sortField))
+        : b.getIn(sortField) - a.getIn(sortField)
+    );
   if (search.length === 0) data = data.map((item) => item.getIn(["_twin", "id"]));
   else {
     const fuse = new Fuse(data, {

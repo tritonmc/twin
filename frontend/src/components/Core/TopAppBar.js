@@ -18,6 +18,7 @@ import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
 import AddItemButton from "../Editor/Dashboard/AddItemButton";
 import SaveButton from "../Editor/Dashboard/SaveButton";
+import SortButton from "../Editor/Dashboard/SortButton";
 import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
 
 const styles = (theme) => ({
@@ -130,6 +131,7 @@ class TopAppBar extends Component {
               {this.props.showHamburger ? (
                 <>
                   <UndoRedoButtons />
+                  <SortButton />
                   <SaveButton />
                   <AddItemButton />
                 </>

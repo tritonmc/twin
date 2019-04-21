@@ -24,3 +24,4 @@ export const SET_SEARCH = "SET_SEARCH";
 export const OPEN_EDITOR = "OPEN_EDITOR";
 export const CLOSE_EDITOR = "CLOSE_EDITOR";
 export const ADD_TAG = "ADD_TAG";
+export const SET_SORT = "SET_SORT";
