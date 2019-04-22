@@ -1,5 +1,0 @@
-.mdc-dialog {
-  @include mdc-dialog-scrim-color($dialog-scrim-color, $dialog-scrim-opacity);
-  @include mdc-dialog-container-fill-color($dialog-background-color);
-  @include mdc-dialog-max-width($dialog-max-width, $dialog-margin);
-}
