@@ -92,6 +92,12 @@ class Editor extends React.PureComponent {
             <Route path="/:id/archive">
               <ItemList archivedOnly={true} />
             </Route>
+            <Route
+              path="/:id/tag/:tag"
+              render={(props) => (
+                <ItemList archivedOnly={false} tag={decodeURIComponent(props.match.params.tag)} />
+              )}
+            />
             <Route>
               <ItemList archivedOnly={false} />
             </Route>

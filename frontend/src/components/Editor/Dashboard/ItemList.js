@@ -50,14 +50,25 @@ class ItemList extends Component {
 
   render() {
     return (
-      <AutoSizer archivedOnly={this.props.archivedOnly} defaultHeight={200} defaultWidth={300}>
+      <AutoSizer
+        archivedOnly={this.props.archivedOnly}
+        tag={this.props.tag}
+        defaultHeight={200}
+        defaultWidth={300}>
         {this._renderList}
       </AutoSizer>
     );
   }
 
   _renderList({ width, height }) {
-    return <InnerList archivedOnly={this.props.archivedOnly} height={height} width={width} />;
+    return (
+      <InnerList
+        archivedOnly={this.props.archivedOnly}
+        tag={this.props.tag}
+        height={height}
+        width={width}
+      />
+    );
   }
 }
 
@@ -67,7 +78,11 @@ const mapStateToProps = (state, ownProps) => {
   var sortText = state.editor.getIn(["sort", "text"]);
   var data = state.items
     .get("present", IList())
-    .filter((item) => item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly)
+    .filter((item) => {
+      return ownProps.tag
+        ? item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1
+        : item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly;
+    })
     .sort((a, b) =>
       sortText
         ? a.getIn(sortField).localeCompare(b.getIn(sortField))

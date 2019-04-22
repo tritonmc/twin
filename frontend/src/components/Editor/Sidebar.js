@@ -12,10 +12,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArchiveIcon from "@material-ui/icons/Archive";
 //import AssistantIcon from "@material-ui/icons/Assistant";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import TagIcon from "@material-ui/icons/Label";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { List as IList } from "immutable";
 import LogoutIcon from "mdi-material-ui/Logout";
 import React from "react";
 import { connect } from "react-redux";
@@ -34,6 +37,18 @@ const styles = (theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    "&::-webkit-scrollbar": {
+      width: 7,
+      height: 7,
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.primary.main, 0.15),
+    },
+    "&::-webkit-scrollbar-thumb": {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: theme.palette.primary.main,
+    },
   },
   toolbar: theme.mixins.toolbar,
   logoutButton: {
@@ -58,7 +73,7 @@ class Sidebar extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, id, clearId, openSettings } = this.props;
+    const { classes, theme, id, clearId, openSettings, tags } = this.props;
     const drawer = (
       <div>
         <Hidden xsDown implementation="css">
@@ -69,6 +84,19 @@ class Sidebar extends React.PureComponent {
           <ListItemLink to={`/${id}/archive`} primary="Archive" icon={<ArchiveIcon />} />
           {/*<ListItemLink to={`/${id}/suggestions`} primary="Suggestions" icon={<AssistantIcon />} />*/}
           <Divider />
+          {tags.size > 0 && (
+            <>
+              {tags.sort().map((tag) => (
+                <ListItemLink
+                  key={tag}
+                  to={`/${id}/tag/${encodeURIComponent(tag)}`}
+                  primary={tag}
+                  icon={<TagIcon />}
+                />
+              ))}
+              <Divider />
+            </>
+          )}
           <ListItem button onClick={openSettings}>
             <ListItemIcon>
               <SettingsIcon />
@@ -156,6 +184,7 @@ class ListItemLink extends React.Component {
 
 const mapStateToProps = (state) => ({
   id: state.main.get("id", ""),
+  tags: state.editor.get("tags", IList()),
 });
 
 const mapDispatchToProps = {
