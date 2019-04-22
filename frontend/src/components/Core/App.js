@@ -9,6 +9,7 @@ import Home from "../Home/Home";
 //import Dashboard from "./components/dashboard.js";
 import Saved from "../Saved/Saved";
 import TopAppBar from "./TopAppBar";
+import Migration from "../Migration/Migration";
 
 const THEMES = [
   createMuiTheme({
@@ -52,6 +53,7 @@ class App extends Component {
             <TopAppBar currentTheme={this.props.theme} />
             <Switch>
               <Route path="/saved" component={Saved} />
+              <Route path="/migrate" component={Migration} />
               <Route path="/:id" component={Editor} />
               <Route component={Home} />
             </Switch>
