@@ -10,7 +10,29 @@ export const setId = (id) => ({
   id,
 });
 
+export const setDrawerState = (state) => ({
+  type: types.SET_DRAWER_STATE,
+  state,
+});
+
 export const setSaved = (id) => ({
   type: types.SET_SAVED,
   id,
+});
+
+export const setTheme = (theme) => ({
+  type: types.SET_THEME,
+  theme,
+});
+
+export const setData = (tritonVersion, bungee, availableLanguages) => ({
+  type: types.SET_DATA,
+  tritonVersion,
+  bungee,
+  availableLanguages,
+});
+
+export const setSettingsState = (open) => ({
+  type: types.SET_SETTINGS_STATE,
+  open,
 });

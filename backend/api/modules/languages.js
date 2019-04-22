@@ -30,7 +30,9 @@ const upload = async (req, res) => {
       }
     }
     var response = await axios.post("https://bytebin.lucko.me/post", body);
-    res.end(Buffer.from(response.data.key, "ascii").toString("base64"));
+    var code = Buffer.from(response.data.key, "ascii").toString("base64");
+    while (code.endsWith("=")) code = code.substring(0, code.length - 1);
+    res.end(code);
   } catch (ex) {
     console.error(ex);
     res.sendStatus(500);
