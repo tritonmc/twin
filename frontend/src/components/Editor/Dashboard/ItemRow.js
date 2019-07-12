@@ -105,8 +105,8 @@ const mapStateToProps = (state, ownProps) => {
     title: item.get("key"),
     description:
       item.get("type", "") === "sign"
-        ? item.getIn(["lines", state.editor.get("previewLanguage")]).join(", ")
-        : item.getIn(["languages", state.editor.get("previewLanguage")]),
+        ? item.getIn(["lines", state.editor.get("previewLanguage")], List()).join(", ")
+        : item.getIn(["languages", state.editor.get("previewLanguage")], ""),
     tags: item.getIn(["_twin", "tags"], List()),
   };
 };
