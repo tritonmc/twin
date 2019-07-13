@@ -66,7 +66,11 @@ function itemReducer(state = List(), action) {
       return state.push(
         Map({
           type: action.itemType,
-          _twin: { id: action.id, dateUpdated: Date.now(), dateCreated: Date.now() },
+          _twin: Map({
+            id: action.id,
+            dateUpdated: Date.now(),
+            dateCreated: Date.now(),
+          }),
         })
       );
     case types.SET_SAVED:
