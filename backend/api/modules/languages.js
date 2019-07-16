@@ -1,9 +1,16 @@
 const axios = require("axios");
 const db = require("../lib/db");
+const fs = require("fs");
+const path = require("path");
 var config = {};
+var demoFile = {};
 
 const getConfig = async (req, res) => {
   try {
+    if (req.params.id === "demo") {
+      res.json(demoFile);
+      return;
+    }
     var id = Buffer.from(req.params.id, "base64").toString("ascii");
     var response = await axios.get("https://bytebin.lucko.me/" + id);
     if (!(response.data instanceof Object)) {
@@ -41,6 +48,7 @@ const upload = async (req, res) => {
 
 module.exports = function(api, conf) {
   config = conf;
+  demoFile = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../assets/demo.json")));
   api.get("/get/:id", getConfig);
   api.post("/upload", upload);
   api.post("/save", upload);

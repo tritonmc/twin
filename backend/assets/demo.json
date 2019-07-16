@@ -1,0 +1,80 @@
+{
+  "bungee": true,
+  "languages": ["en_GB", "pt_PT"],
+  "data": [
+    {
+      "languages": {
+        "en_GB": "&6This is example 1",
+        "pt_PT": "&6Isto é o exemplo 1"
+      },
+      "_twin": {
+        "dateCreated": 1563273495000,
+        "id": "28c4a1cb-354c-4238-8310-ad229a642df3",
+        "dateUpdated": 1563273495000,
+        "tags": ["tag1"],
+        "description": "This is just a basic example."
+      },
+      "type": "text",
+      "key": "example.1"
+    },
+    {
+      "servers": ["hub"],
+      "languages": {
+        "en_GB": "&aThis only works on server \"hub\"",
+        "pt_PT": "&aIsto só funciona no servidor \"hub\""
+      },
+      "_twin": {
+        "dateCreated": 1563273628000,
+        "id": "8d65b1c6-ee62-4508-bb2c-5c76197095fc",
+        "dateUpdated": 1563273628000,
+        "tags": ["tag1"],
+        "description": "This message would only work on a Bungee server named \"hub\""
+      },
+      "type": "text",
+      "key": "example.2"
+    },
+    {
+      "languages": {
+        "en_GB": "&5This has no tags!",
+        "pt_PT": "&5Isto não tem tags!"
+      },
+      "_twin": {
+        "dateCreated": 1563273721000,
+        "id": "1b90a7f3-70f2-44a5-ad8f-b4f8c20e59e9",
+        "dateUpdated": 1563273721000,
+        "tags": [],
+        "description": "This is what an item looks like when it has no tags. Nothing is shown on the dashboard, but it doesn't affect anything ingame."
+      },
+      "type": "text",
+      "key": "example.3"
+    },
+    {
+      "_twin": {
+        "dateCreated": 1563273876000,
+        "id": "e02fcb02-d711-433d-a57d-79c949aa7b89",
+        "dateUpdated": 1563273876000,
+        "tags": ["tag2"],
+        "description": "This is a sign. You must set the location of the sign and its content. Multiple locations can be set if you have the same sign multiple times in a server.\nOnly static content in allowed."
+      },
+      "locations": [
+        {
+          "server": "lobby",
+          "world": "world",
+          "x": 0,
+          "y": 64,
+          "z": 0,
+          "id": "fe95596d-a266-45ac-b7d9-cb0e13bcf4c0"
+        }
+      ],
+      "type": "sign",
+      "lines": {
+        "en_GB": ["This", "is", "a", "sign"],
+        "pt_PT": ["Isto", "é", "uma", "placa"]
+      },
+      "key": "example.4"
+    }
+  ],
+  "tritonv": 2,
+  "mainLanguage": "en_GB",
+  "user": "Demo User"
+}

@@ -20,6 +20,6 @@
     "dev": "nodemon index.js"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.19.1"
   }
 }
