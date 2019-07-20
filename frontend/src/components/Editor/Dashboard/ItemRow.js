@@ -17,7 +17,7 @@ const styles = (theme) => ({
     display: "flex",
   },
   title: {
-    width: 200,
+    width: "25%",
   },
   description: {
     flexGrow: 1,
@@ -73,11 +73,9 @@ class ItemRow extends Component {
       <ListItem button style={style} className={classes.root} onClick={this.openEditor}>
         <Checkbox checked={false} tabIndex={-1} disableRipple />
         <ListItemText disableTypography className={classes.itemText}>
-          <div className={classes.title}>
-            <Typography inline noWrap>
-              {title || "Unknown key"}
-            </Typography>
-          </div>
+          <Typography inline noWrap component="div" className={classes.title}>
+            {title || "Unknown key"}
+          </Typography>
           <div className={classes.description}>
             {tags.map((tag) => (
               <Chip
