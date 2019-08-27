@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       const { enqueueSnackbar } = ownProps;
       dispatch(setLoading(true));
       var payload;
-      if (configVersion === 2) {
+      if (configVersion === 2 || configVersion === 3) {
         payload = saveV2(data, defaultData);
       } else if (configVersion === 1) {
         payload = saveV1(data, defaultData, bungee);
