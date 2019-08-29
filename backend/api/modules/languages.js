@@ -28,6 +28,7 @@ const upload = async (req, res) => {
   try {
     if (!req.is("application/json")) return res.send(400);
     var body = req.body;
+    var userId = body.user;
     if (body.origin == undefined) {
       try {
         body.user = await db.getTokenUser(req.token);
@@ -36,6 +37,14 @@ const upload = async (req, res) => {
         return;
       }
     }
+    if (body.tritonv >= 3)
+      fs.appendFile(
+        path.resolve(__dirname, "../../access.log"),
+        `${new Date().toISOString()}|${userId}|${body.resource}|${body.nonce}|${req.headers[
+          "x-forwarded-for"
+        ] || req.connection.remoteAddress}|${body.user}\n`,
+        (err) => err && console.log(err)
+      );
     var response = await axios.post("https://bytebin.lucko.me/post", body);
     var code = Buffer.from(response.data.key, "ascii").toString("base64");
     while (code.endsWith("=")) code = code.substring(0, code.length - 1);
