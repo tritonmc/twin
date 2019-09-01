@@ -5,10 +5,30 @@ import UndoIcon from "@material-ui/icons/Undo";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
 class UndoRedoButtons extends Component {
   render() {
-    const { onUndo, onRedo, canUndo, canRedo } = this.props;
+    const { onUndo, onRedo, canUndo, canRedo, list } = this.props;
+    if (list)
+      return (
+        <>
+          <MenuItem onClick={onUndo} disabled={!canUndo}>
+            <ListItemIcon>
+              <UndoIcon />
+            </ListItemIcon>
+            <ListItemText primary="Undo" />
+          </MenuItem>
+          <MenuItem onClick={onRedo} disabled={!canRedo}>
+            <ListItemIcon>
+              <RedoIcon />
+            </ListItemIcon>
+            <ListItemText primary="Redo" />
+          </MenuItem>
+        </>
+      );
     return (
       <>
         <Tooltip title="Undo">

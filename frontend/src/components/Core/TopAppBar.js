@@ -20,6 +20,8 @@ import AddItemButton from "../Editor/Dashboard/AddItemButton";
 import SaveButton from "../Editor/Dashboard/SaveButton";
 import SortButton from "../Editor/Dashboard/SortButton";
 import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
+import Hidden from "@material-ui/core/Hidden";
+import MoreButton from "../Editor/Dashboard/MoreButton";
 
 const styles = (theme) => ({
   root: {
@@ -130,10 +132,20 @@ class TopAppBar extends Component {
             <div>
               {this.props.showHamburger ? (
                 <>
-                  <UndoRedoButtons />
-                  <SortButton />
-                  <SaveButton />
-                  <AddItemButton />
+                  <Hidden smDown>
+                    <UndoRedoButtons />
+                    <SortButton />
+                    <SaveButton />
+                    <AddItemButton />
+                  </Hidden>
+                  <Hidden mdUp>
+                    <MoreButton>
+                      <UndoRedoButtons list />
+                      <SortButton list />
+                      <SaveButton list />
+                      <AddItemButton list />
+                    </MoreButton>
+                  </Hidden>
                 </>
               ) : (
                 <IconButton

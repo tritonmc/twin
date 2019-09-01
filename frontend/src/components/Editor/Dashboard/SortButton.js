@@ -1,4 +1,6 @@
 import IconButton from "@material-ui/core/IconButton";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -37,13 +39,23 @@ class SortButton extends Component {
 
   render() {
     const { anchorEl } = this.state;
+    const { list } = this.props;
     return (
       <>
-        <Tooltip title="Sort">
-          <IconButton color="inherit" aria-label="Sort" onClick={this.handleOpen}>
-            <SortIcon />
-          </IconButton>
-        </Tooltip>
+        {list ? (
+          <MenuItem onClick={this.handleOpen}>
+            <ListItemIcon>
+              <SortIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sort by" />
+          </MenuItem>
+        ) : (
+          <Tooltip title="Sort">
+            <IconButton color="inherit" aria-label="Sort" onClick={this.handleOpen}>
+              <SortIcon />
+            </IconButton>
+          </Tooltip>
+        )}
         <Menu
           id="sort-menu"
           anchorEl={anchorEl}

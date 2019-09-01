@@ -13,6 +13,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import uuid from "uuid/v4";
 import { addItem } from "../../../actions/items";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = (theme) => ({
   button: {
@@ -60,14 +63,23 @@ class AddItemButton extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { classes } = this.props;
+    const { classes, list } = this.props;
     return (
       <>
-        <Tooltip title="Add Item">
-          <IconButton color="inherit" aria-label="Add Item" onClick={this.toggleDialog}>
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
+        {list ? (
+          <MenuItem onClick={this.toggleDialog}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sort by" />
+          </MenuItem>
+        ) : (
+          <Tooltip title="Add Item">
+            <IconButton color="inherit" aria-label="Add Item" onClick={this.toggleDialog}>
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        )}
         <Dialog onClose={this.toggleDialog} aria-labelledby="simple-dialog-title" open={isOpen}>
           <DialogTitle id="simple-dialog-title">
             <IconButton

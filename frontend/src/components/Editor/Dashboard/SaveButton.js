@@ -1,4 +1,7 @@
 import IconButton from "@material-ui/core/IconButton";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
 import Tooltip from "@material-ui/core/Tooltip";
 import SaveIcon from "@material-ui/icons/Save";
 import axios from "axios";
@@ -11,6 +14,15 @@ import saveV2 from "../../../utils/save-v2";
 
 class SaveButton extends Component {
   render() {
+    if (this.props.list)
+      return (
+        <MenuItem onClick={this.props.save}>
+          <ListItemIcon>
+            <SaveIcon />
+          </ListItemIcon>
+          <ListItemText primary="Save" />
+        </MenuItem>
+      );
     return (
       <Tooltip title="Save">
         <IconButton color="inherit" aria-label="Save" onClick={this.props.save}>
