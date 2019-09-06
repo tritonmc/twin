@@ -156,9 +156,9 @@ const InnerList = withStyles(styles)(
 const fuseOptions = {
   id: "_twin.id",
   shouldSort: true,
-  threshold: 0.1,
+  threshold: 0.2,
   location: 0,
-  distance: 100,
+  distance: 1000,
   maxPatternLength: 32,
   minMatchCharLength: 1,
   keys: ["key", "_twin.tags", "servers"],
