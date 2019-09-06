@@ -25,3 +25,5 @@ export const OPEN_EDITOR = "OPEN_EDITOR";
 export const CLOSE_EDITOR = "CLOSE_EDITOR";
 export const ADD_TAG = "ADD_TAG";
 export const SET_SORT = "SET_SORT";
+export const TOGGLE_SELECT = "TOGGLE_SELECT";
+export const SET_ALL_SELECT = "SET_ALL_SELECT";

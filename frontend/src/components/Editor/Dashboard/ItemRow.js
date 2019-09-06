@@ -8,6 +8,8 @@ import { is, List } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { openEditor } from "../../../actions/editor";
+import { toggleSelected } from "../../../actions/items";
+import classnames from "classnames";
 
 const styles = (theme) => ({
   root: {
@@ -50,16 +52,18 @@ class ItemRow extends Component {
   constructor() {
     super();
     this.openEditor = this.openEditor.bind(this);
+    this.toggleSelected = this.toggleSelected.bind(this);
   }
 
-  shouldComponentUpdate = (nextProps, nextState) => {
+  shouldComponentUpdate = (nextProps) => {
     return (
       nextProps.id !== this.props.id ||
       nextProps.classes !== this.props.classes ||
       nextProps.index !== this.props.index ||
       !is(this.props.tags, nextProps.tags) ||
       nextProps.title !== this.props.title ||
-      nextProps.description !== this.props.description
+      nextProps.description !== this.props.description ||
+      nextProps.selected !== this.props.selected
     );
   };
 
@@ -67,11 +71,29 @@ class ItemRow extends Component {
     this.props.openEditor(this.props.id);
   }
 
+  toggleSelected() {
+    this.props.toggleSelected(this.props.id);
+  }
+
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+
   render() {
-    const { style, title, description, tags, classes } = this.props;
+    const { style, title, description, tags, classes, selected } = this.props;
     return (
-      <ListItem button style={style} className={classes.root} onClick={this.openEditor}>
-        <Checkbox checked={false} tabIndex={-1} disableRipple />
+      <ListItem
+        button
+        style={style}
+        className={classnames(classes.root, { [classes.primaryColor]: selected })}
+        onClick={this.openEditor}
+        selected={selected}>
+        <Checkbox
+          checked={selected}
+          onClick={this.stopPropagation}
+          onChange={this.toggleSelected}
+          color="primary"
+        />
         <ListItemText disableTypography className={classes.itemText}>
           <Typography inline noWrap component="div" className={classes.title}>
             {title || "Unknown key"}
@@ -106,11 +128,13 @@ const mapStateToProps = (state, ownProps) => {
         ? item.getIn(["lines", state.editor.get("previewLanguage")], List()).join(", ")
         : item.getIn(["languages", state.editor.get("previewLanguage")], ""),
     tags: item.getIn(["_twin", "tags"], List()),
+    selected: item.getIn(["_twin", "selected"], false),
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openEditor: (id) => dispatch(openEditor(id)),
+  toggleSelected: (id) => dispatch(toggleSelected(id)),
 });
 
 export default withStyles(styles)(

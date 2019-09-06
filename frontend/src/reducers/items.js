@@ -75,6 +75,14 @@ function itemReducer(state = List(), action) {
       );
     case types.SET_SAVED:
       return List();
+    case types.TOGGLE_SELECT:
+      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
+        return item.updateIn(["_twin", "selected"], false, (value) => !value);
+      });
+    case types.SET_ALL_SELECT:
+      return state.map((item) => {
+        return item.setIn(["_twin", "selected"], action.selected);
+      });
     default:
       return state;
   }
