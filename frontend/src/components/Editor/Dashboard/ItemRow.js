@@ -7,8 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { is, List } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { openEditor } from "../../../actions/editor";
-import { toggleSelected } from "../../../actions/items";
+import { openEditor, toggleSelected } from "../../../actions/editor";
 import classnames from "classnames";
 
 const styles = (theme) => ({
@@ -128,7 +127,7 @@ const mapStateToProps = (state, ownProps) => {
         ? item.getIn(["lines", state.editor.get("previewLanguage")], List()).join(", ")
         : item.getIn(["languages", state.editor.get("previewLanguage")], ""),
     tags: item.getIn(["_twin", "tags"], List()),
-    selected: item.getIn(["_twin", "selected"], false),
+    selected: state.editor.get("selected").includes(id),
   };
 };
 

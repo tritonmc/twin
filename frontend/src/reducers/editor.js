@@ -7,6 +7,7 @@ function mainReducer(
     editorOpen: false,
     tags: Set(),
     sort: Map({ field: "_twin.dateUpdated", asc: false }),
+    selected: List(),
   }),
   action
 ) {
@@ -41,6 +42,26 @@ function mainReducer(
         .remove("defaultData");
     case types.SET_SORT:
       return state.setIn(["sort", "field"], action.field).setIn(["sort", "text"], action.text);
+    case types.TOGGLE_SELECT:
+      return state.update("selected", (selected) => {
+        let index = selected.indexOf(action.id);
+        if (index === -1) return selected.push(action.id);
+        return selected.delete(index);
+      });
+    case types.SET_ALL_SELECT:
+      if (action.selected === false && !action.id)
+        return state.update("selected", (v) => v.clear());
+      return state.update("selected", (l) => {
+        l = l.filterNot((v) => !!action.id.indexOf(v));
+        if (action.selected) l = l.push(...action.id);
+        return l;
+      });
+    case types.DELETE_ITEM:
+      return state.update("selected", (v) => {
+        let index = v.indexOf(action.id);
+        if (index !== -1) return v.delete(index);
+        return v;
+      });
     default:
       return state;
   }

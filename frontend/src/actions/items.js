@@ -54,14 +54,3 @@ export const addItem = (itemType, id) => ({
   itemType,
   id,
 });
-
-export const toggleSelected = (id) => ({
-  type: types.TOGGLE_SELECT,
-  id,
-});
-
-export const setAllSelected = (id, selected) => ({
-  type: types.TOGGLE_SELECT,
-  id,
-  selected,
-});

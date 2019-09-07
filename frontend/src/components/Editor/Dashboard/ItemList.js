@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList as VirtualList } from "react-window";
 import ItemRow from "./ItemRow";
+import SelectedToolbar from "./SelectedToolbar";
 
 const styles = (theme) => ({
   root: {
@@ -119,24 +120,30 @@ const InnerList = withStyles(styles)(
         const { classes, height, width, data } = this.props;
         if (data.size === 0) {
           return (
-            <Paper className={classNames(classes.root, classes.paper)} style={{ height, width }}>
-              <Typography variant="body1" className={classes.warningNoItems}>
-                No items found
-                <br />
-                You can add an item by clicking the + button above
-              </Typography>
-            </Paper>
+            <>
+              <SelectedToolbar visibleItems={data} />
+              <Paper className={classNames(classes.root, classes.paper)} style={{ height, width }}>
+                <Typography variant="body1" className={classes.warningNoItems}>
+                  No items found
+                  <br />
+                  You can add an item by clicking the + button above
+                </Typography>
+              </Paper>
+            </>
           );
         }
         return (
-          <List
-            className={classes.root}
-            height={height}
-            width={width}
-            itemData={data}
-            itemCount={data.size}
-            component={this._renderVirtualList}
-          />
+          <>
+            <SelectedToolbar visibleItems={data} />
+            <List
+              className={classes.root}
+              height={height}
+              width={width}
+              itemData={data}
+              itemCount={data.size}
+              component={this._renderVirtualList}
+            />
+          </>
         );
       }
       _renderVirtualList(props) {

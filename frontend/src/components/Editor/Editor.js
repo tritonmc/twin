@@ -9,9 +9,9 @@ import { Route, Switch } from "react-router";
 import { Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import uuid from "uuid/v4";
+import { setPreviewLanguage } from "../../actions/editor";
 import { setItems } from "../../actions/items";
 import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
-import { setPreviewLanguage } from "../../actions/editor";
 import Settings from "../Core/Settings";
 import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
@@ -35,6 +35,7 @@ const styles = (theme) => ({
     }),
     marginLeft: -drawerWidth,
     display: "flex",
+    flexDirection: "column",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
