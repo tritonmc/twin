@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import { closeEditor } from "../../../actions/editor";
 import { toggleArchiveState } from "../../../actions/items";
 
-class DeleteButton extends Component {
+class ArchiveButton extends Component {
   render() {
-    const { archived, toggleArchiveState } = this.props;
+    const { archived, toggleArchiveState, bulk } = this.props;
     return (
-      <Tooltip title={archived ? "Unarchive" : "Archive"}>
+      <Tooltip title={`${archived ? "Unarchive" : "Archive"}${bulk ? " selected" : ""}`}>
         <IconButton
           color="inherit"
           onClick={toggleArchiveState}
@@ -26,11 +26,23 @@ class DeleteButton extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleArchiveState: () => {
-    dispatch(toggleArchiveState(ownProps.id));
+    dispatch(toggleArchiveState(ownProps.id, !ownProps.archived));
     if (ownProps.archived) {
-      ownProps.enqueueSnackbar("Item has been unarchived!");
+      ownProps.enqueueSnackbar(
+        `${
+          ownProps.bulk
+            ? `${ownProps.id.size} ${ownProps.id.size === 1 ? "item has" : "items have"}`
+            : "Item has"
+        } been unarchived!`
+      );
     } else {
-      ownProps.enqueueSnackbar("Item has been archived!");
+      ownProps.enqueueSnackbar(
+        `${
+          ownProps.bulk
+            ? `${ownProps.id.size} ${ownProps.id.size === 1 ? "item has" : "items have"}`
+            : "Item has"
+        } has been archived!`
+      );
     }
     dispatch(closeEditor());
   },
@@ -40,5 +52,5 @@ export default withSnackbar(
   connect(
     null,
     mapDispatchToProps
-  )(DeleteButton)
+  )(ArchiveButton)
 );

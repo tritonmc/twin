@@ -100,7 +100,7 @@ class ItemRow extends Component {
           color="primary"
         />
         <ListItemText disableTypography className={classes.itemText}>
-          <Typography inline noWrap component="div" className={classes.title}>
+          <Typography noWrap component="div" className={classes.title}>
             {title || "Unknown key"}
           </Typography>
           <div className={classes.description}>
@@ -112,7 +112,7 @@ class ItemRow extends Component {
                 label={tag}
               />
             ))}
-            <Typography inline noWrap className={classes.descriptionText}>
+            <Typography noWrap className={classes.descriptionText}>
               {description}
             </Typography>
           </div>

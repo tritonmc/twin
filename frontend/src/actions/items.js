@@ -44,9 +44,10 @@ export const addSignLocation = (id) => ({
   id,
 });
 
-export const toggleArchiveState = (id) => ({
+export const toggleArchiveState = (id, status) => ({
   type: types.TOGGLE_ARCHIVE_STATE,
   id,
+  status,
 });
 
 export const addItem = (itemType, id) => ({

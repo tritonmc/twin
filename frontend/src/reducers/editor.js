@@ -57,6 +57,7 @@ function mainReducer(
         return l;
       });
     case types.DELETE_ITEM:
+      if (typeof action.id === "object") return state.update("selected", (v) => v.clear());
       return state.update("selected", (v) => {
         let index = v.indexOf(action.id);
         if (index !== -1) return v.delete(index);

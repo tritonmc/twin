@@ -4,9 +4,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/CloseRounded";
 import classnames from "classnames";
+import { List } from "immutable";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllSelected } from "../../../actions/editor";
+import ArchiveButton from "../EditorFields/ArchiveButton";
+import DeleteButton from "../EditorFields/DeleteButton";
 
 const TOOLBAR_HEIGHT = 48;
 const DRAWER_WIDTH = 240;
@@ -46,13 +49,25 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -12,
     marginRight: 20,
   },
+  grow: {
+    flexGrow: 1,
+  },
 }));
 
-const selector = (state) => state.editor.get("selected").size;
+const selector = (state) => {
+  const selected = state.editor.get("selected");
+  const unarchiveAll = !state.items
+    .get("present", List())
+    .some(
+      (v) => selected.includes(v.getIn(["_twin", "id"])) && !v.getIn(["_twin", "archived"], false)
+    );
+  return { selected, unarchiveAll };
+};
 
 const SelectedToolbar = ({ drawerOpen }) => {
   const classes = useStyles();
-  const size = useSelector(selector);
+  const { selected, unarchiveAll } = useSelector(selector);
+  const size = selected.size;
   const dispatch = useDispatch();
   const onCloseIconClick = () => dispatch(setAllSelected(false));
   return (
@@ -68,9 +83,13 @@ const SelectedToolbar = ({ drawerOpen }) => {
         onClick={onCloseIconClick}>
         <CloseIcon />
       </IconButton>
-      <Typography variant="body1" color="inherit" noWrap>
+      <Typography variant="body1" color="inherit" noWrap className={classes.grow}>
         {`${size} item${size === 1 ? "" : "s"} selected`}
       </Typography>
+      <div>
+        <DeleteButton item={selected} bulk />
+        <ArchiveButton id={selected} bulk archived={unarchiveAll} />
+      </div>
     </Toolbar>
   );
 };

@@ -52,7 +52,6 @@ const SelectionToolbar = ({ visibleItems }) => {
         <ListItemText>
           <ListItemText disableTypography className={classes.itemText}>
             <Typography
-              inline
               noWrap
               component="div"
               variant="subtitle2"
@@ -61,7 +60,6 @@ const SelectionToolbar = ({ visibleItems }) => {
               Key
             </Typography>
             <Typography
-              inline
               noWrap
               component="div"
               variant="subtitle2"

@@ -24,6 +24,8 @@ function itemReducer(state = List(), action) {
         return item;
       });
     case types.DELETE_ITEM:
+      if (typeof action.id === "object")
+        return state.filterNot((v) => action.id.includes(v.getIn(["_twin", "id"])));
       return state.delete(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id));
     case types.UPDATE_SIGN_COORDINATE:
       return state.update(
@@ -57,6 +59,14 @@ function itemReducer(state = List(), action) {
           .setIn(["_twin", "dateUpdated"], Date.now());
       });
     case types.TOGGLE_ARCHIVE_STATE:
+      if (typeof action.id === "object")
+        return state.map((v) =>
+          action.id.includes(v.getIn(["_twin", "id"]))
+            ? v
+                .setIn(["_twin", "archived"], action.status)
+                .setIn(["_twin", "dateUpdated"], Date.now())
+            : v
+        );
       return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
         return item
           .updateIn(["_twin", "archived"], false, (value) => !value)
