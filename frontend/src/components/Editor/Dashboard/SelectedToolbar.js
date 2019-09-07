@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllSelected } from "../../../actions/editor";
 
 const TOOLBAR_HEIGHT = 48;
+const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,17 +23,24 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
     boxShadow: theme.shadows[20],
     zIndex: 50,
-    transition: theme.transitions.create("bottom", {
+    transition: theme.transitions.create("all", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   hidden: {
-    transition: theme.transitions.create("bottom", {
+    transition: theme.transitions.create("all", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     bottom: -TOOLBAR_HEIGHT,
+  },
+  drawerOpen: {
+    transition: theme.transitions.create("all", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    left: DRAWER_WIDTH,
   },
   closeButton: {
     marginLeft: -12,
@@ -42,13 +50,17 @@ const useStyles = makeStyles((theme) => ({
 
 const selector = (state) => state.editor.get("selected").size;
 
-const SelectedToolbar = () => {
+const SelectedToolbar = ({ drawerOpen }) => {
   const classes = useStyles();
   const size = useSelector(selector);
   const dispatch = useDispatch();
   const onCloseIconClick = () => dispatch(setAllSelected(false));
   return (
-    <Toolbar className={classnames(classes.root, { [classes.hidden]: size === 0 })}>
+    <Toolbar
+      className={classnames(classes.root, {
+        [classes.hidden]: size === 0,
+        [classes.drawerOpen]: drawerOpen,
+      })}>
       <IconButton
         className={classes.closeButton}
         color="inherit"

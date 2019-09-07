@@ -86,7 +86,7 @@ class Editor extends React.PureComponent {
         <CssBaseline />
         <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
         <Settings />
-        <SelectedToolbar />
+        <SelectedToolbar drawerOpen={this.props.drawerOpen} />
         <main
           className={classNames(classes.content, {
             [classes.contentShift]: this.props.drawerOpen,
