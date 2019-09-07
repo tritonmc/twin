@@ -10,13 +10,16 @@ import { connect } from "react-redux";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList as VirtualList } from "react-window";
 import ItemRow from "./ItemRow";
-import SelectedToolbar from "./SelectedToolbar";
+import SelectionToolbar from "./SelectionToolbar";
 
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     flex: "1 1 auto",
     borderRadius: theme.shape.borderRadius,
+  },
+  list: {
+    paddingBottom: 20,
     "&::-webkit-scrollbar": {
       width: 7,
       height: 7,
@@ -120,30 +123,27 @@ const InnerList = withStyles(styles)(
         const { classes, height, width, data } = this.props;
         if (data.size === 0) {
           return (
-            <>
-              <SelectedToolbar visibleItems={data} />
-              <Paper className={classNames(classes.root, classes.paper)} style={{ height, width }}>
-                <Typography variant="body1" className={classes.warningNoItems}>
-                  No items found
-                  <br />
-                  You can add an item by clicking the + button above
-                </Typography>
-              </Paper>
-            </>
+            <Paper className={classNames(classes.root, classes.paper)} style={{ height, width }}>
+              <Typography variant="body1" className={classes.warningNoItems}>
+                No items found
+                <br />
+                You can add an item by clicking the + button above
+              </Typography>
+            </Paper>
           );
         }
         return (
-          <>
-            <SelectedToolbar visibleItems={data} />
+          <div className={classes.root} style={{ width, height }}>
+            <SelectionToolbar visibleItems={data} />
             <List
-              className={classes.root}
-              height={height}
+              className={classes.list}
+              height={height - 37}
               width={width}
               itemData={data}
               itemCount={data.size}
               component={this._renderVirtualList}
             />
-          </>
+          </div>
         );
       }
       _renderVirtualList(props) {

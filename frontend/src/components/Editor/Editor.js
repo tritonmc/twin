@@ -15,6 +15,7 @@ import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
 import Settings from "../Core/Settings";
 import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
+import SelectedToolbar from "./Dashboard/SelectedToolbar";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
 
@@ -85,6 +86,7 @@ class Editor extends React.PureComponent {
         <CssBaseline />
         <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
         <Settings />
+        <SelectedToolbar />
         <main
           className={classNames(classes.content, {
             [classes.contentShift]: this.props.drawerOpen,

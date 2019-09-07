@@ -52,7 +52,7 @@ function mainReducer(
       if (action.selected === false && !action.id)
         return state.update("selected", (v) => v.clear());
       return state.update("selected", (l) => {
-        l = l.filterNot((v) => !!action.id.indexOf(v));
+        l = l.filterNot((v) => action.id.indexOf(v) >= 0);
         if (action.selected) l = l.push(...action.id);
         return l;
       });
