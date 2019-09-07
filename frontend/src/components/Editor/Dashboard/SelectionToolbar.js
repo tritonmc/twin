@@ -22,6 +22,10 @@ const useStyles = makeStyles({
     flexGrow: 1,
     minWidth: 0,
   },
+  checkbox: {
+    marginLeft: -12,
+    marginRight: 6,
+  },
 });
 
 const SelectionToolbar = ({ visibleItems }) => {
@@ -39,6 +43,7 @@ const SelectionToolbar = ({ visibleItems }) => {
     <>
       <ListItem className={classes.root}>
         <Checkbox
+          className={classes.checkbox}
           checked={checked}
           indeterminate={indeterminate}
           color="primary"

@@ -19,6 +19,7 @@ const styles = (theme) => ({
   },
   title: {
     width: "25%",
+    paddingRight: 5,
   },
   description: {
     flexGrow: 1,
@@ -44,6 +45,10 @@ const styles = (theme) => ({
     borderRadius: 4,
     boxSizing: "border-box",
     padding: "0 4px",
+  },
+  checkbox: {
+    marginLeft: -12,
+    marginRight: 6,
   },
 });
 
@@ -88,6 +93,7 @@ class ItemRow extends Component {
         onClick={this.openEditor}
         selected={selected}>
         <Checkbox
+          className={classes.checkbox}
           checked={selected}
           onClick={this.stopPropagation}
           onChange={this.toggleSelected}
