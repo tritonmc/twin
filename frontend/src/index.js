@@ -1,22 +1,19 @@
-import { SnackbarProvider } from "notistack";
 import React from "react";
 import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import App from "./components/Core/App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
-import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={configureStore()}>
-      <SnackbarProvider>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </SnackbarProvider>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </Provider>
   </CookiesProvider>,
   document.getElementById("root")

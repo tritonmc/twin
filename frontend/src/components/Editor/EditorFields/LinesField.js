@@ -6,8 +6,8 @@ import Grid from "@material-ui/core/Grid";
 
 const styles = (theme) => ({
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
 });
 
@@ -17,7 +17,7 @@ class LinesField extends Component {
     return (
       <>
         <Typography variant="subtitle1">{language}</Typography>
-        <Grid container spacing={16} className={classes.textField}>
+        <Grid container spacing={2} className={classes.textField}>
           <LineField
             line={0}
             language={this.props.language}

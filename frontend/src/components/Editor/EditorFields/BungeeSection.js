@@ -7,7 +7,7 @@ export class MetaSection extends Component {
   render() {
     const { id } = this.props;
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <CheckboxField id={id} path="universal" label="Universal" />
         </Grid>

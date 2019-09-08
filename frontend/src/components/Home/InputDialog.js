@@ -13,8 +13,8 @@ const styles = (theme) => ({
   },
   paper: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     margin: "20px",
   },
   buttonContainer: {
@@ -22,11 +22,11 @@ const styles = (theme) => ({
     flexFlow: "column",
   },
   button: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     alignSelf: "flex-end",
   },
   textField: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
 });
 

@@ -21,7 +21,7 @@ import { setSettingsState, setTheme } from "../../actions/main";
 
 const styles = (theme) => ({
   versionInfo: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
   },
   heartIcon: {

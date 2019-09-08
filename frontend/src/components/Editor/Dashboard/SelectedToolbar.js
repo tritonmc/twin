@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    left: DRAWER_WIDTH,
+    [theme.breakpoints.up("sm")]: {
+      left: DRAWER_WIDTH,
+    },
   },
   closeButton: {
     marginLeft: -12,

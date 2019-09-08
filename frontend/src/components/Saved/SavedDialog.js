@@ -15,8 +15,8 @@ const styles = (theme) => ({
   },
   paper: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     margin: "20px",
     textAlign: "center",
   },
@@ -24,13 +24,13 @@ const styles = (theme) => ({
     display: "flex",
     flexFlow: "column",
     alignItems: "flex-end",
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   title: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
 });
 
