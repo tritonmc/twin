@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import CreatableSelect from "react-select/lib/Creatable";
+import CreatableSelect from "react-select/creatable";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import NoSsr from "@material-ui/core/NoSsr";
@@ -17,10 +17,12 @@ import { List, Map } from "immutable";
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
+    margin: `${theme.spacing(1)}px 0px`,
   },
   input: {
     display: "flex",
     padding: 0,
+    height: "auto",
   },
   valueContainer: {
     display: "flex",
@@ -30,13 +32,13 @@ const styles = (theme) => ({
     overflow: "hidden",
   },
   chip: {
-    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+    margin: `${theme.spacing(1) / 2}px ${theme.spacing(1) / 4}px`,
   },
   chipFocused: {
     backgroundColor: emphasize(theme.palette.secondary.main, 0.08),
   },
   noOptionsMessage: {
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   },
   singleValue: {
     fontSize: 16,
@@ -49,12 +51,12 @@ const styles = (theme) => ({
   paper: {
     position: "absolute",
     zIndex: 999,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     left: 0,
     right: 0,
   },
   divider: {
-    height: theme.spacing.unit * 2,
+    height: theme.spacing(2),
   },
 });
 

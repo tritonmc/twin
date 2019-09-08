@@ -19,7 +19,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = (theme) => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     width: 150,
     textTransform: "unset",
     flexDirection: "column",
@@ -37,7 +37,7 @@ const styles = (theme) => ({
   },
   dialogContent: {
     display: "flex",
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
     flexWrap: "wrap",
     justifyContent: "center",
   },

@@ -10,12 +10,16 @@ import { connect } from "react-redux";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList as VirtualList } from "react-window";
 import ItemRow from "./ItemRow";
+import SelectionToolbar from "./SelectionToolbar";
 
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     flex: "1 1 auto",
     borderRadius: theme.shape.borderRadius,
+  },
+  list: {
+    paddingBottom: 20,
     "&::-webkit-scrollbar": {
       width: 7,
       height: 7,
@@ -129,14 +133,17 @@ const InnerList = withStyles(styles)(
           );
         }
         return (
-          <List
-            className={classes.root}
-            height={height}
-            width={width}
-            itemData={data}
-            itemCount={data.size}
-            component={this._renderVirtualList}
-          />
+          <div className={classes.root} style={{ width, height }}>
+            <SelectionToolbar visibleItems={data} />
+            <List
+              className={classes.list}
+              height={height - 37}
+              width={width}
+              itemData={data}
+              itemCount={data.size}
+              component={this._renderVirtualList}
+            />
+          </div>
         );
       }
       _renderVirtualList(props) {

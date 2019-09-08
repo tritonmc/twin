@@ -1,4 +1,3 @@
-import { Typography } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
@@ -6,22 +5,23 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
+import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import HeartIcon from "@material-ui/icons/Favorite";
+import { List as IList } from "immutable";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-import { setSettingsState, setTheme } from "../../actions/main";
 import { setPreviewLanguage } from "../../actions/editor";
-import { List as IList } from "immutable";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import { setSettingsState, setTheme } from "../../actions/main";
 
 const styles = (theme) => ({
   versionInfo: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
   },
   heartIcon: {
@@ -69,7 +69,7 @@ class Settings extends Component {
               </ListItemSecondaryAction>
             </ListItem>
           </List>
-          <Typography variant="caption" className={classes.versionInfo}>
+          <Typography variant="caption" component="div" className={classes.versionInfo}>
             {`TWIN v${process.env.REACT_APP_VERSION} developed with `}
             <HeartIcon className={classes.heartIcon} color="secondary" /> {`by Diogo Correia`}
           </Typography>

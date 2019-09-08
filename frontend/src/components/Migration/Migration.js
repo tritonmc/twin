@@ -25,14 +25,14 @@ const styles = (theme) => ({
     color: theme.palette.secondary.main,
   },
   paper: {
-    padding: theme.spacing.unit,
-    margin: theme.spacing.unit,
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   leftIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
 });
 
@@ -123,7 +123,7 @@ class Migration extends Component {
 
   migrate = () => {
     var compare = (o1, o2) => {
-      for (let p in o1) {
+      for (var p in o1) {
         if (o1.hasOwnProperty(p)) {
           if (Array.isArray(o1[p]) && Array.isArray(o2[p])) {
             if (!compare(o1[p], o2[p])) return false;
@@ -132,11 +132,11 @@ class Migration extends Component {
           }
         }
       }
-      for (let p in o2) {
-        if (o2.hasOwnProperty(p)) {
-          if (Array.isArray(o1[p]) && Array.isArray(o2[p])) {
-            if (!compare(o1[p], o2[p])) return false;
-          } else if (o1[p] !== o2[p]) {
+      for (var p2 in o2) {
+        if (o2.hasOwnProperty(p2)) {
+          if (Array.isArray(o1[p2]) && Array.isArray(o2[p2])) {
+            if (!compare(o1[p2], o2[p2])) return false;
+          } else if (o1[p2] !== o2[p2]) {
             return false;
           }
         }

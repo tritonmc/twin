@@ -1,4 +1,5 @@
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { SnackbarProvider } from "notistack";
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
@@ -6,10 +7,10 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Editor from "../Editor/Editor";
 import Home from "../Home/Home";
+import Migration from "../Migration/Migration";
 //import Dashboard from "./components/dashboard.js";
 import Saved from "../Saved/Saved";
 import TopAppBar from "./TopAppBar";
-import Migration from "../Migration/Migration";
 
 const THEMES = [
   createMuiTheme({
@@ -48,17 +49,19 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={THEMES[this.props.theme]}>
-        <Router>
-          <>
-            <TopAppBar currentTheme={this.props.theme} />
-            <Switch>
-              <Route path="/saved" component={Saved} />
-              <Route path="/migrate" component={Migration} />
-              <Route path="/:id" component={Editor} />
-              <Route component={Home} />
-            </Switch>
-          </>
-        </Router>
+        <SnackbarProvider maxSnack={3}>
+          <Router>
+            <>
+              <TopAppBar currentTheme={this.props.theme} />
+              <Switch>
+                <Route path="/saved" component={Saved} />
+                <Route path="/migrate" component={Migration} />
+                <Route path="/:id" component={Editor} />
+                <Route component={Home} />
+              </Switch>
+            </>
+          </Router>
+        </SnackbarProvider>
       </MuiThemeProvider>
     );
   }

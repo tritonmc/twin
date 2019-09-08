@@ -38,9 +38,10 @@ class DeleteButton extends Component {
   };
 
   render() {
+    const { bulk, item, classes } = this.props;
     return (
       <>
-        <Tooltip title="Delete">
+        <Tooltip title={bulk ? "Delete selected" : "Delete"}>
           <IconButton color="inherit" onClick={this.handleClickOpen} aria-label="Delete">
             <DeleteIcon />
           </IconButton>
@@ -50,11 +51,16 @@ class DeleteButton extends Component {
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">
-          <DialogTitle id="alert-dialog-title">{"Delete this item?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{`Delete ${
+            bulk && item.size !== 1 ? "these items" : "this item"
+          }?`}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              The item will be permanently deleted after saving. If you only want to disable this
-              item, just archive it.
+              {`${
+                bulk ? `${item.size} ${item.size === 1 ? "item" : "items"}` : "This item"
+              } will be permanently deleted after saving. If you only want to disable ${
+                bulk && item.size !== 1 ? "these items" : "this item"
+              }, just archive ${bulk && item.size !== 1 ? "them" : "it"}.`}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -64,7 +70,7 @@ class DeleteButton extends Component {
             <Button
               onClick={this.handleCloseDelete}
               autoFocus
-              className={this.props.classes.deleteConfirmButton}>
+              className={classes.deleteConfirmButton}>
               Delete
             </Button>
           </DialogActions>

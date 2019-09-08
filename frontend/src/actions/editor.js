@@ -29,3 +29,14 @@ export const setSort = (field, text) => ({
   field,
   text,
 });
+
+export const toggleSelected = (id) => ({
+  type: types.TOGGLE_SELECT,
+  id,
+});
+
+export const setAllSelected = (selected, id) => ({
+  type: types.SET_ALL_SELECT,
+  id,
+  selected,
+});

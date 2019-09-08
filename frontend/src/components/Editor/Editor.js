@@ -9,12 +9,13 @@ import { Route, Switch } from "react-router";
 import { Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import uuid from "uuid/v4";
+import { setPreviewLanguage } from "../../actions/editor";
 import { setItems } from "../../actions/items";
 import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
-import { setPreviewLanguage } from "../../actions/editor";
 import Settings from "../Core/Settings";
 import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
+import SelectedToolbar from "./Dashboard/SelectedToolbar";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
 
@@ -28,13 +29,14 @@ const styles = (theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
     display: "flex",
+    flexDirection: "column",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -84,6 +86,7 @@ class Editor extends React.PureComponent {
         <CssBaseline />
         <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
         <Settings />
+        <SelectedToolbar drawerOpen={this.props.drawerOpen} />
         <main
           className={classNames(classes.content, {
             [classes.contentShift]: this.props.drawerOpen,

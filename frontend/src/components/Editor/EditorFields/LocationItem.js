@@ -7,11 +7,11 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = (theme) => ({
   root: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   gridSpacing: {
     paddingTop: "0 !important",
@@ -24,7 +24,7 @@ export class LocationItem extends Component {
     const { bungee, x, y, z, world, server, id, classes, updateField, deleteItem } = this.props;
     return (
       <Grid container alignItems="center" className={classes.root}>
-        <Grid container item xs spacing={16} alignItems="center">
+        <Grid container item xs spacing={2} alignItems="center">
           {bungee && (
             <Grid item xs={6} md={3} classes={{ item: classes.gridSpacing }}>
               <TextField

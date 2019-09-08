@@ -128,7 +128,9 @@ class Sidebar extends React.PureComponent {
             <Button
               className={classes.logoutButton}
               autoFocus
-              component={(props) => <Link onClick={clearId} to="/" {...props} />}>
+              component={React.forwardRef((props, ref) => (
+                <Link innerRef={ref} onClick={clearId} to="/" {...props} />
+              ))}>
               Logout
             </Button>
           </DialogActions>
@@ -167,13 +169,13 @@ class Sidebar extends React.PureComponent {
 }
 
 class ListItemLink extends React.Component {
-  renderLink = (itemProps) => <Link to={this.props.to} {...itemProps} />;
+  renderLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
   render() {
     const { icon, primary } = this.props;
     return (
       <li>
-        <ListItem button component={this.renderLink}>
+        <ListItem button component={this.renderLink} to={this.props.to}>
           <ListItemIcon>{icon}</ListItemIcon>
           <ListItemText primary={primary} />
         </ListItem>
