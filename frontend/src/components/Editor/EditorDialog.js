@@ -18,6 +18,8 @@ import KeyField from "./EditorFields/KeyField";
 import LocationSection from "./EditorFields/LocationSection";
 import MetaSection from "./EditorFields/MetaSection";
 import TextFieldsSection from "./EditorFields/TextFieldsSection";
+import CollectionField from "./EditorFields/CollectionField";
+import Grid from "@material-ui/core/Grid";
 
 const styles = (theme) => ({
   appBar: {
@@ -71,7 +73,14 @@ class EditorDialog extends Component {
           </Toolbar>
         </AppBar>
         <form className={classes.container} noValidate autoComplete="off">
-          <KeyField id={id} />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <CollectionField id={id} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <KeyField id={id} />
+            </Grid>
+          </Grid>
           <Typography variant="h5" className={classes.sectionHeader}>
             Text
           </Typography>

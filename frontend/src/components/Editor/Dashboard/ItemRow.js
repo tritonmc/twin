@@ -64,6 +64,7 @@ class ItemRow extends Component {
       nextProps.title !== this.props.title ||
       nextProps.description !== this.props.description ||
       nextProps.selected !== this.props.selected ||
+      nextProps.collection !== this.props.collection ||
       nextProps.archived !== this.props.archived
     );
   };
