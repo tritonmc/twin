@@ -5,6 +5,11 @@ export const setPreviewLanguage = (language) => ({
   language,
 });
 
+export const setMetadata = (metadata) => ({
+  type: types.SET_METADATA,
+  metadata,
+});
+
 export const setSearch = (search) => ({
   type: types.SET_SEARCH,
   search,

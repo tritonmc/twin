@@ -8,6 +8,7 @@ function mainReducer(
     tags: Set(),
     sort: Map({ field: "_twin.dateUpdated", asc: false }),
     selected: List(),
+    metadata: Map(),
   }),
   action
 ) {
@@ -16,6 +17,8 @@ function mainReducer(
       return state.set("previewLanguage", action.language);
     case types.SET_DATA:
       return state.set("previewLanguage", action.availableLanguages[0] || "");
+    case types.SET_METADATA:
+      return state.set("metadata", Map(action.metadata));
     case types.SET_SEARCH:
       return state.set("search", action.search);
     case types.OPEN_EDITOR:
@@ -39,7 +42,8 @@ function mainReducer(
         .remove("search")
         .remove("activeItem")
         .remove("previewLanguage")
-        .remove("defaultData");
+        .remove("defaultData")
+        .remove("metadata");
     case types.SET_SORT:
       return state.setIn(["sort", "field"], action.field).setIn(["sort", "text"], action.text);
     case types.TOGGLE_SELECT:

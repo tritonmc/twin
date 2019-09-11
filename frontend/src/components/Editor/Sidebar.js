@@ -11,19 +11,21 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArchiveIcon from "@material-ui/icons/Archive";
 //import AssistantIcon from "@material-ui/icons/Assistant";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import TagIcon from "@material-ui/icons/Label";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { List as IList } from "immutable";
+import { List as IList, Map } from "immutable";
 import LogoutIcon from "mdi-material-ui/Logout";
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink as Link } from "react-router-dom";
 import { setId, setSettingsState } from "../../actions/main";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import CollectionIcon from "@material-ui/icons/StyleRounded";
 
 const drawerWidth = 240;
 
@@ -73,7 +75,7 @@ class Sidebar extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, id, clearId, openSettings, tags } = this.props;
+    const { classes, theme, id, clearId, openSettings, tags, metadata } = this.props;
     const drawer = (
       <div>
         <Hidden xsDown implementation="css">
@@ -83,7 +85,22 @@ class Sidebar extends React.PureComponent {
           <ListItemLink to={`/${id}`} primary="Dashboard" icon={<DashboardIcon />} />
           <ListItemLink to={`/${id}/archive`} primary="Archive" icon={<ArchiveIcon />} />
           {/*<ListItemLink to={`/${id}/suggestions`} primary="Suggestions" icon={<AssistantIcon />} />*/}
+          {!!metadata && (
+            <>
+              <Divider />
+              <ListSubheader>Collections</ListSubheader>
+              {metadata.sort().map((collection) => (
+                <ListItemLink
+                  key={collection}
+                  to={`/${id}/collection/${encodeURIComponent(collection)}`}
+                  primary={collection}
+                  icon={<CollectionIcon />}
+                />
+              ))}
+            </>
+          )}
           <Divider />
+          <ListSubheader>Tags</ListSubheader>
           {tags.size > 0 && (
             <>
               {tags.sort().map((tag) => (
@@ -168,25 +185,35 @@ class Sidebar extends React.PureComponent {
   }
 }
 
-class ListItemLink extends React.Component {
-  renderLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+const useStylesItemLink = makeStyles((theme) => ({
+  linkSelected: {
+    backgroundColor: theme.palette.action.selected,
+    "&:hover": {
+      backgroundColor: theme.palette.action.selected,
+    },
+  },
+}));
 
-  render() {
-    const { icon, primary } = this.props;
-    return (
-      <li>
-        <ListItem button component={this.renderLink} to={this.props.to}>
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText primary={primary} />
-        </ListItem>
-      </li>
-    );
-  }
-}
+const ListItemLink = ({ to, icon, primary }) => {
+  const renderLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+  const classes = useStylesItemLink();
+  return (
+    <li>
+      <ListItem button component={renderLink} to={to} activeClassName={classes.linkSelected} exact>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>
+  );
+};
 
 const mapStateToProps = (state) => ({
   id: state.main.get("id", ""),
   tags: state.editor.get("tags", IList()),
+  metadata:
+    state.main.get("tritonVersion", 1) >= 4
+      ? state.editor.get("metadata", Map()).keySeq()
+      : undefined,
 });
 
 const mapDispatchToProps = {

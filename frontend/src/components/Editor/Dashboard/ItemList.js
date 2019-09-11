@@ -57,6 +57,7 @@ class ItemList extends Component {
       <AutoSizer
         archivedOnly={this.props.archivedOnly}
         tag={this.props.tag}
+        collection={this.props.collection}
         defaultHeight={200}
         defaultWidth={300}>
         {this._renderList}
@@ -69,6 +70,7 @@ class ItemList extends Component {
       <InnerList
         archivedOnly={this.props.archivedOnly}
         tag={this.props.tag}
+        collection={this.props.collection}
         height={height}
         width={width}
       />
@@ -83,9 +85,10 @@ const mapStateToProps = (state, ownProps) => {
   var data = state.items
     .get("present", IList())
     .filter((item) => {
-      return ownProps.tag
-        ? item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1
-        : item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly;
+      if (!!ownProps.collection) return item.get("fileName") === ownProps.collection;
+      if (!!ownProps.tag)
+        return item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1;
+      return item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly;
     })
     .sort((a, b) =>
       sortText

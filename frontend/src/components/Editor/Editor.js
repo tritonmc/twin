@@ -9,7 +9,7 @@ import { Route, Switch } from "react-router";
 import { Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import uuid from "uuid/v4";
-import { setPreviewLanguage } from "../../actions/editor";
+import { setPreviewLanguage, setMetadata } from "../../actions/editor";
 import { setItems } from "../../actions/items";
 import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
 import Settings from "../Core/Settings";
@@ -96,6 +96,15 @@ class Editor extends React.PureComponent {
               <ItemList archivedOnly={true} />
             </Route>
             <Route
+              path="/:id/collection/:collection"
+              render={(props) => (
+                <ItemList
+                  archivedOnly={false}
+                  collection={decodeURIComponent(props.match.params.collection)}
+                />
+              )}
+            />
+            <Route
               path="/:id/tag/:tag"
               render={(props) => (
                 <ItemList archivedOnly={false} tag={decodeURIComponent(props.match.params.tag)} />
@@ -150,6 +159,7 @@ const mapDispatchToProps = (dispatch) => ({
   setData: (data) => {
     dispatch(setData(data.tritonv, data.bungee, data.languages));
     if (data.tritonv >= 2) dispatch(setPreviewLanguage(data.mainLanguage));
+    if (data.tritonv >= 4) dispatch(setMetadata(data.metadata));
     dispatch(setItems(processData(data.data)));
   },
 });

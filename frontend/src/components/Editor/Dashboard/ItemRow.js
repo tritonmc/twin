@@ -9,6 +9,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { openEditor, toggleSelected } from "../../../actions/editor";
 import classnames from "classnames";
+import ArchivedIcon from "@material-ui/icons/ArchiveRounded";
 
 const styles = (theme) => ({
   root: {
@@ -31,13 +32,8 @@ const styles = (theme) => ({
     width: 0,
   },
   chip: {
-    backgroundColor: theme.palette.secondary.main,
-    borderColor: theme.palette.secondary.main,
-    height: "100%",
     borderRadius: 4,
-    boxSizing: "border-box",
     marginRight: 6,
-    color: theme.palette.secondary.contrastText,
   },
   chipLabel: {
     border: "none",
@@ -67,7 +63,8 @@ class ItemRow extends Component {
       !is(this.props.tags, nextProps.tags) ||
       nextProps.title !== this.props.title ||
       nextProps.description !== this.props.description ||
-      nextProps.selected !== this.props.selected
+      nextProps.selected !== this.props.selected ||
+      nextProps.archived !== this.props.archived
     );
   };
 
@@ -84,7 +81,7 @@ class ItemRow extends Component {
   }
 
   render() {
-    const { style, title, description, tags, classes, selected } = this.props;
+    const { style, title, description, tags, classes, selected, collection, archived } = this.props;
     return (
       <ListItem
         button
@@ -104,12 +101,31 @@ class ItemRow extends Component {
             {title || "Unknown key"}
           </Typography>
           <div className={classes.description}>
+            {archived && (
+              <Chip
+                className={classes.chip}
+                classes={{ label: classes.chipLabel }}
+                label={<ArchivedIcon />}
+                size="small"
+              />
+            )}
+            {collection !== "default" && (
+              <Chip
+                className={classes.chip}
+                classes={{ label: classes.chipLabel }}
+                label={collection}
+                color="primary"
+                size="small"
+              />
+            )}
             {tags.map((tag) => (
               <Chip
                 className={classes.chip}
                 classes={{ label: classes.chipLabel }}
                 key={tag}
                 label={tag}
+                color="secondary"
+                size="small"
               />
             ))}
             <Typography noWrap className={classes.descriptionText}>
@@ -133,7 +149,9 @@ const mapStateToProps = (state, ownProps) => {
         ? item.getIn(["lines", state.editor.get("previewLanguage")], List()).join(", ")
         : item.getIn(["languages", state.editor.get("previewLanguage")], ""),
     tags: item.getIn(["_twin", "tags"], List()),
+    archived: item.getIn(["_twin", "archived"], false),
     selected: state.editor.get("selected").includes(id),
+    collection: item.get("fileName", "default"),
   };
 };
 
