@@ -9,7 +9,7 @@ export class MetaSection extends Component {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <CheckboxField id={id} path="universal" label="Universal" />
+          <CheckboxField id={id} path="universal" label="Universal" default={true} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <CheckboxField id={id} path="blacklist" label="Use server list as blacklist" />

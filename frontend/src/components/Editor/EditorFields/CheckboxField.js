@@ -24,11 +24,12 @@ class CheckboxField extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const defaultValue = ownProps.default || false;
   const item = state.items
     .get("present")
     .find((item) => item.getIn(["_twin", "id"]) === ownProps.id);
   return {
-    value: item ? item.get(ownProps.path, false) : false,
+    value: item ? item.get(ownProps.path, defaultValue) : defaultValue,
   };
 };
 
