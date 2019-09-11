@@ -1,4 +1,4 @@
-import { List, Map, Set } from "immutable";
+import { List, Map, Set, fromJS } from "immutable";
 import * as types from "../constants/ActionTypes";
 
 function mainReducer(
@@ -18,7 +18,11 @@ function mainReducer(
     case types.SET_DATA:
       return state.set("previewLanguage", action.availableLanguages[0] || "");
     case types.SET_METADATA:
-      return state.set("metadata", Map(action.metadata));
+      return state.set("metadata", fromJS(action.metadata));
+    case types.ADD_COLLECTION:
+      return state.update("metadata", (metadata) =>
+        metadata.set(action.name, fromJS({ universal: true, blacklist: false, servers: [] }))
+      );
     case types.SET_SEARCH:
       return state.set("search", action.search);
     case types.OPEN_EDITOR:

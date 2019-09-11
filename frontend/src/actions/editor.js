@@ -45,3 +45,8 @@ export const setAllSelected = (selected, id) => ({
   id,
   selected,
 });
+
+export const addCollection = (name) => ({
+  type: types.ADD_COLLECTION,
+  name,
+});

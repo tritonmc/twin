@@ -28,3 +28,4 @@ export const SET_SORT = "SET_SORT";
 export const TOGGLE_SELECT = "TOGGLE_SELECT";
 export const SET_ALL_SELECT = "SET_ALL_SELECT";
 export const SET_METADATA = "SET_METADATA";
+export const ADD_COLLECTION = "ADD_COLLECTION";

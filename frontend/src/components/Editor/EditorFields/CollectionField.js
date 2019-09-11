@@ -25,7 +25,10 @@ const CollectionField = ({ id }) => {
       .find((item) => item.getIn(["_twin", "id"]) === id, undefined, Map());
     return {
       collection: item.get("fileName", "default"),
-      collections: state.editor.get("metadata").keySeq(),
+      collections: state.editor
+        .get("metadata")
+        .keySeq()
+        .sort(),
     };
   });
   const dispatch = useDispatch();

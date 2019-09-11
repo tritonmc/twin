@@ -26,6 +26,7 @@ import { NavLink as Link } from "react-router-dom";
 import { setId, setSettingsState } from "../../actions/main";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import CollectionIcon from "@material-ui/icons/StyleRounded";
+import AddCollectionButton from "./AddCollectionButton";
 
 const drawerWidth = 240;
 
@@ -97,6 +98,7 @@ class Sidebar extends React.PureComponent {
                   icon={<CollectionIcon />}
                 />
               ))}
+              <AddCollectionButton />
             </>
           )}
           <Divider />
