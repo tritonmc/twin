@@ -33,13 +33,6 @@ class SaveButton extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  configVersion: state.main.get("tritonVersion"),
-  data: state.items.get("present"),
-  defaultData: state.editor.get("defaultData"),
-  bungee: state.main.get("bungee", false),
-});
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   save: () =>
     dispatch(async (dispatch, getState) => {
@@ -48,11 +41,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       const data = state.items.get("present");
       const defaultData = state.editor.get("defaultData");
       const bungee = state.main.get("bungee", false);
+      const metadata = state.editor.get("metadata");
       const { enqueueSnackbar } = ownProps;
       dispatch(setLoading(true));
       var payload;
-      if (configVersion === 2 || configVersion === 3) {
-        payload = saveV2(data, defaultData);
+      if (configVersion === 2 || configVersion === 3 || configVersion === 4) {
+        payload = saveV2(data, defaultData, configVersion >= 4 ? metadata : undefined);
       } else if (configVersion === 1) {
         payload = saveV1(data, defaultData, bungee);
       } else {
@@ -89,7 +83,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 export default withSnackbar(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(SaveButton)
 );

@@ -1,7 +1,7 @@
 import Immutable, { List, Map } from "immutable";
 import immutablediff from "immutablediff";
 
-const saveV2 = (data, defaultData) => {
+const saveV2 = (data, defaultData, metadata) => {
   var deletedItems = getDeleted(data, defaultData);
   var notEqualItems = removeDefaultsFromCollection(getNotEqualItems(data, defaultData));
   var addItems = [];
@@ -17,6 +17,13 @@ const saveV2 = (data, defaultData) => {
     let diff = immutablediff(removeDefaults(defaultItem), item);
     if (diff.size !== 0) changedItems[id] = diff;
   });
+  if (!!metadata)
+    return {
+      deleted: deletedItems.toJS(),
+      added: addItems,
+      modified: changedItems,
+      metadata,
+    };
   return { deleted: deletedItems.toJS(), added: addItems, modified: changedItems };
 };
 
