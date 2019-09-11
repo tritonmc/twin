@@ -52,7 +52,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 class EditorDialog extends Component {
   render() {
-    const { classes, id, open, close, archived } = this.props;
+    const { classes, id, open, close, archived, tritonV } = this.props;
     return (
       <Dialog fullScreen open={open} onClose={close} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -74,10 +74,12 @@ class EditorDialog extends Component {
         </AppBar>
         <form className={classes.container} noValidate autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <CollectionField id={id} />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            {tritonV >= 4 && (
+              <Grid item xs={12} md={6}>
+                <CollectionField id={id} />
+              </Grid>
+            )}
+            <Grid item xs={12} md={tritonV >= 4 ? 6 : 12}>
               <KeyField id={id} />
             </Grid>
           </Grid>
@@ -122,6 +124,7 @@ const mapStateToProps = (state) => {
     type: item.get("type", "text"),
     bungee: state.main.get("bungee", false),
     archived: item.getIn(["_twin", "archived"], false),
+    tritonV: state.main.get("tritonVersion", 1),
   };
 };
 
