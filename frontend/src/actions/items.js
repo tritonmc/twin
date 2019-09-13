@@ -55,3 +55,14 @@ export const addItem = (itemType, id) => ({
   itemType,
   id,
 });
+
+export const addPattern = (id) => ({
+  type: types.ADD_PATTERN,
+  id,
+});
+
+export const deletePattern = (id, index) => ({
+  type: types.DELETE_PATTERN,
+  id,
+  index,
+});

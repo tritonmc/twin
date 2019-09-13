@@ -83,6 +83,22 @@ function itemReducer(state = List(), action) {
           }),
         })
       );
+    case types.ADD_PATTERN:
+      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
+        return item
+          .update("patterns", List(), (patterns) => {
+            return patterns.push("");
+          })
+          .setIn(["_twin", "dateUpdated"], Date.now());
+      });
+    case types.DELETE_PATTERN:
+      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
+        return item
+          .update("patterns", List(), (patterns) => {
+            return patterns.delete(action.index);
+          })
+          .setIn(["_twin", "dateUpdated"], Date.now());
+      });
     case types.SET_SAVED:
       return List();
     default:

@@ -20,6 +20,7 @@ import MetaSection from "./EditorFields/MetaSection";
 import TextFieldsSection from "./EditorFields/TextFieldsSection";
 import CollectionField from "./EditorFields/CollectionField";
 import Grid from "@material-ui/core/Grid";
+import PatternsSection from "./EditorFields/PatternsSection";
 
 const styles = (theme) => ({
   appBar: {
@@ -87,6 +88,14 @@ class EditorDialog extends Component {
             Text
           </Typography>
           <TextFieldsSection id={id} />
+          {tritonV >= 4 && this.props.type === "text" && (
+            <>
+              <Typography variant="h5" className={classes.sectionHeader}>
+                Patterns
+              </Typography>
+              <PatternsSection id={id} />
+            </>
+          )}
           {this.props.type === "text" && this.props.bungee && (
             <>
               <Typography variant="h5" className={classes.sectionHeader}>

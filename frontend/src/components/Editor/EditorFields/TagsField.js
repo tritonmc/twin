@@ -168,6 +168,7 @@ const components = {
 
 class TagsField extends React.Component {
   handleChange = (value, action) => {
+    if (!value) value = [];
     this.props.updateField(List(value.map((v) => v.value)));
     if (action.action === "create-option") this.props.addTag(value[value.length - 1].value);
   };
