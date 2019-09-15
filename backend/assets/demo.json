@@ -15,7 +15,8 @@
         "description": "This is just a basic example."
       },
       "type": "text",
-      "key": "example.1"
+      "key": "example.1",
+      "fileName": "default"
     },
     {
       "servers": ["hub"],
@@ -31,7 +32,8 @@
         "description": "This message would only work on a Bungee server named \"hub\""
       },
       "type": "text",
-      "key": "example.2"
+      "key": "example.2",
+      "fileName": "default"
     },
     {
       "languages": {
@@ -46,7 +48,8 @@
         "description": "This is what an item looks like when it has no tags. Nothing is shown on the dashboard, but it doesn't affect anything ingame."
       },
       "type": "text",
-      "key": "example.3"
+      "key": "example.3",
+      "fileName": "collection1"
     },
     {
       "_twin": {
@@ -71,10 +74,23 @@
         "en_GB": ["This", "is", "a", "sign"],
         "pt_PT": ["Isto", "é", "uma", "placa"]
       },
-      "key": "example.4"
+      "key": "example.4",
+      "fileName": "collection1"
     }
   ],
-  "tritonv": 2,
+  "metadata": {
+    "default": {
+      "universal": true,
+      "blacklist": false,
+      "servers": []
+    },
+    "collection1": {
+      "universal": true,
+      "blacklist": false,
+      "servers": []
+    }
+  },
+  "tritonv": 4,
   "mainLanguage": "en_GB",
   "user": "Demo User"
 }
