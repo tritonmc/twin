@@ -158,9 +158,20 @@ const mapDispatchToProps = (dispatch) => ({
     }),
   setData: (data) => {
     dispatch(setData(data.tritonv, data.bungee, data.languages));
+    var items = processData(data.data);
     if (data.tritonv >= 2) dispatch(setPreviewLanguage(data.mainLanguage));
-    if (data.tritonv >= 4) dispatch(setMetadata(data.metadata));
-    dispatch(setItems(processData(data.data)));
+    if (data.tritonv >= 4) {
+      if (data.bungee) {
+        dispatch(setMetadata(data.metadata));
+      } else {
+        dispatch(
+          setMetadata(
+            items.reduce((map, item) => map.set(item.get("fileName", "default"), Map()), Map())
+          )
+        );
+      }
+    }
+    dispatch(setItems(items));
   },
 });
 
