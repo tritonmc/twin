@@ -147,8 +147,9 @@ class Sidebar extends React.PureComponent {
             <Button
               className={classes.logoutButton}
               autoFocus
+              onClick={clearId}
               component={React.forwardRef((props, ref) => (
-                <Link innerRef={ref} onClick={clearId} to="/" {...props} />
+                <Link innerRef={ref} to="/" {...props} />
               ))}>
               Logout
             </Button>
