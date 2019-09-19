@@ -1,4 +1,4 @@
-import { List, Map } from "immutable";
+import { List, Map, fromJS } from "immutable";
 import undoable from "redux-undo-immutable";
 import uuid from "uuid/v4";
 import * as types from "../constants/ActionTypes";
@@ -101,6 +101,40 @@ function itemReducer(state = List(), action) {
       });
     case types.SET_SAVED:
       return List();
+    case types.IMPORT_TRANSLATIONS:
+      Object.keys(action.translations).forEach((key) => {
+        var twinId = key.split(".")[0];
+        let index = state.findKey((v) => v.getIn(["_twin", "id"]) === twinId);
+        if (index === undefined) {
+          state = state.push(
+            fromJS({
+              type: "text",
+              key: key
+                .split(".")
+                .slice(1)
+                .join("."),
+              _twin: Map({
+                id: twinId,
+                dateUpdated: Date.now(),
+                dateCreated: Date.now(),
+              }),
+              languages: {
+                [action.language]: action.translations[key],
+              },
+            })
+          );
+        } else {
+          state = state.update(index, (v) => {
+            if (v.get("type", "text") === "sign")
+              return v.setIn(
+                ["lines", action.language],
+                fromJS(action.translations[key].split("\n"))
+              );
+            return v.setIn(["languages", action.language], action.translations[key]);
+          });
+        }
+      });
+      return state;
     default:
       return state;
   }

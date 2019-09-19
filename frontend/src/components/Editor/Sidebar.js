@@ -27,6 +27,7 @@ import { setId, setSettingsState } from "../../actions/main";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import CollectionIcon from "@material-ui/icons/StyleRounded";
 import AddCollectionButton from "./AddCollectionButton";
+import ExportIcon from "@material-ui/icons/ImportExportRounded";
 
 const drawerWidth = 240;
 
@@ -85,6 +86,7 @@ class Sidebar extends React.PureComponent {
         <List>
           <ListItemLink to={`/${id}`} primary="Dashboard" icon={<DashboardIcon />} />
           <ListItemLink to={`/${id}/archive`} primary="Archive" icon={<ArchiveIcon />} />
+          <ListItemLink to={`/${id}/export`} primary="Export/Import" icon={<ExportIcon />} />
           {/*<ListItemLink to={`/${id}/suggestions`} primary="Suggestions" icon={<AssistantIcon />} />*/}
           {!!metadata && (
             <>

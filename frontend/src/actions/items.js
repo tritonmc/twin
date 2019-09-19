@@ -66,3 +66,9 @@ export const deletePattern = (id, index) => ({
   id,
   index,
 });
+
+export const importTranslations = (language, translations) => ({
+  type: types.IMPORT_TRANSLATIONS,
+  language,
+  translations,
+});

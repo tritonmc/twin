@@ -18,6 +18,7 @@ import ItemList from "./Dashboard/ItemList";
 import SelectedToolbar from "./Dashboard/SelectedToolbar";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
+import Export from "../Export/Export";
 
 const drawerWidth = 240;
 
@@ -94,6 +95,9 @@ class Editor extends React.PureComponent {
           <Switch>
             <Route path="/:id/archive">
               <ItemList archivedOnly={true} />
+            </Route>
+            <Route path="/:id/export">
+              <Export />
             </Route>
             <Route
               path="/:id/collection/:collection"
