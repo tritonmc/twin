@@ -119,13 +119,8 @@ class AddItemButton extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addItem: (type) => dispatch(addItem(type, uuid())),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  addItem: (type) => dispatch(addItem(type, uuid(), ownProps.collection || "default")),
 });
 
-export default withStyles(styles)(
-  connect(
-    null,
-    mapDispatchToProps
-  )(AddItemButton)
-);
+export default withStyles(styles)(connect(null, mapDispatchToProps)(AddItemButton));

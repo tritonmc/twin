@@ -89,6 +89,7 @@ function itemReducer(state = List(), action) {
     case types.ADD_ITEM:
       return state.push(
         Map({
+          fileName: action.collection,
           type: action.itemType,
           _twin: Map({
             id: action.id,

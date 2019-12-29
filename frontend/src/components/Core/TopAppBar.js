@@ -22,6 +22,7 @@ import SortButton from "../Editor/Dashboard/SortButton";
 import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
 import Hidden from "@material-ui/core/Hidden";
 import MoreButton from "../Editor/Dashboard/MoreButton";
+import { Switch, Route } from "react-router-dom";
 
 const styles = (theme) => ({
   root: {
@@ -136,7 +137,17 @@ class TopAppBar extends Component {
                     <UndoRedoButtons />
                     <SortButton />
                     <SaveButton />
-                    <AddItemButton />
+                    <Switch>
+                      <Route
+                        path="/:id/collection/:collection"
+                        render={(props) => (
+                          <AddItemButton
+                            collection={decodeURIComponent(props.match.params.collection)}
+                          />
+                        )}
+                      />
+                      <Route component={AddItemButton} />
+                    </Switch>
                   </Hidden>
                   <Hidden mdUp>
                     <MoreButton>
@@ -197,10 +208,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 export default withStyles(styles, { withTheme: true })(
-  withCookies(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(TopAppBar)
-  )
+  withCookies(connect(mapStateToProps, mapDispatchToProps)(TopAppBar))
 );

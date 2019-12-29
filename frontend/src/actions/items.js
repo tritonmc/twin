@@ -50,10 +50,11 @@ export const toggleArchiveState = (id, status) => ({
   status,
 });
 
-export const addItem = (itemType, id) => ({
+export const addItem = (itemType, id, collection) => ({
   type: types.ADD_ITEM,
   itemType,
   id,
+  collection,
 });
 
 export const addPattern = (id) => ({
