@@ -41,6 +41,7 @@ const styles = (theme) => ({
     borderRadius: 4,
     boxSizing: "border-box",
     padding: "0 4px",
+    lineHeight: "24px",
   },
   checkbox: {
     marginLeft: -12,
@@ -161,9 +162,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleSelected: (id) => dispatch(toggleSelected(id)),
 });
 
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ItemRow)
-);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ItemRow));
