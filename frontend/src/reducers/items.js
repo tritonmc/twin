@@ -1,4 +1,4 @@
-import { List, Map, fromJS, is } from "immutable";
+import { fromJS, is, List, Map } from "immutable";
 import undoable from "redux-undo-immutable";
 import uuid from "uuid/v4";
 import * as types from "../constants/ActionTypes";
@@ -8,21 +8,29 @@ function itemReducer(state = List(), action) {
     case types.SET_ITEMS:
       return action.data;
     case types.UPDATE_FIELD:
-      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
-        if (item.getIn(action.path) !== action.value)
-          return item.setIn(action.path, action.value).setIn(["_twin", "dateUpdated"], Date.now());
-        return item;
-      });
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
+        (item) => {
+          if (item.getIn(action.path) !== action.value)
+            return item
+              .setIn(action.path, action.value)
+              .setIn(["_twin", "dateUpdated"], Date.now());
+          return item;
+        }
+      );
     case types.UPDATE_SIGN_LINE:
-      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
-        if (item.getIn(["lines", action.language, action.line]) !== action.value)
-          return item
-            .updateIn(["lines", action.language], List(), (list) =>
-              list.set(action.line, action.value)
-            )
-            .setIn(["_twin", "dateUpdated"], Date.now());
-        return item;
-      });
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
+        (item) => {
+          if (item.getIn(["lines", action.language, action.line]) !== action.value)
+            return item
+              .updateIn(["lines", action.language], List(), (list) =>
+                list.set(action.line, action.value)
+              )
+              .setIn(["_twin", "dateUpdated"], Date.now());
+          return item;
+        }
+      );
     case types.DELETE_ITEM:
       if (typeof action.id === "object")
         return state.filterNot((v) => action.id.includes(v.getIn(["_twin", "id"])));
@@ -51,13 +59,16 @@ function itemReducer(state = List(), action) {
         }
       );
     case types.ADD_SIGN_LOCATION:
-      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
-        return item
-          .update("locations", List(), (locs) => {
-            return locs.push(Map({ id: uuid() }));
-          })
-          .setIn(["_twin", "dateUpdated"], Date.now());
-      });
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
+        (item) => {
+          return item
+            .update("locations", List(), (locs) => {
+              return locs.push(Map({ id: uuid() }));
+            })
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        }
+      );
     case types.TOGGLE_ARCHIVE_STATE:
       if (typeof action.id === "object")
         return state.map((v) =>
@@ -67,11 +78,14 @@ function itemReducer(state = List(), action) {
                 .setIn(["_twin", "dateUpdated"], Date.now())
             : v
         );
-      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
-        return item
-          .updateIn(["_twin", "archived"], false, (value) => !value)
-          .setIn(["_twin", "dateUpdated"], Date.now());
-      });
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
+        (item) => {
+          return item
+            .updateIn(["_twin", "archived"], false, (value) => !value)
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        }
+      );
     case types.ADD_ITEM:
       return state.push(
         Map({
@@ -84,21 +98,27 @@ function itemReducer(state = List(), action) {
         })
       );
     case types.ADD_PATTERN:
-      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
-        return item
-          .update("patterns", List(), (patterns) => {
-            return patterns.push("");
-          })
-          .setIn(["_twin", "dateUpdated"], Date.now());
-      });
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
+        (item) => {
+          return item
+            .update("patterns", List(), (patterns) => {
+              return patterns.push("");
+            })
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        }
+      );
     case types.DELETE_PATTERN:
-      return state.update(state.findKey((v) => v.getIn(["_twin", "id"]) === action.id), (item) => {
-        return item
-          .update("patterns", List(), (patterns) => {
-            return patterns.delete(action.index);
-          })
-          .setIn(["_twin", "dateUpdated"], Date.now());
-      });
+      return state.update(
+        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
+        (item) => {
+          return item
+            .update("patterns", List(), (patterns) => {
+              return patterns.delete(action.index);
+            })
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        }
+      );
     case types.SET_SAVED:
       return List();
     case types.IMPORT_TRANSLATIONS:
@@ -146,12 +166,19 @@ function itemReducer(state = List(), action) {
         }
       });
       return state;
+    case types.DELETE_COLLECTION:
+      return state.map((v) =>
+        v.update((v) =>
+          v.get("fileName", "default") === action.name ? v.set("fileName", "default") : v
+        )
+      );
     default:
       return state;
   }
 }
 
 export default undoable(itemReducer, {
-  actionFilter: (action) => action.type !== types.SET_ITEMS,
+  actionFilter: (action) =>
+    action.type !== types.SET_ITEMS && action.type !== types.DELETE_COLLECTION,
   clearHistoryType: types.SET_SAVED,
 });

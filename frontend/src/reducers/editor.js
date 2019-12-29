@@ -1,4 +1,4 @@
-import { List, Map, Set, fromJS } from "immutable";
+import { fromJS, List, Map, Set } from "immutable";
 import * as types from "../constants/ActionTypes";
 
 function mainReducer(
@@ -71,6 +71,8 @@ function mainReducer(
         if (index !== -1) return v.delete(index);
         return v;
       });
+    case types.DELETE_COLLECTION:
+      return state.update("metadata", (v) => v.delete(action.name));
     default:
       return state;
   }

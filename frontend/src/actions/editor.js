@@ -50,3 +50,8 @@ export const addCollection = (name) => ({
   type: types.ADD_COLLECTION,
   name,
 });
+
+export const deleteCollection = (name) => ({
+  type: types.DELETE_COLLECTION,
+  name,
+});

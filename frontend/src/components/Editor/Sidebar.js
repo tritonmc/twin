@@ -11,23 +11,24 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArchiveIcon from "@material-ui/icons/Archive";
 //import AssistantIcon from "@material-ui/icons/Assistant";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import ExportIcon from "@material-ui/icons/ImportExportRounded";
 import TagIcon from "@material-ui/icons/Label";
 import SettingsIcon from "@material-ui/icons/Settings";
+import CollectionIcon from "@material-ui/icons/StyleRounded";
 import { List as IList, Map } from "immutable";
 import LogoutIcon from "mdi-material-ui/Logout";
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink as Link } from "react-router-dom";
 import { setId, setSettingsState } from "../../actions/main";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import CollectionIcon from "@material-ui/icons/StyleRounded";
 import AddCollectionButton from "./AddCollectionButton";
-import ExportIcon from "@material-ui/icons/ImportExportRounded";
+import DeleteCollectionButton from "./DeleteCollectionButton";
 
 const drawerWidth = 240;
 
@@ -101,6 +102,7 @@ class Sidebar extends React.PureComponent {
                 />
               ))}
               <AddCollectionButton />
+              <DeleteCollectionButton />
             </>
           )}
           <Divider />
