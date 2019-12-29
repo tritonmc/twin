@@ -43,12 +43,12 @@ const RemoveCollectionButton = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setCollection("");
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setCollection("");
   };
 
   const handleChange = (event) => {
