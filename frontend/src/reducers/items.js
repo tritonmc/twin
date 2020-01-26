@@ -150,11 +150,14 @@ function itemReducer(state = List(), action) {
               if (
                 !is(
                   v.getIn(["lines", action.language]),
-                  fromJS(action.translations[key].split("\n"))
+                  fromJS(splitSignData(action.translations[key]))
                 )
               )
                 return v
-                  .setIn(["lines", action.language], fromJS(action.translations[key].split("\n")))
+                  .setIn(
+                    ["lines", action.language],
+                    fromJS(splitSignData(action.translations[key]))
+                  )
                   .setIn(["_twin", "dateUpdated"], Date.now());
               return v;
             }
@@ -177,6 +180,11 @@ function itemReducer(state = List(), action) {
       return state;
   }
 }
+
+const splitSignData = (text) => {
+  if (!text) return [];
+  return fromJS(text.split("\n"));
+};
 
 export default undoable(itemReducer, {
   actionFilter: (action) =>

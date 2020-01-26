@@ -49,7 +49,12 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={THEMES[this.props.theme]}>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}>
           <Router>
             <>
               <TopAppBar currentTheme={this.props.theme} />

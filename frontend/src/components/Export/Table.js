@@ -6,10 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import MuiTableRow from "@material-ui/core/TableRow";
 import { List, Map } from "immutable";
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import properties from "properties";
 import fileDownload from "js-file-download";
+import { useSnackbar } from "notistack";
+import properties from "properties";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { importTranslations } from "../../actions/items";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,7 @@ const useStylesRow = makeStyles({
 });
 
 const TableRow = ({ lang }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStylesRow();
   const items = useSelector((state) => {
     var selected = state.editor.get("selected", List());
@@ -86,7 +88,12 @@ const TableRow = ({ lang }) => {
     if (e.target.files.length === 0) return;
     const contents = await getFileContents(e.target.files[0]);
     const objects = properties.parse(contents);
-    dispatch(importTranslations(lang, objects));
+    try {
+      dispatch(importTranslations(lang, objects));
+      enqueueSnackbar("Sucessfully imported file!", { variant: "success" });
+    } catch (e) {
+      enqueueSnackbar("An error occurred while importing file ;(", { variant: "error" });
+    }
   };
 
   return (
