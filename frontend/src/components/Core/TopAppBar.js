@@ -1,4 +1,5 @@
 import AppBar from "@material-ui/core/AppBar";
+import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,15 +15,14 @@ import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { Helmet } from "react-helmet-async";
 import { connect } from "react-redux";
+import { Route, Switch } from "react-router-dom";
 import { setSearch } from "../../actions/editor";
 import { setDrawerState, setTheme } from "../../actions/main";
 import AddItemButton from "../Editor/Dashboard/AddItemButton";
+import MoreButton from "../Editor/Dashboard/MoreButton";
 import SaveButton from "../Editor/Dashboard/SaveButton";
 import SortButton from "../Editor/Dashboard/SortButton";
 import UndoRedoButtons from "../Editor/Dashboard/UndoRedoButtons";
-import Hidden from "@material-ui/core/Hidden";
-import MoreButton from "../Editor/Dashboard/MoreButton";
-import { Switch, Route } from "react-router-dom";
 
 const styles = (theme) => ({
   root: {
@@ -151,10 +151,12 @@ class TopAppBar extends Component {
                   </Hidden>
                   <Hidden mdUp>
                     <MoreButton>
-                      <UndoRedoButtons list />
-                      <SortButton list />
-                      <SaveButton list />
-                      <AddItemButton list />
+                      <div>
+                        <UndoRedoButtons list />
+                        <SortButton list />
+                        <SaveButton list />
+                        <AddItemButton list />
+                      </div>
                     </MoreButton>
                   </Hidden>
                 </>
