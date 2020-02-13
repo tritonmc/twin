@@ -176,6 +176,14 @@ function itemReducer(state = List(), action) {
           v.get("fileName", "default") === action.name ? v.set("fileName", "default") : v
         )
       );
+    case types.MOVE_COLLECTION_BULK:
+      return state.map((v) =>
+        action.items.indexOf(v.getIn(["_twin", "id"], "")) !== -1
+          ? v.update((v) =>
+              v.set("fileName", action.collection).setIn(["_twin", "dateUpdated"], Date.now())
+            )
+          : v
+      );
     default:
       return state;
   }

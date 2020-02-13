@@ -73,3 +73,9 @@ export const importTranslations = (language, translations) => ({
   language,
   translations,
 });
+
+export const moveCollectionBulk = (items, collection) => ({
+  type: types.MOVE_COLLECTION_BULK,
+  items,
+  collection,
+});

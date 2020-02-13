@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllSelected } from "../../../actions/editor";
 import ArchiveButton from "../EditorFields/ArchiveButton";
 import DeleteButton from "../EditorFields/DeleteButton";
+import MoveCollectionBulk from "../EditorFields/MoveCollectionBulk";
 
 const TOOLBAR_HEIGHT = 48;
 const DRAWER_WIDTH = 240;
@@ -89,6 +90,7 @@ const SelectedToolbar = ({ drawerOpen }) => {
         {`${size} item${size === 1 ? "" : "s"} selected`}
       </Typography>
       <div>
+        <MoveCollectionBulk items={selected} />
         <DeleteButton item={selected} bulk />
         <ArchiveButton id={selected} bulk archived={unarchiveAll} />
       </div>
