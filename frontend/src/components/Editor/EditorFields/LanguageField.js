@@ -27,6 +27,7 @@ class LanguageField extends Component {
         margin="normal"
         variant="outlined"
         fullWidth
+        multiline
       />
     );
   }
