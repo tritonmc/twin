@@ -71,7 +71,7 @@ class AddItemButton extends Component {
             <ListItemIcon>
               <AddIcon />
             </ListItemIcon>
-            <ListItemText primary="Sort by" />
+            <ListItemText primary="Add Item" />
           </MenuItem>
         ) : (
           <Tooltip title="Add Item">
