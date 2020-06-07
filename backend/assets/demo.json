@@ -20,6 +20,7 @@
     },
     {
       "servers": ["hub"],
+      "blacklist": false,
       "languages": {
         "en_GB": "&aThis only works on server \"hub\"",
         "pt_PT": "&aIsto só funciona no servidor \"hub\""
@@ -80,17 +81,15 @@
   ],
   "metadata": {
     "default": {
-      "universal": true,
-      "blacklist": false,
+      "blacklist": true,
       "servers": []
     },
     "collection1": {
-      "universal": true,
-      "blacklist": false,
+      "blacklist": true,
       "servers": []
     }
   },
-  "tritonv": 4,
+  "tritonv": 5,
   "mainLanguage": "en_GB",
   "user": "Demo User"
 }
