@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       const { enqueueSnackbar } = ownProps;
       dispatch(setLoading(true));
       var payload;
-      if (configVersion === 2 || configVersion === 3 || configVersion === 4) {
+      if (configVersion > 2 && configVersion < 5) {
         payload = saveV2(data, defaultData, configVersion >= 4 ? metadata : undefined);
       } else if (configVersion === 1) {
         payload = saveV1(data, defaultData, bungee);
@@ -81,9 +81,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }),
 });
 
-export default withSnackbar(
-  connect(
-    null,
-    mapDispatchToProps
-  )(SaveButton)
-);
+export default withSnackbar(connect(null, mapDispatchToProps)(SaveButton));
