@@ -24,7 +24,7 @@ function itemReducer(state = List(), action) {
         (item) => {
           if (item.getIn(["lines", action.language, action.line]) !== action.value)
             return item
-              .updateIn(["lines", action.language], List(), (list) =>
+              .updateIn(["lines", action.language], List(["", "", "", ""]), (list) =>
                 list.set(action.line, action.value)
               )
               .setIn(["_twin", "dateUpdated"], Date.now());
@@ -130,10 +130,7 @@ function itemReducer(state = List(), action) {
           state = state.push(
             fromJS({
               type: "text",
-              key: key
-                .split(".")
-                .slice(1)
-                .join("."),
+              key: key.split(".").slice(1).join("."),
               _twin: Map({
                 id: twinId,
                 dateUpdated: Date.now(),
