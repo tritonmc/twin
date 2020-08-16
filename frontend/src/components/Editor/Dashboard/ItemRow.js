@@ -10,6 +10,10 @@ import { connect } from "react-redux";
 import { openEditor, toggleSelected } from "../../../actions/editor";
 import classnames from "classnames";
 import ArchivedIcon from "@material-ui/icons/ArchiveRounded";
+import CopyIcon from "mdi-material-ui/ClipboardText";
+import IconButton from "@material-ui/core/IconButton";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { withSnackbar } from "notistack";
 
 const styles = (theme) => ({
   root: {
@@ -21,6 +25,10 @@ const styles = (theme) => ({
   title: {
     width: "25%",
     paddingRight: 5,
+    display: "flex",
+  },
+  titleText: {
+    minWidth: 0,
   },
   description: {
     flexGrow: 1,
@@ -47,6 +55,13 @@ const styles = (theme) => ({
     marginLeft: -12,
     marginRight: 6,
   },
+  copyButton: {
+    marginLeft: 6,
+    opacity: 0.2,
+    "&:hover": {
+      opacity: 1,
+    },
+  },
 });
 
 class ItemRow extends Component {
@@ -54,6 +69,7 @@ class ItemRow extends Component {
     super();
     this.openEditor = this.openEditor.bind(this);
     this.toggleSelected = this.toggleSelected.bind(this);
+    this.onCopy = this.onCopy.bind(this);
   }
 
   shouldComponentUpdate = (nextProps) => {
@@ -82,8 +98,19 @@ class ItemRow extends Component {
     e.stopPropagation();
   }
 
+  onCopy(e) {
+    e.stopPropagation();
+    this.props.enqueueSnackbar("Copied to clipboard!", { variant: "info", autoHideDuration: 1000 });
+  }
+
   render() {
     const { style, title, description, tags, classes, selected, collection, archived } = this.props;
+    const argsCopySyntax = Array(((description || "").match(/%\d/g) || []).length)
+      .fill("[arg][/arg]")
+      .join("");
+    const copySyntax = `[lang]${title || ""}${
+      argsCopySyntax ? `[args]${argsCopySyntax}[/args]` : ``
+    }[/lang]`;
     return (
       <ListItem
         button
@@ -99,9 +126,16 @@ class ItemRow extends Component {
           color="primary"
         />
         <ListItemText disableTypography className={classes.itemText}>
-          <Typography noWrap component="div" className={classes.title}>
-            {title || "Unknown key"}
-          </Typography>
+          <div className={classes.title}>
+            <div className={classes.titleText}>
+              <Typography noWrap>{title || "Unknown key"}</Typography>
+            </div>
+            <CopyToClipboard text={copySyntax}>
+              <IconButton size="small" className={classes.copyButton} onClick={this.onCopy}>
+                <CopyIcon />
+              </IconButton>
+            </CopyToClipboard>
+          </div>
           <div className={classes.description}>
             {archived && (
               <Chip
@@ -162,4 +196,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleSelected: (id) => dispatch(toggleSelected(id)),
 });
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ItemRow));
+export default withSnackbar(
+  withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ItemRow))
+);
