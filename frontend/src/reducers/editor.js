@@ -21,7 +21,7 @@ function mainReducer(
       return state.set("metadata", fromJS(action.metadata));
     case types.ADD_COLLECTION:
       return state.update("metadata", (metadata) =>
-        metadata.set(action.name, fromJS({ universal: true, blacklist: false, servers: [] }))
+        metadata.set(action.name, fromJS(action.options))
       );
     case types.SET_SEARCH:
       return state.set("search", action.search);

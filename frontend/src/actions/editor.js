@@ -46,10 +46,15 @@ export const setAllSelected = (selected, id) => ({
   selected,
 });
 
-export const addCollection = (name) => ({
-  type: types.ADD_COLLECTION,
-  name,
-});
+export const addCollection = (name) => (dispatch, getState) =>
+  dispatch({
+    type: types.ADD_COLLECTION,
+    name,
+    options:
+      getState().main.get("tritonVersion", 1) >= 5
+        ? { blacklist: true, servers: [] }
+        : { universal: true, blacklist: false, servers: [] },
+  });
 
 export const deleteCollection = (name) => ({
   type: types.DELETE_COLLECTION,
