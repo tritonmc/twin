@@ -1,15 +1,12 @@
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import { SnackbarProvider } from "notistack";
 import React, { Component } from "react";
-import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-//import Migrate from "./components/migrate";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Editor from "../Editor/Editor";
-import Home from "../Home/Home";
-import Migration from "../Migration/Migration";
-//import Dashboard from "./components/dashboard.js";
-import Saved from "../Saved/Saved";
+import Editor from "components/Editor/Editor";
+import Home from "components/Home/Home";
+import Migration from "components/Migration/Migration";
+import Saved from "components/Saved/Saved";
 import TopAppBar from "./TopAppBar";
 
 const THEMES = [
@@ -71,48 +68,10 @@ class App extends Component {
     );
   }
 }
-/*
-<Switch>
-  <Route path="/:id" component={Editor} />
-  <Route component={Home} />
-</Switch>
-*/
-/*<Route path="/migrate" component={Migrate} />
-<Route path="/saved" component={Saved} />
-<Route path="/error/:id" component={Home} />
-<Route path="/:id" component={Dashboard} />*/
 
-/*const THEMES2 = [
-  {
-    name: "Light",
-    "--mdc-theme-primary": "#008ff8",
-    "--mdc-theme-secondary": "#173753",
-  },
-  {
-    name: "Dark",
-    "--mdc-theme-primary": "#00bafa",
-    "--mdc-theme-secondary": "#ff0056",
-    "--mdc-theme-background": "#151836",
-    "--mdc-theme-surface": "#14223f",
-    "--mdc-theme-on-surface": "rgba(255,255,255,.87)",
-    "--mdc-theme-on-primary": "rgba(255,255,255,.87)",
-    "--mdc-theme-on-secondary": "rgba(255,255,255,.87)",
-  },
-  {
-    name: "Dark",
-    "--mdc-theme-primary": "#1D70A2",
-    "--mdc-theme-secondary": "#207CA0",
-    "--mdc-theme-background": "#001221",
-    "--mdc-theme-surface": "#032F38",
-    "--mdc-theme-on-surface": "rgba(255,255,255,.87)",
-    "--mdc-theme-on-primary": "rgba(255,255,255,.87)",
-    "--mdc-theme-on-secondary": "rgba(255,255,255,.87)",
-  },
-];*/
-
-const mapStateToProps = (state, ownProps) => ({
-  theme: state.main.get("theme", ownProps.cookies.get("theme")) || 0,
+const mapStateToProps = (state) => ({
+  theme: state.main.get("theme", parseInt(localStorage.getItem("theme")) || 0),
   loading: state.main.get("loading", false),
 });
 
-export default withCookies(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);

@@ -1,5 +1,4 @@
 import React from "react";
-import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
@@ -9,13 +8,11 @@ import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
 
 ReactDOM.render(
-  <CookiesProvider>
-    <Provider store={configureStore()}>
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
-    </Provider>
-  </CookiesProvider>,
+  <Provider store={configureStore()}>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </Provider>,
   document.getElementById("root")
 );
 

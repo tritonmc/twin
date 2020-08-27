@@ -14,7 +14,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import HeartIcon from "@material-ui/icons/Favorite";
 import { List as IList } from "immutable";
 import React, { Component } from "react";
-import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { setPreviewLanguage } from "../../actions/editor";
 import { setSettingsState, setTheme } from "../../actions/main";
@@ -81,17 +80,17 @@ class Settings extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   isOpen: state.main.get("settingsOpen", false),
-  theme: state.main.get("theme", ownProps.cookies.get("theme")) || 0,
+  theme: parseInt(state.main.get("theme", localStorage.getItem("theme"))) || 0,
   previewLanguage: state.editor.get("previewLanguage"),
   availableLanguages: state.main.get("availableLanguages", IList()),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleTheme: () =>
     dispatch((dispatch, getState) => {
       var targetTheme =
-        parseInt(getState().main.get("theme", ownProps.cookies.get("theme")) || 0) === 1 ? 0 : 1;
-      ownProps.cookies.set("theme", targetTheme, { path: "/", maxAge: 2147483647 });
+        parseInt(getState().main.get("theme", localStorage.getItem("theme")) || 0) === 1 ? 0 : 1;
+      localStorage.setItem("theme", targetTheme);
       dispatch(setTheme(targetTheme));
     }),
   close: () => {
@@ -102,11 +101,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-export default withCookies(
-  withStyles(styles)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(Settings)
-  )
-);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Settings));

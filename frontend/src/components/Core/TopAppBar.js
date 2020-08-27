@@ -12,7 +12,6 @@ import classnames from "classnames";
 import Lightbulb from "mdi-material-ui/Lightbulb";
 import LightbulbOn from "mdi-material-ui/LightbulbOn";
 import React, { Component } from "react";
-import { withCookies } from "react-cookie";
 import { Helmet } from "react-helmet-async";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
@@ -194,12 +193,12 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleTheme: () =>
     dispatch((dispatch, getState) => {
       var targetTheme =
-        parseInt(getState().main.get("theme", ownProps.cookies.get("theme")) || 0) === 1 ? 0 : 1;
-      ownProps.cookies.set("theme", targetTheme, { path: "/", maxAge: 2147483647 });
+        parseInt(getState().main.get("theme", localStorage.getItem("theme")) || 0) === 1 ? 0 : 1;
+      localStorage.setItem("theme", targetTheme);
       dispatch(setTheme(targetTheme));
     }),
   toggleDrawer: () =>
@@ -210,5 +209,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 export default withStyles(styles, { withTheme: true })(
-  withCookies(connect(mapStateToProps, mapDispatchToProps)(TopAppBar))
+  connect(mapStateToProps, mapDispatchToProps)(TopAppBar)
 );
