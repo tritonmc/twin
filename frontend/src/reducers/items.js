@@ -1,6 +1,6 @@
 import { fromJS, is, List, Map } from "immutable";
 import undoable from "redux-undo-immutable";
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import * as types from "../constants/ActionTypes";
 
 function itemReducer(state = List(), action) {

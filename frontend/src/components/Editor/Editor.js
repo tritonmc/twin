@@ -8,17 +8,17 @@ import { connect } from "react-redux";
 import { Route, Switch } from "react-router";
 import { Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import uuid from "uuid/v4";
-import { setPreviewLanguage, setMetadata } from "../../actions/editor";
+import { v4 as uuid } from "uuid";
+import { setMetadata, setPreviewLanguage } from "../../actions/editor";
 import { setItems } from "../../actions/items";
 import { setData, setDrawerState, setId, setLoading } from "../../actions/main";
 import Settings from "../Core/Settings";
+import Export from "../Export/Export";
 import Loading from "../Loading/Loading";
 import ItemList from "./Dashboard/ItemList";
 import SelectedToolbar from "./Dashboard/SelectedToolbar";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
-import Export from "../Export/Export";
 
 const drawerWidth = 240;
 
@@ -179,7 +179,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(Editor));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Editor));

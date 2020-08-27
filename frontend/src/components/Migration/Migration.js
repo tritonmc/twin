@@ -1,21 +1,21 @@
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
-import { fromJS, Map } from "immutable";
-import React, { Component } from "react";
-import uuid from "uuid/v4";
-import ServerItem from "./ServerItem";
-import AddIcon from "@material-ui/icons/Add";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import { withSnackbar } from "notistack";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import AddIcon from "@material-ui/icons/Add";
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { fromJS, Map } from "immutable";
+import { withSnackbar } from "notistack";
+import React, { Component } from "react";
+import { v4 as uuid } from "uuid";
+import ServerItem from "./ServerItem";
 
 const styles = (theme) => ({
   root: {
