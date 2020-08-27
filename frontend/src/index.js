@@ -6,12 +6,15 @@ import App from "./components/Core/App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
+import { GlobalSettingsProvider } from "hooks/useGlobalSettings";
 
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
+    <GlobalSettingsProvider>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </GlobalSettingsProvider>
   </Provider>,
   document.getElementById("root")
 );

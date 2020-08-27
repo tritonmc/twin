@@ -15,7 +15,7 @@ import NotesIcon from "@material-ui/icons/Notes";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
-import { addItem } from "../../../actions/items";
+import { addItem } from "../../../../actions/items";
 
 const styles = (theme) => ({
   button: {

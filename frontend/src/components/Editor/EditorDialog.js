@@ -10,7 +10,7 @@ import { Map } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { closeEditor } from "../../actions/editor";
-import UndoRedoButtons from "./Dashboard/UndoRedoButtons";
+import UndoRedoButtons from "./Dashboard/TopAppBar/UndoRedoButtons";
 import ArchiveButton from "./EditorFields/ArchiveButton";
 import BungeeSection from "./EditorFields/BungeeSection";
 import DeleteButton from "./EditorFields/DeleteButton";
@@ -141,9 +141,4 @@ const mapDispatchToProps = {
   close: closeEditor,
 };
 
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(EditorDialog)
-);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(EditorDialog));

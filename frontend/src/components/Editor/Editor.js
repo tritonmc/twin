@@ -19,6 +19,8 @@ import ItemList from "./Dashboard/ItemList";
 import SelectedToolbar from "./Dashboard/SelectedToolbar";
 import EditorDialog from "./EditorDialog";
 import Sidebar from "./Sidebar";
+import TopAppBar from "./Dashboard/TopAppBar/TopAppBar";
+import { EditorSettingsProvider } from "hooks/useEditorSettings";
 
 const drawerWidth = 240;
 
@@ -83,44 +85,47 @@ class Editor extends React.PureComponent {
     }
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
-        <Settings />
-        <SelectedToolbar drawerOpen={this.props.drawerOpen} />
-        <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: this.props.drawerOpen,
-          })}>
-          <Switch>
-            <Route path="/:id/archive">
-              <ItemList archivedOnly={true} />
-            </Route>
-            <Route path="/:id/export">
-              <Export />
-            </Route>
-            <Route
-              path="/:id/collection/:collection"
-              render={(props) => (
-                <ItemList
-                  archivedOnly={false}
-                  collection={decodeURIComponent(props.match.params.collection)}
-                />
-              )}
-            />
-            <Route
-              path="/:id/tag/:tag"
-              render={(props) => (
-                <ItemList archivedOnly={false} tag={decodeURIComponent(props.match.params.tag)} />
-              )}
-            />
-            <Route>
-              <ItemList archivedOnly={false} />
-            </Route>
-          </Switch>
-        </main>
-        <EditorDialog />
-      </div>
+      <EditorSettingsProvider>
+        <TopAppBar />
+        <div className={classes.root}>
+          <CssBaseline />
+          <Sidebar drawerOpen={this.props.drawerOpen} toggleDrawer={this.props.toggleDrawer} />
+          <Settings />
+          <SelectedToolbar drawerOpen={this.props.drawerOpen} />
+          <main
+            className={classNames(classes.content, {
+              [classes.contentShift]: this.props.drawerOpen,
+            })}>
+            <Switch>
+              <Route path="/:id/archive">
+                <ItemList archivedOnly={true} />
+              </Route>
+              <Route path="/:id/export">
+                <Export />
+              </Route>
+              <Route
+                path="/:id/collection/:collection"
+                render={(props) => (
+                  <ItemList
+                    archivedOnly={false}
+                    collection={decodeURIComponent(props.match.params.collection)}
+                  />
+                )}
+              />
+              <Route
+                path="/:id/tag/:tag"
+                render={(props) => (
+                  <ItemList archivedOnly={false} tag={decodeURIComponent(props.match.params.tag)} />
+                )}
+              />
+              <Route>
+                <ItemList archivedOnly={false} />
+              </Route>
+            </Switch>
+          </main>
+          <EditorDialog />
+        </div>
+      </EditorSettingsProvider>
     );
   }
 }

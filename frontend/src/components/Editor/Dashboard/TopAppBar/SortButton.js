@@ -1,13 +1,8 @@
-import IconButton from "@material-ui/core/IconButton";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Tooltip from "@material-ui/core/Tooltip";
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
+import { setSort } from "actions/editor";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setSort } from "../../../actions/editor";
 
 const sortFilters = [
   {
@@ -81,7 +76,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { setSort };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SortButton);
+export default connect(mapStateToProps, mapDispatchToProps)(SortButton);

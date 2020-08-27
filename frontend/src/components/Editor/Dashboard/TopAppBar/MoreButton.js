@@ -1,5 +1,4 @@
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
+import { IconButton, Menu } from "@material-ui/core";
 import MoreIcon from "@material-ui/icons/MoreVertRounded";
 import React from "react";
 

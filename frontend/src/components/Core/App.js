@@ -1,13 +1,13 @@
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import { SnackbarProvider } from "notistack";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Editor from "components/Editor/Editor";
 import Home from "components/Home/Home";
 import Migration from "components/Migration/Migration";
 import Saved from "components/Saved/Saved";
-import TopAppBar from "./TopAppBar";
+import { useGlobalSettings } from "hooks/useGlobalSettings";
+import { SnackbarProvider } from "notistack";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ThemeColor from "./ThemeColor";
 
 const THEMES = [
   createMuiTheme({
@@ -42,36 +42,28 @@ const THEMES = [
   }),
 ];
 
-class App extends Component {
-  render() {
-    return (
-      <MuiThemeProvider theme={THEMES[this.props.theme]}>
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}>
-          <Router>
-            <>
-              <TopAppBar currentTheme={this.props.theme} />
-              <Switch>
-                <Route path="/saved" component={Saved} />
-                <Route path="/migrate" component={Migration} />
-                <Route path="/:id" component={Editor} />
-                <Route component={Home} />
-              </Switch>
-            </>
-          </Router>
-        </SnackbarProvider>
-      </MuiThemeProvider>
-    );
-  }
-}
+const App = () => {
+  const { theme } = useGlobalSettings();
+  return (
+    <MuiThemeProvider theme={THEMES[theme]}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}>
+        <ThemeColor />
+        <Router>
+          <Switch>
+            <Route path="/saved" component={Saved} />
+            <Route path="/migrate" component={Migration} />
+            <Route path="/:id" component={Editor} />
+            <Route component={Home} />
+          </Switch>
+        </Router>
+      </SnackbarProvider>
+    </MuiThemeProvider>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  theme: state.main.get("theme", parseInt(localStorage.getItem("theme")) || 0),
-  loading: state.main.get("loading", false),
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
