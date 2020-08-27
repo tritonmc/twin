@@ -26,3 +26,5 @@ frontend/src/styles/index.css
 backend/api/config.js
 
 test
+
+.eslintcache

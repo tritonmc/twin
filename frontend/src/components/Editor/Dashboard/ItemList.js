@@ -85,9 +85,8 @@ const mapStateToProps = (state, ownProps) => {
   var data = state.items
     .get("present", IList())
     .filter((item) => {
-      if (!!ownProps.collection) return item.get("fileName") === ownProps.collection;
-      if (!!ownProps.tag)
-        return item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1;
+      if (ownProps.collection) return item.get("fileName") === ownProps.collection;
+      if (ownProps.tag) return item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1;
       return item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly;
     })
     .sort((a, b) =>

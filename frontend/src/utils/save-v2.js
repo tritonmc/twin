@@ -17,7 +17,7 @@ const saveV2 = (data, defaultData, metadata) => {
     let diff = immutablediff(removeDefaults(defaultItem), item);
     if (diff.size !== 0) changedItems[id] = diff;
   });
-  if (!!metadata)
+  if (metadata)
     return {
       deleted: deletedItems.toJS(),
       added: addItems,
