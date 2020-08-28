@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import InputDialog from "./InputDialog";
 import TopAppBar from "./TopAppBar";
+import Footer from "./Footer";
 
 const useStyles = makeStyles({
   root: {
@@ -19,6 +20,7 @@ const Home = () => {
       <div className={classes.root}>
         <InputDialog />
       </div>
+      <Footer />
     </div>
   );
 };

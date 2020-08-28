@@ -28,7 +28,7 @@ const TopAppBar = () => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            TWIN
+            Triton Web Interface
           </Typography>
           <div className={classes.grow} />
           <IconButton onClick={toggleTheme} color="inherit">
