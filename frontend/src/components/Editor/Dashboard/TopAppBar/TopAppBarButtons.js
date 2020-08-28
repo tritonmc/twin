@@ -22,14 +22,14 @@ const TopAppBarButtons = () => {
   );
 
   return (
-    <>
+    <div>
       <Hidden smDown>{getButtons(false)}</Hidden>
       <Hidden mdUp>
         <MoreButton>
           <div>{getButtons(true)}</div>
         </MoreButton>
       </Hidden>
-    </>
+    </div>
   );
 };
 

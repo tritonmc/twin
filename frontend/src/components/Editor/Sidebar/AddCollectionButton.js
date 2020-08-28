@@ -11,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/AddRounded";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addCollection } from "../../actions/editor";
+import { addCollection } from "../../../actions/editor";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({

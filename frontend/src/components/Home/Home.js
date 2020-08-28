@@ -1,4 +1,3 @@
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import InputDialog from "./InputDialog";
@@ -18,7 +17,6 @@ const Home = () => {
     <div>
       <TopAppBar />
       <div className={classes.root}>
-        <CssBaseline />
         <InputDialog />
       </div>
     </div>

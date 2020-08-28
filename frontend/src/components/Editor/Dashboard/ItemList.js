@@ -55,7 +55,7 @@ class ItemList extends Component {
   render() {
     return (
       <AutoSizer
-        archivedOnly={this.props.archivedOnly}
+        archivedOnly={this.props.archivedOnly || false}
         tag={this.props.tag}
         collection={this.props.collection}
         defaultHeight={200}
@@ -68,7 +68,7 @@ class ItemList extends Component {
   _renderList({ width, height }) {
     return (
       <InnerList
-        archivedOnly={this.props.archivedOnly}
+        archivedOnly={this.props.archivedOnly || false}
         tag={this.props.tag}
         collection={this.props.collection}
         height={height}

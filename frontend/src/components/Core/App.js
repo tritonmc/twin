@@ -1,3 +1,4 @@
+import { CssBaseline } from "@material-ui/core";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Editor from "components/Editor/Editor";
 import Home from "components/Home/Home";
@@ -53,6 +54,7 @@ const App = () => {
           horizontal: "right",
         }}>
         <ThemeColor />
+        <CssBaseline />
         <Router>
           <Switch>
             <Route path="/saved" component={Saved} />

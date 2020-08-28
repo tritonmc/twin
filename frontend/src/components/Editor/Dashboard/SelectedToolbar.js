@@ -11,6 +11,7 @@ import { setAllSelected } from "../../../actions/editor";
 import ArchiveButton from "../EditorFields/ArchiveButton";
 import DeleteButton from "../EditorFields/DeleteButton";
 import MoveCollectionBulk from "../EditorFields/MoveCollectionBulk";
+import { useEditorSettings } from "hooks/useEditorSettings";
 
 const TOOLBAR_HEIGHT = 48;
 const DRAWER_WIDTH = 240;
@@ -67,12 +68,15 @@ const selector = (state) => {
   return { selected, unarchiveAll };
 };
 
-const SelectedToolbar = ({ drawerOpen }) => {
+const SelectedToolbar = () => {
   const classes = useStyles();
+  const { drawerOpen } = useEditorSettings();
   const { selected, unarchiveAll } = useSelector(selector);
   const size = selected.size;
   const dispatch = useDispatch();
+
   const onCloseIconClick = () => dispatch(setAllSelected(false));
+
   return (
     <Toolbar
       className={classnames(classes.root, {
