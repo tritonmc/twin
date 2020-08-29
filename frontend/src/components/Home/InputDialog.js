@@ -44,8 +44,6 @@ const InputDialog = () => {
     if (evt.key === "Enter") loadConfig();
   };
 
-  console.log(location);
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>

@@ -1,4 +1,4 @@
-import { AppBar, IconButton, InputBase, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, IconButton, InputBase, Toolbar, Typography, debounce } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -73,7 +73,8 @@ const TopAppBar = () => {
   const { drawerOpen, setDrawerOpen, setSearch } = useEditorSettings();
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
-  const updateSearch = (evt) => setSearch(evt.target.value);
+  const updateSearch = debounce(setSearch, 400);
+  const onChange = (evt) => updateSearch(evt.target.value);
 
   return (
     <div className={classes.root}>
@@ -99,7 +100,7 @@ const TopAppBar = () => {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              onChange={updateSearch}
+              onChange={onChange}
             />
           </div>
           <div className={classes.grow} />
