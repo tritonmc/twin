@@ -66,6 +66,7 @@ const InnerList = ({ width, height, filteredKeys }) => {
         itemCount={filteredKeys.size}
         itemSize={40}
         itemKey={getItemKey}
+        overscanCount={10}
         outerElementType={List}>
         {ItemRow}
       </FixedSizeList>
