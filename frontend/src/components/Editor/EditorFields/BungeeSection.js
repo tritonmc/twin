@@ -31,7 +31,7 @@ export class MetaSection extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  tritonVersion: state.main.get("tritonVersion", 1),
+  tritonVersion: /*state.main.get("tritonVersion", 1)*/ 6, // HOT FIX
 });
 
 export default connect(mapStateToProps)(MetaSection);

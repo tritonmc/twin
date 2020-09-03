@@ -120,7 +120,7 @@ function itemReducer(state = List(), action) {
             .setIn(["_twin", "dateUpdated"], Date.now());
         }
       );
-    case types.SET_SAVED:
+    case types.CLEAR_DATA:
       return List();
     case types.IMPORT_TRANSLATIONS:
       Object.keys(action.translations).forEach((key) => {
@@ -194,5 +194,5 @@ const splitSignData = (text) => {
 export default undoable(itemReducer, {
   actionFilter: (action) =>
     action.type !== types.SET_ITEMS && action.type !== types.DELETE_COLLECTION,
-  clearHistoryType: types.SET_SAVED,
+  clearHistoryType: types.CLEAR_DATA,
 });

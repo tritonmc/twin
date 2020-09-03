@@ -63,7 +63,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     type,
     languages: item.get(type === "text" ? "languages" : "lines", Map()),
-    availableLanguages: state.main.get("availableLanguages", List()),
+    availableLanguages: /*state.main.get("availableLanguages", List())*/ List(), // HOT FIX
   };
 };
 
@@ -74,7 +74,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(updateSignLine(ownProps.id, language, parseInt(line), value)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TextFieldsSection);
+export default connect(mapStateToProps, mapDispatchToProps)(TextFieldsSection);

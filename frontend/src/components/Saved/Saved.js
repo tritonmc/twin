@@ -2,7 +2,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { withStyles } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setSaved } from "../../actions/main";
 import SavedDialog from "./SavedDialog";
 
 const styles = {
@@ -15,7 +14,7 @@ const styles = {
 
 class Saved extends Component {
   componentDidMount() {
-    this.props.setSaved();
+    //this.props.setSaved();
   }
   render() {
     const { classes } = this.props;
@@ -30,12 +29,7 @@ class Saved extends Component {
 }
 
 const mapDispatchToProps = {
-  setSaved,
+  //setSaved,
 };
 
-export default withStyles(styles)(
-  connect(
-    null,
-    mapDispatchToProps
-  )(Saved)
-);
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Saved));

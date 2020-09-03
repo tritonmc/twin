@@ -10,7 +10,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { closeEditor } from "../../../actions/editor";
 import { deleteItem } from "../../../actions/items";
 
 const styles = (theme) => ({
@@ -83,11 +82,7 @@ class DeleteButton extends Component {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   deleteItem: () => {
     dispatch(deleteItem(ownProps.item));
-    dispatch(closeEditor());
   },
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(withStyles(styles)(DeleteButton));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(DeleteButton));

@@ -5,9 +5,9 @@ export const setItems = (data) => ({
   data,
 });
 
-export const updateField = (id, path, value) => ({
+export const updateField = (index, path, value) => ({
   type: types.UPDATE_FIELD,
-  id,
+  index,
   path,
   value,
 });

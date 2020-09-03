@@ -5,7 +5,6 @@ import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import { withSnackbar } from "notistack";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { closeEditor } from "../../../actions/editor";
 import { toggleArchiveState } from "../../../actions/items";
 
 class ArchiveButton extends Component {
@@ -44,13 +43,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         } has been archived!`
       );
     }
-    dispatch(closeEditor());
   },
 });
 
-export default withSnackbar(
-  connect(
-    null,
-    mapDispatchToProps
-  )(ArchiveButton)
-);
+export default withSnackbar(connect(null, mapDispatchToProps)(ArchiveButton));

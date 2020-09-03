@@ -1,6 +1,5 @@
 import { IconButton, ListItemIcon, ListItemText, MenuItem, Tooltip } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
-import { setLoading, setSaved } from "actions/main";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { Component } from "react";
@@ -39,7 +38,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       const bungee = state.main.get("bungee", false);
       const metadata = state.editor.get("metadata");
       const { enqueueSnackbar } = ownProps;
-      dispatch(setLoading(true));
+      //dispatch(setLoading(true));
       var payload;
       if (configVersion >= 2) {
         payload = saveV2(data, defaultData, configVersion >= 4 ? metadata : undefined);
@@ -49,7 +48,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         enqueueSnackbar("This version of TWIN doesn't support the config version you're using!", {
           variant: "error",
         });
-        dispatch(setLoading(false));
+        //dispatch(setLoading(false));
         return;
       }
       if (
@@ -60,19 +59,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         enqueueSnackbar("You haven't made any changes yet!", {
           variant: "info",
         });
-        dispatch(setLoading(false));
+        //dispatch(setLoading(false));
         return;
       }
       payload["origin"] = getState().main.get("id", "");
       try {
         var response = await axios.post("/api/v1/save", payload);
-        dispatch(setLoading(false));
-        dispatch(setSaved(response.data));
+        //dispatch(setLoading(false));
+        //dispatch(setSaved(response.data));
       } catch (ex) {
         enqueueSnackbar("Failed to save! Please check your internet connection.", {
           variant: "error",
         });
-        dispatch(setLoading(false));
+        //dispatch(setLoading(false));
       }
     }),
 });
