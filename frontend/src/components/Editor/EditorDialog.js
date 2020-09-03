@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import { Alert } from "@material-ui/lab";
 import { useEditorSettings } from "hooks/useEditorSettings";
+import useMemoCompare from "hooks/useMemoCompare";
 import { Map } from "immutable";
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -56,7 +57,10 @@ const EditorDialog = () => {
   const history = useHistory();
   const match = useRouteMatch("/:id/translation/:translation");
   const { tritonv, bungee } = useEditorSettings();
-  const translationIndex = match?.params.translation;
+  const translationIndex = useMemoCompare(
+    match?.params.translation,
+    (prev, next) => next === undefined || prev === next
+  );
   const { type, archived } = useSelector((state) => {
     if (!translationIndex) return {};
     const item = state.items.getIn(["present", translationIndex], Map());

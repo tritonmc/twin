@@ -8,16 +8,11 @@ function itemReducer(state = List(), action) {
     case types.SET_ITEMS:
       return action.data;
     case types.UPDATE_FIELD:
-      return state.update(
-        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
-        (item) => {
-          if (item.getIn(action.path) !== action.value)
-            return item
-              .setIn(action.path, action.value)
-              .setIn(["_twin", "dateUpdated"], Date.now());
-          return item;
-        }
-      );
+      return state.update(action.index, (item) => {
+        if (item.getIn(action.path) !== action.value)
+          return item.setIn(action.path, action.value).setIn(["_twin", "dateUpdated"], Date.now());
+        return item;
+      });
     case types.UPDATE_SIGN_LINE:
       return state.update(
         state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
