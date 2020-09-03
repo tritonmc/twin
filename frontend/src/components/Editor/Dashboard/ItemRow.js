@@ -12,6 +12,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useDispatch, useSelector } from "react-redux";
 import { openEditor, toggleSelected } from "../../../actions/editor";
 import { areEqual } from "react-window";
+import { useHistory, useParams } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,9 +68,23 @@ const ItemRow = ({ index, data, style }) => {
   const { previewLanguage } = useEditorSettings();
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const { title, description, tags, archived, selected, collection } = useSelector((state) => {
-    const item = state.items.get("present").find((obj) => obj.getIn(["_twin", "id"]) === id);
+  const { id: configId } = useParams();
+  const history = useHistory();
+  const {
+    title,
+    description,
+    tags,
+    archived,
+    selected,
+    collection,
+    translationIndex,
+  } = useSelector((state) => {
+    const itemIndex = state.items
+      .get("present")
+      .findIndex((obj) => obj.getIn(["_twin", "id"]) === id);
+    const item = state.items.getIn(["present", itemIndex]);
     return {
+      translationIndex: itemIndex,
       title: item.get("key"),
       description:
         item.get("type", "") === "sign"
@@ -83,7 +98,7 @@ const ItemRow = ({ index, data, style }) => {
   });
   const dispatch = useDispatch();
 
-  const handleOpenEditor = () => dispatch(openEditor(id));
+  const handleOpenEditor = () => history.push(`/${configId}/translation/${translationIndex}`);
   const handleToggleSelected = () => dispatch(toggleSelected(id));
   const stopPropagation = (e) => e.stopPropagation();
   const onCopy = (e) => {
