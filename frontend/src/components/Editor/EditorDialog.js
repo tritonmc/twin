@@ -87,7 +87,7 @@ const EditorDialog = () => {
             Editing Language Item
           </Typography>
           <UndoRedoButtons />
-          <ArchiveButton archived={!!archived} index={translationIndex} />
+          <ArchiveButton archived={!!archived} id={translationIndex} />
           <DeleteButton index={translationIndex} />
         </Toolbar>
       </AppBar>

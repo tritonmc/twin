@@ -73,14 +73,11 @@ function itemReducer(state = List(), action) {
                 .setIn(["_twin", "dateUpdated"], Date.now())
             : v
         );
-      return state.update(
-        state.findKey((v) => v.getIn(["_twin", "id"]) === action.id),
-        (item) => {
-          return item
-            .updateIn(["_twin", "archived"], false, (value) => !value)
-            .setIn(["_twin", "dateUpdated"], Date.now());
-        }
-      );
+      return state.update(action.id, (item) => {
+        return item
+          .updateIn(["_twin", "archived"], false, (value) => !value)
+          .setIn(["_twin", "dateUpdated"], Date.now());
+      });
     case types.ADD_ITEM:
       return state.push(
         Map({

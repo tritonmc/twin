@@ -10,9 +10,9 @@ import { useSnackbar } from "notistack";
 import React, { memo } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useDispatch, useSelector } from "react-redux";
-import { openEditor, toggleSelected } from "../../../actions/editor";
-import { areEqual } from "react-window";
 import { useHistory, useParams } from "react-router";
+import { areEqual } from "react-window";
+import { toggleSelected } from "../../../actions/editor";
 
 const useStyles = makeStyles((theme) => ({
   root: {
