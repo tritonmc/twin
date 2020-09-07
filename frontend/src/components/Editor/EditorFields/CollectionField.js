@@ -3,7 +3,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
-import { Map } from "immutable";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../../../actions/items";
@@ -16,21 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CollectionField = ({ id }) => {
+const CollectionField = ({ index }) => {
   const classes = useStyles();
 
-  const { collection, collections } = useSelector((state) => {
-    const item = state.items
-      .get("present")
-      .find((item) => item.getIn(["_twin", "id"]) === id, undefined, Map());
-    return {
-      collection: item.get("fileName", "default"),
-      collections: state.editor
-        .get("metadata")
-        .keySeq()
-        .sort(),
-    };
-  });
+  const { collection, collections } = useSelector((state) => ({
+    collection: state.items.getIn(["present", index, "fileName"], "default"),
+    collections: state.editor.get("metadata").keySeq().sort(),
+  }));
   const dispatch = useDispatch();
 
   const inputLabel = React.useRef(null);
@@ -39,7 +30,7 @@ const CollectionField = ({ id }) => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = (event) => dispatch(updateField(id, ["fileName"], event.target.value));
+  const handleChange = (event) => dispatch(updateField(index, ["fileName"], event.target.value));
   return (
     <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel ref={inputLabel} htmlFor="item-collection">

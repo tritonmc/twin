@@ -61,12 +61,13 @@ const EditorDialog = () => {
     match?.params.translation,
     (prev, next) => next === undefined || prev === next
   );
-  const { type, archived } = useSelector((state) => {
+  const { type, archived, id } = useSelector((state) => {
     if (!translationIndex) return {};
     const item = state.items.getIn(["present", translationIndex], Map());
     return {
       type: item.get("type", "text"),
       archived: item.getIn(["_twin", "archived"], false),
+      id: item.getIn(["_twin", "id"]),
     };
   });
 
@@ -88,7 +89,7 @@ const EditorDialog = () => {
           </Typography>
           <UndoRedoButtons />
           <ArchiveButton archived={!!archived} id={translationIndex} />
-          <DeleteButton index={translationIndex} />
+          <DeleteButton item={id} />
         </Toolbar>
       </AppBar>
 

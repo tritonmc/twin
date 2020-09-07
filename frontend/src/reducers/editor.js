@@ -27,7 +27,10 @@ function mainReducer(
     case types.ADD_TAG:
       return state.update("tags", (tags) => tags.add(action.tag));
     case types.ADD_ITEM:
-      return state.set("activeItem", action.id);
+      return state.update("metadata", (metadata) => {
+        if (metadata.has(action.collection)) return metadata;
+        return metadata.set(action.collection, Map());
+      });
     case types.CLEAR_DATA:
       return state.remove("tags").remove("defaultData").remove("metadata");
     case types.SET_SORT:
