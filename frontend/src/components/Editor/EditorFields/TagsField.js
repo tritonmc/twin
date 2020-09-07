@@ -1,21 +1,21 @@
-import React from "react";
-import classNames from "classnames";
-import CreatableSelect from "react-select/creatable";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import NoSsr from "@material-ui/core/NoSsr";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import MenuItem from "@material-ui/core/MenuItem";
-import CancelIcon from "@material-ui/icons/Cancel";
+import NoSsr from "@material-ui/core/NoSsr";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
-import { connect } from "react-redux";
-import { updateField } from "../../../actions/items";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import CancelIcon from "@material-ui/icons/Cancel";
+import classNames from "classnames";
+import { List } from "immutable";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CreatableSelect from "react-select/creatable";
 import { addTag } from "../../../actions/editor";
-import { List, Map } from "immutable";
+import { updateField } from "../../../actions/items";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     margin: `${theme.spacing(1)}px 0px`,
@@ -59,9 +59,9 @@ const styles = (theme) => ({
   divider: {
     height: theme.spacing(2),
   },
-});
+}));
 
-function NoOptionsMessage(props) {
+const NoOptionsMessage = (props) => {
   return (
     <Typography
       color="textSecondary"
@@ -70,13 +70,13 @@ function NoOptionsMessage(props) {
       {props.children}
     </Typography>
   );
-}
+};
 
-function inputComponent({ inputRef, ...props }) {
+const inputComponent = ({ inputRef, ...props }) => {
   return <div ref={inputRef} {...props} />;
-}
+};
 
-function Control(props) {
+const Control = (props) => {
   return (
     <TextField
       fullWidth
@@ -92,9 +92,9 @@ function Control(props) {
       {...props.selectProps.textFieldProps}
     />
   );
-}
+};
 
-function Option(props) {
+const Option = (props) => {
   return (
     <MenuItem
       buttonRef={props.innerRef}
@@ -107,9 +107,9 @@ function Option(props) {
       {props.children}
     </MenuItem>
   );
-}
+};
 
-function Placeholder(props) {
+const Placeholder = (props) => {
   return (
     <Typography
       color="textSecondary"
@@ -118,21 +118,21 @@ function Placeholder(props) {
       {props.children}
     </Typography>
   );
-}
+};
 
-function SingleValue(props) {
+const SingleValue = (props) => {
   return (
     <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
       {props.children}
     </Typography>
   );
-}
+};
 
-function ValueContainer(props) {
+const ValueContainer = (props) => {
   return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
-}
+};
 
-function MultiValue(props) {
+const MultiValue = (props) => {
   return (
     <Chip
       color="secondary"
@@ -145,15 +145,15 @@ function MultiValue(props) {
       deleteIcon={<CancelIcon {...props.removeProps} />}
     />
   );
-}
+};
 
-function Menu(props) {
+const Menu = (props) => {
   return (
     <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
       {props.children}
     </Paper>
   );
-}
+};
 
 const components = {
   Control,
@@ -166,77 +166,61 @@ const components = {
   ValueContainer,
 };
 
-class TagsField extends React.Component {
-  handleChange = (value, action) => {
-    if (!value) value = [];
-    this.props.updateField(List(value.map((v) => v.value)));
-    if (action.action === "create-option") this.props.addTag(value[value.length - 1].value);
-  };
-
-  render() {
-    const { classes, theme } = this.props;
-
-    const selectStyles = {
-      input: (base) => ({
-        ...base,
-        color: theme.palette.text.primary,
-        "& input": {
-          font: "inherit",
-        },
-      }),
-      clearIndicator: (base) => ({
-        ...base,
-        cursor: "pointer",
-      }),
-      dropdownIndicator: (base) => ({
-        ...base,
-        cursor: "pointer",
-      }),
-    };
-
-    return (
-      <div className={classes.root}>
-        <NoSsr>
-          <CreatableSelect
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: "Tags",
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={this.props.availableTags.map((v) => ({ label: v, value: v })).toJS()}
-            components={components}
-            value={this.props.tags.map((v) => ({ label: v, value: v })).toJS()}
-            onChange={this.handleChange}
-            placeholder="Add tag..."
-            isMulti
-          />
-        </NoSsr>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const item = state.items
-    .get("present")
-    .find((item) => item.getIn(["_twin", "id"]) === ownProps.id, undefined, Map());
-  return {
+const TagsField = ({ index }) => {
+  const { tags, availableTags } = useSelector((state) => ({
+    tags: state.items.getIn(["present", index, "_twin", "tags"]),
     availableTags: state.editor.get("tags"),
-    tags: item.getIn(["_twin", "tags"], List()),
+  }));
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const handleChange = (value, action) => {
+    if (!value) value = [];
+    dispatch(updateField(index, ["_twin", "tags"], List(value?.map((v) => v.value))));
+    if (action.action === "create-option") dispatch(addTag(value[value.length - 1].value));
   };
+
+  const selectStyles = {
+    input: (base) => ({
+      ...base,
+      color: theme.palette.text.primary,
+      "& input": {
+        font: "inherit",
+      },
+    }),
+    clearIndicator: (base) => ({
+      ...base,
+      cursor: "pointer",
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      cursor: "pointer",
+    }),
+  };
+
+  return (
+    <div className={classes.root}>
+      <NoSsr>
+        <CreatableSelect
+          classes={classes}
+          styles={selectStyles}
+          textFieldProps={{
+            label: "Tags",
+            InputLabelProps: {
+              shrink: true,
+            },
+          }}
+          options={availableTags.map((v) => ({ label: v, value: v })).toJS()}
+          components={components}
+          value={tags.map((v) => ({ label: v, value: v })).toJS()}
+          onChange={handleChange}
+          placeholder="Add tag..."
+          isMulti
+        />
+      </NoSsr>
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateField: (tags) => dispatch(updateField(ownProps.id, ["_twin", "tags"], tags)),
-  addTag: (tag) => dispatch(addTag(tag)),
-});
-
-export default withStyles(styles, { withTheme: true })(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TagsField)
-);
+export default TagsField;

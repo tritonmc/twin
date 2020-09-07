@@ -1,16 +1,14 @@
-import React, { Component } from "react";
-import TagsField from "./TagsField";
+import React from "react";
 import DescriptionField from "./DescriptionField";
+import TagsField from "./TagsField";
 
-export class MetaSection extends Component {
-  render() {
-    return (
-      <>
-        <TagsField id={this.props.id} />
-        <DescriptionField id={this.props.id} />
-      </>
-    );
-  }
-}
+const MetaSection = ({ index }) => {
+  return (
+    <>
+      <TagsField index={index} />
+      <DescriptionField index={index} />
+    </>
+  );
+};
 
 export default MetaSection;

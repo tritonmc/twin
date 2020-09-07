@@ -1,53 +1,41 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { updateField } from "../../../actions/items";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateField } from "../../../actions/items";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
-});
+}));
 
-class KeyField extends Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <TextField
-        id="editor-item-description"
-        label="Description"
-        className={classes.textField}
-        defaultValue={this.props.itemDescription}
-        key={this.props.itemDescription}
-        onBlur={this.props.updateField}
-        margin="normal"
-        variant="outlined"
-        fullWidth
-        multiline
-      />
-    );
-  }
-}
+const DescriptionField = ({ index }) => {
+  const classes = useStyles();
+  const value = useSelector((state) =>
+    state.items.getIn(["present", index, "_twin", "description"])
+  );
+  const dispatch = useDispatch();
 
-const mapStateToProps = (state, ownProps) => {
-  const item = state.items
-    .get("present")
-    .find((item) => item.getIn(["_twin", "id"]) === ownProps.id);
-  return {
-    itemDescription: item ? item.getIn(["_twin", "description"]) : "",
-  };
+  const updateValue = useCallback(
+    (evt) => dispatch(updateField(index, ["_twin", "description"], evt.target.value)),
+    [dispatch, index]
+  );
+
+  return (
+    <TextField
+      id="editor-item-description"
+      label="Description"
+      className={classes.textField}
+      defaultValue={value}
+      onBlur={updateValue}
+      margin="normal"
+      variant="outlined"
+      fullWidth
+      multiline
+    />
+  );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateField: (evt) =>
-    dispatch(updateField(ownProps.id, ["_twin", "description"], evt.target.value)),
-});
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(KeyField)
-);
+export default DescriptionField;
