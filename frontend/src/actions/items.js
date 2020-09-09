@@ -57,15 +57,15 @@ export const addItem = (itemType, id, collection) => ({
   collection,
 });
 
-export const addPattern = (id) => ({
+export const addPattern = (index) => ({
   type: types.ADD_PATTERN,
-  id,
+  index,
 });
 
-export const deletePattern = (id, index) => ({
+export const deletePattern = (index, patternIndex) => ({
   type: types.DELETE_PATTERN,
-  id,
   index,
+  patternIndex,
 });
 
 export const importTranslations = (language, translations) => ({

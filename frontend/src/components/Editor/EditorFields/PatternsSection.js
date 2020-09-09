@@ -1,11 +1,11 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { makeStyles } from "@material-ui/styles";
 import { List } from "immutable";
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPattern, deletePattern, updateField } from "../../../actions/items";
 import PatternField from "./PatternField";
-import { updateField, addPattern, deletePattern } from "../../../actions/items";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,20 +19,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PatternsSection = ({ id }) => {
+const PatternsSection = ({ index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const patterns = useSelector((state) => {
-    const item = state.items.get("present").find((item) => item.getIn(["_twin", "id"]) === id);
-    return item ? item.get("patterns", List()) : List();
-  });
+  const patterns = useSelector((state) =>
+    state.items.getIn(["present", index, "patterns"], List())
+  );
 
-  const onAdd = () => dispatch(addPattern(id));
-
-  const onUpdate = (index) => (event) =>
-    dispatch(updateField(id, ["patterns", index], event.target.value));
-  const onDelete = (index) => () => dispatch(deletePattern(id, index));
+  const onAdd = useCallback(() => dispatch(addPattern(index)), [dispatch, index]);
+  const onUpdate = useCallback(
+    (patternIndex) => (event) =>
+      dispatch(updateField(index, ["patterns", patternIndex], event.target.value)),
+    [dispatch, index]
+  );
+  const onDelete = useCallback(
+    (patternIndex) => () => dispatch(deletePattern(index, patternIndex)),
+    [dispatch, index]
+  );
 
   return (
     <div className={classes.root}>
