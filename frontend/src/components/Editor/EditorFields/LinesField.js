@@ -1,7 +1,6 @@
-import { Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +19,7 @@ const LineField = ({ updateField, language, value, line }) => {
         id={"editor-language-field-" + language + "-" + line}
         label={"Line " + (line + 1)}
         defaultValue={value}
+        // Use key here so it updates on undo/redo
         key={value}
         onBlur={handleChange}
         margin="normal"

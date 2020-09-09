@@ -18,6 +18,8 @@ const KeyField = ({ index }) => {
       id="editor-item-key"
       label="Item Key"
       defaultValue={value}
+      // Use key here so it updates on undo/redo
+      key={value}
       onBlur={updateValue}
       margin="normal"
       variant="outlined"
