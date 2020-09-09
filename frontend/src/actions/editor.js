@@ -37,3 +37,7 @@ export const deleteCollection = (name) => ({
   type: types.DELETE_COLLECTION,
   name,
 });
+
+export const clearData = () => ({
+  type: types.CLEAR_DATA,
+});

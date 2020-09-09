@@ -1,62 +1,54 @@
-import Immutable, { List, Map } from "immutable";
+import { List, Map, is as immutableIs } from "immutable";
 import immutablediff from "immutablediff";
 
-const saveV2 = (data, defaultData, metadata) => {
-  var deletedItems = getDeleted(data, defaultData);
-  var notEqualItems = removeDefaultsFromCollection(getNotEqualItems(data, defaultData));
-  var addItems = [];
-  var changedItems = {};
+const saveV2 = (data, defaultData, metadata, tritonv) => {
+  const defaultDataObject = {};
+  defaultData.forEach((item) => (defaultDataObject[item.getIn(["_twin", "id"])] = item));
 
-  notEqualItems.forEach((item) => {
-    let id = item.getIn(["_twin", "id"]);
-    let defaultItem = findItemFromId(defaultData, id);
-    if (!defaultItem) {
-      addItems.push(item);
-      return;
-    }
-    let diff = immutablediff(removeDefaults(defaultItem), item);
+  const deletedItems = getDeleted(data, Object.keys(defaultDataObject));
+  const addItems = [];
+  const changedItems = {};
+
+  const defaults = Map({
+    blacklist: tritonv >= 5,
+    servers: List(),
+    "_twin.archived": false,
+    "_twin.description": "",
+    "_twin.tags": List(),
+  });
+
+  data.forEach((item) => {
+    const id = item.getIn(["_twin", "id"]);
+    if (!defaultDataObject[id]) return addItems.push(item);
+
+    const sanitizedItem = removeDefaults(item, defaults);
+    const sanitizedDefault = removeDefaults(defaultDataObject[id], defaults);
+    if (immutableIs(sanitizedItem, sanitizedDefault)) return;
+
+    const diff = immutablediff(sanitizedDefault, sanitizedItem);
     if (diff.size !== 0) changedItems[id] = diff;
   });
-  if (metadata)
+
+  if (tritonv >= 4)
     return {
-      deleted: deletedItems.toJS(),
+      deleted: deletedItems,
       added: addItems,
       modified: changedItems,
       metadata,
     };
-  return { deleted: deletedItems.toJS(), added: addItems, modified: changedItems };
+  return { deleted: deletedItems, added: addItems, modified: changedItems };
 };
 
-const getDeleted = (data, defaultData) =>
-  defaultData
-    .filter((item) => findItemFromId(data, item.getIn(["_twin", "id"])) === undefined)
-    .map((item) => item.getIn(["_twin", "id"]));
+const getDeleted = (data, defaultIds) => {
+  const ids = new Set(data.map((item) => item.getIn(["_twin", "id"])));
+  return defaultIds.filter((id) => !ids.has(id));
+};
 
-const getNotEqualItems = (data, defaultData) =>
-  data.filter(
-    (item) => !Immutable.is(item, findItemFromId(defaultData, item.getIn(["_twin", "id"])))
-  );
-
-const defaults = Map({
-  universal: false,
-  blacklist: false,
-  servers: List(),
-  "_twin.archived": false,
-  "_twin.description": "",
-  "_twin.tags": List(),
-});
-
-const removeDefaultsFromCollection = (data) => data.map(removeDefaults);
-
-const removeDefaults = (item) => {
+const removeDefaults = (item, defaults) => {
   defaults.forEach((value, key) => {
-    if (Immutable.is(value, item.getIn(key.split(".")))) item = item.deleteIn(key.split("."));
+    if (immutableIs(value, item.getIn(key.split(".")))) item = item.deleteIn(key.split("."));
   });
   return item;
-};
-
-const findItemFromId = (data, id) => {
-  return data.find((v) => v.getIn(["_twin", "id"]) === id);
 };
 
 export default saveV2;
