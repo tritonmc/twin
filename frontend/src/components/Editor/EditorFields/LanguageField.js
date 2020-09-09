@@ -1,36 +1,33 @@
-import React, { Component } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
-});
+}));
 
-class LanguageField extends Component {
-  updateField = (evt) => {
-    this.props.updateField(this.props.language, evt.target.value);
-  };
+const LanguageField = ({ updateField, value, language }) => {
+  const classes = useStyles();
 
-  render() {
-    const { classes, language, value } = this.props;
-    return (
-      <TextField
-        id={"editor-language-field-" + language}
-        label={language}
-        className={classes.textField}
-        defaultValue={value}
-        key={value}
-        onBlur={this.updateField}
-        margin="normal"
-        variant="outlined"
-        fullWidth
-        multiline
-      />
-    );
-  }
-}
+  const handleChange = (evt) => updateField(language, evt.target.value);
 
-export default withStyles(styles)(LanguageField);
+  return (
+    <TextField
+      id={"editor-language-field-" + language}
+      label={language}
+      className={classes.textField}
+      defaultValue={value}
+      key={value}
+      onBlur={handleChange}
+      margin="normal"
+      variant="outlined"
+      fullWidth
+      multiline
+    />
+  );
+};
+
+export default LanguageField;
