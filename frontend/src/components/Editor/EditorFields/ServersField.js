@@ -1,18 +1,13 @@
-import React from "react";
-import classNames from "classnames";
-import CreatableSelect from "react-select/creatable";
-import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import NoSsr from "@material-ui/core/NoSsr";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
-import CancelIcon from "@material-ui/icons/Cancel";
+import { Chip, MenuItem, NoSsr, Paper, TextField, Typography } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
-import { connect, useDispatch, useSelector } from "react-redux";
+import CancelIcon from "@material-ui/icons/Cancel";
+import classNames from "classnames";
+import { List } from "immutable";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CreatableSelect from "react-select/creatable";
 import { updateField } from "../../../actions/items";
-import { List, Map } from "immutable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
