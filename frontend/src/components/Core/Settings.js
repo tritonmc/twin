@@ -17,6 +17,7 @@ import HeartIcon from "@material-ui/icons/Favorite";
 import { useEditorSettings } from "hooks/useEditorSettings";
 import { useGlobalSettings } from "hooks/useGlobalSettings";
 import React from "react";
+import Footer from "components/Home/Footer";
 
 const useStyles = makeStyles((theme) => ({
   versionInfo: {
@@ -80,10 +81,7 @@ const Settings = () => {
             </ListItemSecondaryAction>
           </ListItem>
         </List>
-        <Typography variant="caption" component="div" className={classes.versionInfo}>
-          {`TWIN v${process.env.REACT_APP_VERSION} developed with `}
-          <HeartIcon className={classes.heartIcon} color="secondary" /> {`by Diogo Correia`}
-        </Typography>
+        <Footer />
       </div>
     </Dialog>
   );
