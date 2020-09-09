@@ -25,6 +25,7 @@ const TextFieldsSection = ({ index }) => {
   let keys = Set();
   languages.forEach((v) => (keys = keys.add(v)));
   content.keySeq().forEach((v) => (keys = keys.add(v)));
+  keys = keys.sort();
 
   if (keys.size === 0)
     return (
