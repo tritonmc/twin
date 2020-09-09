@@ -213,7 +213,7 @@ const TagsField = ({ index }) => {
           }}
           options={availableTags.map((v) => ({ label: v, value: v })).toJS()}
           components={components}
-          value={tags.map((v) => ({ label: v, value: v })).toJS()}
+          value={tags?.map((v) => ({ label: v, value: v })).toJS() ?? []}
           onChange={handleChange}
           placeholder="Add tag..."
           isMulti
