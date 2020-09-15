@@ -41,7 +41,7 @@ const DrawerChild = () => {
 
   return (
     <div>
-      <Hidden xsDown implementation="css">
+      <Hidden smDown implementation="css">
         <div className={classes.toolbar} />
       </Hidden>
       <List>
