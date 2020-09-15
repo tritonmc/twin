@@ -97,11 +97,16 @@ function itemReducer(state = List(), action) {
     case types.CLEAR_DATA:
       return List();
     case types.IMPORT_TRANSLATIONS:
-      Object.keys(action.translations).forEach((key) => {
-        var twinId = key.split(".")[0];
-        let index = state.findKey((v) => v.getIn(["_twin", "id"]) === twinId);
-        if (index === undefined) {
-          state = state.push(
+      const indexMap = {};
+      state.forEach((item, i) => (indexMap[item.getIn(["_twin", "id"])] = i));
+
+      return Object.keys(action.translations).reduce((acc, key) => {
+        const twinId = key.split(".")[0];
+        const index = indexMap[twinId];
+
+        // If translation doesn't exist
+        if (index === undefined)
+          return acc.push(
             fromJS({
               type: "text",
               key: key.split(".").slice(1).join("."),
@@ -115,33 +120,22 @@ function itemReducer(state = List(), action) {
               },
             })
           );
-        } else {
-          state = state.update(index, (v) => {
-            if (v.get("type", "text") === "sign") {
-              if (
-                !is(
-                  v.getIn(["lines", action.language]),
-                  fromJS(splitSignData(action.translations[key]))
-                )
-              )
-                return v
-                  .setIn(
-                    ["lines", action.language],
-                    fromJS(splitSignData(action.translations[key]))
-                  )
-                  .setIn(["_twin", "dateUpdated"], Date.now());
-              return v;
-            }
-            const newValue = action.translations[key] ?? undefined;
-            if (v.getIn(["languages", action.language]) !== newValue)
-              return v
-                .setIn(["languages", action.language], newValue)
-                .setIn(["_twin", "dateUpdated"], Date.now());
-            return v;
-          });
-        }
-      });
-      return state;
+
+        return acc.update(index, (v) => {
+          if (v.get("type") === "sign") {
+            const signData = fromJS(splitSignData(action.translations[key]));
+            if (is(v.getIn(["lines", action.language]), signData)) return v;
+            return v
+              .setIn(["lines", action.language], signData)
+              .setIn(["_twin", "dateUpdated"], Date.now());
+          }
+          const newValue = action.translations[key] ?? undefined;
+          if (v.getIn(["languages", action.language]) === newValue) return v;
+          return v
+            .setIn(["languages", action.language], newValue)
+            .setIn(["_twin", "dateUpdated"], Date.now());
+        });
+      }, state);
     case types.DELETE_COLLECTION:
       return state.map((v) =>
         v.update((v) =>
