@@ -1,23 +1,26 @@
-import { Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuItem from "@material-ui/core/MenuItem";
-import { withStyles } from "@material-ui/core/styles";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import Tooltip from "@material-ui/core/Tooltip";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  SvgIcon,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import NotesIcon from "@material-ui/icons/Notes";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
 import { v4 as uuid } from "uuid";
 import { addItem } from "../../../../actions/items";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     width: 150,
@@ -45,82 +48,72 @@ const styles = (theme) => ({
     marginLeft: -12,
     marginRight: 20,
   },
-});
+}));
 
-class AddItemButton extends Component {
-  state = {
-    isOpen: false,
+const AddItemButton = ({ collection, list }) => {
+  const classes = useStyles();
+  const [isOpen, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const nextIndex = useSelector((state) => state.items.get("present").size);
+  const history = useHistory();
+  const { id: configId } = useParams();
+
+  const toggleDialog = () => setOpen((open) => !open);
+  const handleAddItem = (type) => () => {
+    toggleDialog();
+    dispatch(addItem(type, uuid(), collection || "default"));
+    history.push(`/${configId}/translation/${nextIndex}`);
   };
 
-  toggleDialog = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
+  return (
+    <>
+      {list ? (
+        <MenuItem onClick={toggleDialog}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add Item" />
+        </MenuItem>
+      ) : (
+        <Tooltip title="Add Item">
+          <IconButton color="inherit" aria-label="Add Item" onClick={toggleDialog}>
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+      <Dialog onClose={toggleDialog} aria-labelledby="simple-dialog-title" open={isOpen}>
+        <DialogTitle id="simple-dialog-title">
+          <IconButton aria-label="Close" className={classes.inlineIcon} onClick={toggleDialog}>
+            <CloseIcon />
+          </IconButton>
+          Select new item type
+        </DialogTitle>
+        <div className={classes.dialogContent}>
+          <Button variant="outlined" className={classes.button} onClick={handleAddItem("text")}>
+            <div className={classes.innerButton}>
+              <NotesIcon className={classes.buttonIcon} />
+              <Typography variant="body1">Text</Typography>
+              <Typography variant="caption">
+                Can be used in chat, scoreboards, items, etc...
+              </Typography>
+            </div>
+          </Button>
+          <Button variant="outlined" className={classes.button} onClick={handleAddItem("sign")}>
+            <div className={classes.innerButton}>
+              <SvgIcon className={classes.buttonIcon} viewBox="0 0 3.704 3.704">
+                <path
+                  d="M2.117 3.44H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm-0.265 0h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm1.852-0.794h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm-0.265 0h0.265v0.265H3.175Zm-0.265 0H3.175v0.265H2.91Zm-0.265 0h0.265v0.265H2.646Zm-0.265 0h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852Zm-0.265 0h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm-0.265 0h0.265v0.265H1.058ZM0 0.529h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0.265 0h0.265v0.265H0.265Zm0.529 0h0.265v0.265H0.794Zm-0.265 0h0.265v0.265H0.529ZM0 0.265h0.265v0.265H0Zm2.91 1.323H3.175v0.265H2.91Zm0-0.265H3.175v0.265H2.91Zm0-0.794H3.175v0.265H2.91Zm0 0.265H3.175v0.265H2.91Zm-0.265 0h0.265v0.265H2.646ZM2.381 0.529h0.265v0.265H2.381Zm0 0.265h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117ZM1.588 0.794h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm1.058 0.529h0.265v0.265H2.381Zm0 0.265h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852ZM1.588 1.323h0.265v0.265H1.588Zm0 0.265h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm0-0.265H1.588v0.265H1.323Zm2.117-0.529h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm-2.91 0.265h0.265v0.265H0.529Zm0.265 0h0.265v0.265H0.794Zm0-0.265h0.265v0.265H0.794Zm0-0.529h0.265v0.265H0.794Zm-0.265 0h0.265v0.265H0.529Zm0-0.265h0.265v0.265H0.529Zm2.91 0h0.265v0.265H3.44Zm0-0.265h0.265v0.265H3.44Zm0-0.265h0.265v0.265H3.44Zm-0.265 0h0.265v0.265H3.175Zm-0.265 0H3.175v0.265H2.91Zm-0.265 0h0.265v0.265H2.646Zm-0.265 0h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852Zm-0.265 0h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm-0.265 0h0.265v0.265H1.058Zm-0.265 0h0.265v0.265H0.794Zm-0.265 0h0.265v0.265H0.529Zm-0.265 0h0.265v0.265H0.265ZM0 0h0.265v0.265H0Z"
+                  strokeWidth="0.26"
+                />
+              </SvgIcon>
+              <Typography variant="body1">Sign Group</Typography>
+              <Typography variant="caption">Can be used in multiple signs</Typography>
+            </div>
+          </Button>
+        </div>
+      </Dialog>
+    </>
+  );
+};
 
-  addItem = (type) => () => {
-    this.toggleDialog();
-    this.props.addItem(type);
-  };
-
-  render() {
-    const { isOpen } = this.state;
-    const { classes, list } = this.props;
-    return (
-      <>
-        {list ? (
-          <MenuItem onClick={this.toggleDialog}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add Item" />
-          </MenuItem>
-        ) : (
-          <Tooltip title="Add Item">
-            <IconButton color="inherit" aria-label="Add Item" onClick={this.toggleDialog}>
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-        <Dialog onClose={this.toggleDialog} aria-labelledby="simple-dialog-title" open={isOpen}>
-          <DialogTitle id="simple-dialog-title">
-            <IconButton
-              aria-label="Close"
-              className={classes.inlineIcon}
-              onClick={this.toggleDialog}>
-              <CloseIcon />
-            </IconButton>
-            Select new item type
-          </DialogTitle>
-          <div className={classes.dialogContent}>
-            <Button variant="outlined" className={classes.button} onClick={this.addItem("text")}>
-              <div className={classes.innerButton}>
-                <NotesIcon className={classes.buttonIcon} />
-                <Typography variant="body1">Text</Typography>
-                <Typography variant="caption">
-                  Can be used in chat, scoreboards, items, etc...
-                </Typography>
-              </div>
-            </Button>
-            <Button variant="outlined" className={classes.button} onClick={this.addItem("sign")}>
-              <div className={classes.innerButton}>
-                <SvgIcon className={classes.buttonIcon} viewBox="0 0 3.704 3.704">
-                  <path
-                    d="M2.117 3.44H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm0 0.265h0.265v0.265H1.852Zm-0.265 0h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm0-0.265h0.265v0.265H1.588Zm1.852-0.794h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm-0.265 0h0.265v0.265H3.175Zm-0.265 0H3.175v0.265H2.91Zm-0.265 0h0.265v0.265H2.646Zm-0.265 0h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852Zm-0.265 0h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm-0.265 0h0.265v0.265H1.058ZM0 0.529h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0 0.265h0.265v0.265H0Zm0.265 0h0.265v0.265H0.265Zm0.529 0h0.265v0.265H0.794Zm-0.265 0h0.265v0.265H0.529ZM0 0.265h0.265v0.265H0Zm2.91 1.323H3.175v0.265H2.91Zm0-0.265H3.175v0.265H2.91Zm0-0.794H3.175v0.265H2.91Zm0 0.265H3.175v0.265H2.91Zm-0.265 0h0.265v0.265H2.646ZM2.381 0.529h0.265v0.265H2.381Zm0 0.265h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm0-0.265H2.381v0.265H2.117ZM1.588 0.794h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm1.058 0.529h0.265v0.265H2.381Zm0 0.265h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852ZM1.588 1.323h0.265v0.265H1.588Zm0 0.265h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm0-0.265H1.588v0.265H1.323Zm2.117-0.529h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm0 0.265h0.265v0.265H3.44Zm-2.91 0.265h0.265v0.265H0.529Zm0.265 0h0.265v0.265H0.794Zm0-0.265h0.265v0.265H0.794Zm0-0.529h0.265v0.265H0.794Zm-0.265 0h0.265v0.265H0.529Zm0-0.265h0.265v0.265H0.529Zm2.91 0h0.265v0.265H3.44Zm0-0.265h0.265v0.265H3.44Zm0-0.265h0.265v0.265H3.44Zm-0.265 0h0.265v0.265H3.175Zm-0.265 0H3.175v0.265H2.91Zm-0.265 0h0.265v0.265H2.646Zm-0.265 0h0.265v0.265H2.381Zm-0.265 0H2.381v0.265H2.117Zm-0.265 0h0.265v0.265H1.852Zm-0.265 0h0.265v0.265H1.588Zm-0.265 0H1.588v0.265H1.323Zm-0.265 0h0.265v0.265H1.058Zm-0.265 0h0.265v0.265H0.794Zm-0.265 0h0.265v0.265H0.529Zm-0.265 0h0.265v0.265H0.265ZM0 0h0.265v0.265H0Z"
-                    strokeWidth="0.26"
-                  />
-                </SvgIcon>
-                <Typography variant="body1">Sign Group</Typography>
-                <Typography variant="caption">Can be used in multiple signs</Typography>
-              </div>
-            </Button>
-          </div>
-        </Dialog>
-      </>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  addItem: (type) => dispatch(addItem(type, uuid(), ownProps.collection || "default")),
-});
-
-export default withStyles(styles)(connect(null, mapDispatchToProps)(AddItemButton));
+export default AddItemButton;
