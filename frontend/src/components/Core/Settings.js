@@ -8,16 +8,14 @@ import {
   ListItemText,
   MenuItem,
   Select,
+  Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
-import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import HeartIcon from "@material-ui/icons/Favorite";
+import Footer from "components/Home/Footer";
 import { useEditorSettings } from "hooks/useEditorSettings";
 import { useGlobalSettings } from "hooks/useGlobalSettings";
 import React from "react";
-import Footer from "components/Home/Footer";
 
 const useStyles = makeStyles((theme) => ({
   versionInfo: {
