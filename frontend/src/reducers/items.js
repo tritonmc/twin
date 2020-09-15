@@ -132,9 +132,10 @@ function itemReducer(state = List(), action) {
                   .setIn(["_twin", "dateUpdated"], Date.now());
               return v;
             }
-            if (v.getIn(["languages", action.language]) !== action.translations[key])
+            const newValue = action.translations[key] ?? undefined;
+            if (v.getIn(["languages", action.language]) !== newValue)
               return v
-                .setIn(["languages", action.language], action.translations[key])
+                .setIn(["languages", action.language], newValue)
                 .setIn(["_twin", "dateUpdated"], Date.now());
             return v;
           });
