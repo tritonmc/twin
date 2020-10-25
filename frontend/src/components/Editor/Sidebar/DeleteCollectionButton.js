@@ -14,10 +14,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import DeleteIcon from "@material-ui/icons/DeleteRounded";
 import { makeStyles } from "@material-ui/styles";
+import { deleteCollection } from "actions/editor";
 import { Map } from "immutable";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCollection } from "../../actions/editor";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

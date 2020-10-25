@@ -1,20 +1,15 @@
-import React from "react";
-import classNames from "classnames";
-import CreatableSelect from "react-select/creatable";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import NoSsr from "@material-ui/core/NoSsr";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
-import CancelIcon from "@material-ui/icons/Cancel";
+import { Chip, MenuItem, NoSsr, Paper, TextField, Typography } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
-import { connect } from "react-redux";
+import CancelIcon from "@material-ui/icons/Cancel";
+import classNames from "classnames";
+import { List } from "immutable";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CreatableSelect from "react-select/creatable";
 import { updateField } from "../../../actions/items";
-import { List, Map } from "immutable";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     margin: `${theme.spacing(1)}px 0px`,
@@ -58,9 +53,9 @@ const styles = (theme) => ({
   divider: {
     height: theme.spacing(2),
   },
-});
+}));
 
-function NoOptionsMessage(props) {
+const NoOptionsMessage = (props) => {
   return (
     <Typography
       color="textSecondary"
@@ -69,13 +64,13 @@ function NoOptionsMessage(props) {
       {props.children}
     </Typography>
   );
-}
+};
 
-function inputComponent({ inputRef, ...props }) {
+const inputComponent = ({ inputRef, ...props }) => {
   return <div ref={inputRef} {...props} />;
-}
+};
 
-function Control(props) {
+const Control = (props) => {
   return (
     <TextField
       fullWidth
@@ -91,9 +86,9 @@ function Control(props) {
       {...props.selectProps.textFieldProps}
     />
   );
-}
+};
 
-function Option(props) {
+const Option = (props) => {
   return (
     <MenuItem
       buttonRef={props.innerRef}
@@ -106,9 +101,9 @@ function Option(props) {
       {props.children}
     </MenuItem>
   );
-}
+};
 
-function Placeholder(props) {
+const Placeholder = (props) => {
   return (
     <Typography
       color="textSecondary"
@@ -117,21 +112,21 @@ function Placeholder(props) {
       {props.children}
     </Typography>
   );
-}
+};
 
-function SingleValue(props) {
+const SingleValue = (props) => {
   return (
     <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
       {props.children}
     </Typography>
   );
-}
+};
 
-function ValueContainer(props) {
+const ValueContainer = (props) => {
   return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
-}
+};
 
-function MultiValue(props) {
+const MultiValue = (props) => {
   return (
     <Chip
       color="secondary"
@@ -144,15 +139,15 @@ function MultiValue(props) {
       deleteIcon={<CancelIcon {...props.removeProps} />}
     />
   );
-}
+};
 
-function Menu(props) {
+const Menu = (props) => {
   return (
     <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
       {props.children}
     </Paper>
   );
-}
+};
 
 const components = {
   Control,
@@ -165,73 +160,55 @@ const components = {
   ValueContainer,
 };
 
-class ServersField extends React.Component {
-  handleChange = (value) => {
-    this.props.updateField(List(value.map((v) => v.value)));
+const ServersField = ({ index }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const servers = useSelector((state) => state.items.getIn(["present", index, "servers"], List()));
+  const dispatch = useDispatch();
+
+  const handleChange = (value) =>
+    dispatch(updateField(index, ["servers"], List(value?.map((v) => v.value))));
+
+  const selectStyles = {
+    input: (base) => ({
+      ...base,
+      color: theme.palette.text.primary,
+      "& input": {
+        font: "inherit",
+      },
+    }),
+    clearIndicator: (base) => ({
+      ...base,
+      cursor: "pointer",
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      cursor: "pointer",
+    }),
   };
 
-  render() {
-    const { classes, theme } = this.props;
-
-    const selectStyles = {
-      input: (base) => ({
-        ...base,
-        color: theme.palette.text.primary,
-        "& input": {
-          font: "inherit",
-        },
-      }),
-      clearIndicator: (base) => ({
-        ...base,
-        cursor: "pointer",
-      }),
-      dropdownIndicator: (base) => ({
-        ...base,
-        cursor: "pointer",
-      }),
-    };
-
-    return (
-      <div className={classes.root}>
-        <NoSsr>
-          <CreatableSelect
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: "Servers",
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={[]}
-            components={components}
-            value={this.props.servers.map((v) => ({ label: v, value: v })).toJS()}
-            onChange={this.handleChange}
-            placeholder="Add server..."
-            isMulti
-          />
-        </NoSsr>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const item = state.items
-    .get("present")
-    .find((item) => item.getIn(["_twin", "id"]) === ownProps.id, undefined, Map());
-  return {
-    servers: item.get("servers", List()),
-  };
+  return (
+    <div className={classes.root}>
+      <NoSsr>
+        <CreatableSelect
+          classes={classes}
+          styles={selectStyles}
+          textFieldProps={{
+            label: "Servers",
+            InputLabelProps: {
+              shrink: true,
+            },
+          }}
+          options={[]}
+          components={components}
+          value={servers.map((v) => ({ label: v, value: v })).toJS()}
+          onChange={handleChange}
+          placeholder="Add server..."
+          isMulti
+        />
+      </NoSsr>
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateField: (servers) => dispatch(updateField(ownProps.id, ["servers"], servers)),
-});
-
-export default withStyles(styles, { withTheme: true })(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ServersField)
-);
+export default ServersField;

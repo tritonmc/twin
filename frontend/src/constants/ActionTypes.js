@@ -1,11 +1,5 @@
-// main
-export const SET_THEME = "SET_THEME";
-export const SET_LOADING = "SET_LOADING";
-export const SET_ID = "SET_ID";
-export const SET_DRAWER_STATE = "SET_DRAWER_STATE";
-export const SET_DATA = "SET_DATA";
-export const SET_SETTINGS_STATE = "SET_SETTINGS_STATE";
-export const SET_SAVED = "SET_SAVED";
+// common
+export const CLEAR_DATA = "CLEAR_DATA";
 
 // items
 export const SET_ITEMS = "SET_ITEMS";
@@ -23,10 +17,6 @@ export const IMPORT_TRANSLATIONS = "IMPORT_TRANSLATIONS";
 export const MOVE_COLLECTION_BULK = "MOVE_COLLECTION_BULK";
 
 // editor
-export const SET_PREVIEW_LANGUAGE = "SET_PREVIEW_LANGUAGE";
-export const SET_SEARCH = "SET_SEARCH";
-export const OPEN_EDITOR = "OPEN_EDITOR";
-export const CLOSE_EDITOR = "CLOSE_EDITOR";
 export const ADD_TAG = "ADD_TAG";
 export const SET_SORT = "SET_SORT";
 export const TOGGLE_SELECT = "TOGGLE_SELECT";

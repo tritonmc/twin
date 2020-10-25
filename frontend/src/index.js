@@ -1,5 +1,4 @@
 import React from "react";
-import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
@@ -7,15 +6,16 @@ import App from "./components/Core/App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
+import { GlobalSettingsProvider } from "hooks/useGlobalSettings";
 
 ReactDOM.render(
-  <CookiesProvider>
-    <Provider store={configureStore()}>
+  <Provider store={configureStore()}>
+    <GlobalSettingsProvider>
       <HelmetProvider>
         <App />
       </HelmetProvider>
-    </Provider>
-  </CookiesProvider>,
+    </GlobalSettingsProvider>
+  </Provider>,
   document.getElementById("root")
 );
 

@@ -1,6 +1,6 @@
 {
   "name": "twin-backend",
-  "version": "2.6.2",
+  "version": "3.0.0-beta.1",
   "description": "Backend for Triton Web Interface",
   "main": "index.js",
   "author": "Rexcantor64",

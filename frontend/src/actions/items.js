@@ -5,9 +5,9 @@ export const setItems = (data) => ({
   data,
 });
 
-export const updateField = (id, path, value) => ({
+export const updateField = (index, path, value) => ({
   type: types.UPDATE_FIELD,
-  id,
+  index,
   path,
   value,
 });
@@ -17,31 +17,31 @@ export const deleteItem = (id) => ({
   id,
 });
 
-export const updateSignLine = (id, language, line, value) => ({
+export const updateSignLine = (index, language, line, value) => ({
   type: types.UPDATE_SIGN_LINE,
-  id,
+  index,
   language,
   line,
   value,
 });
 
-export const updateSignCoordinate = (itemId, locId, field, value) => ({
+export const updateSignCoordinate = (index, locId, field, value) => ({
   type: types.UPDATE_SIGN_COORDINATE,
-  itemId,
+  index,
   locId,
   field,
   value,
 });
 
-export const deleteSignLocation = (itemId, locId) => ({
+export const deleteSignLocation = (index, locId) => ({
   type: types.DELETE_SIGN_LOCATION,
-  itemId,
+  index,
   locId,
 });
 
-export const addSignLocation = (id) => ({
+export const addSignLocation = (index) => ({
   type: types.ADD_SIGN_LOCATION,
-  id,
+  index,
 });
 
 export const toggleArchiveState = (id, status) => ({
@@ -57,15 +57,15 @@ export const addItem = (itemType, id, collection) => ({
   collection,
 });
 
-export const addPattern = (id) => ({
+export const addPattern = (index) => ({
   type: types.ADD_PATTERN,
-  id,
+  index,
 });
 
-export const deletePattern = (id, index) => ({
+export const deletePattern = (index, patternIndex) => ({
   type: types.DELETE_PATTERN,
-  id,
   index,
+  patternIndex,
 });
 
 export const importTranslations = (language, translations) => ({

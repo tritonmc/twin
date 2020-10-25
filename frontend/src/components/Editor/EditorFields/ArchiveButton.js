@@ -2,55 +2,43 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
-import { withSnackbar } from "notistack";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { closeEditor } from "../../../actions/editor";
+import { useSnackbar } from "notistack";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { toggleArchiveState } from "../../../actions/items";
+import { useHistory } from "react-router";
 
-class ArchiveButton extends Component {
-  render() {
-    const { archived, toggleArchiveState, bulk } = this.props;
-    return (
-      <Tooltip title={`${archived ? "Unarchive" : "Archive"}${bulk ? " selected" : ""}`}>
-        <IconButton
-          color="inherit"
-          onClick={toggleArchiveState}
-          aria-label={archived ? "Unarchive" : "Archive"}>
-          {archived ? <UnarchiveIcon /> : <ArchiveIcon />}
-        </IconButton>
-      </Tooltip>
-    );
-  }
-}
+const ArchiveButton = ({ id, archived, bulk }) => {
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  toggleArchiveState: () => {
-    dispatch(toggleArchiveState(ownProps.id, !ownProps.archived));
-    if (ownProps.archived) {
-      ownProps.enqueueSnackbar(
+  const closeTranslation = useCallback(() => history.goBack(), [history]);
+
+  const onClick = () => {
+    if (!bulk) closeTranslation();
+    dispatch(toggleArchiveState(id, !archived));
+    if (archived) {
+      enqueueSnackbar(
         `${
-          ownProps.bulk
-            ? `${ownProps.id.size} ${ownProps.id.size === 1 ? "item has" : "items have"}`
-            : "Item has"
+          bulk ? `${id.size} ${id.size === 1 ? "item has" : "items have"}` : "Item has"
         } been unarchived!`
       );
     } else {
-      ownProps.enqueueSnackbar(
+      enqueueSnackbar(
         `${
-          ownProps.bulk
-            ? `${ownProps.id.size} ${ownProps.id.size === 1 ? "item has" : "items have"}`
-            : "Item has"
+          bulk ? `${id.size} ${id.size === 1 ? "item has" : "items have"}` : "Item has"
         } has been archived!`
       );
     }
-    dispatch(closeEditor());
-  },
-});
+  };
+  return (
+    <Tooltip title={`${archived ? "Unarchive" : "Archive"}${bulk ? " selected" : ""}`}>
+      <IconButton color="inherit" onClick={onClick} aria-label={archived ? "Unarchive" : "Archive"}>
+        {archived ? <UnarchiveIcon /> : <ArchiveIcon />}
+      </IconButton>
+    </Tooltip>
+  );
+};
 
-export default withSnackbar(
-  connect(
-    null,
-    mapDispatchToProps
-  )(ArchiveButton)
-);
+export default ArchiveButton;

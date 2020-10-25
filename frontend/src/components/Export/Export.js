@@ -1,8 +1,9 @@
+import { Typography } from "@material-ui/core";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import { makeStyles } from "@material-ui/styles";
+import { List } from "immutable";
 import React from "react";
 import { useSelector } from "react-redux";
-import { List } from "immutable";
-import { Typography } from "@material-ui/core";
 import Table from "./Table";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,6 +12,19 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 1 auto",
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
+    overflowY: "auto",
+    "&::-webkit-scrollbar": {
+      width: 7,
+      height: 7,
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.primary.main, 0.15),
+    },
+    "&::-webkit-scrollbar-thumb": {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: theme.palette.primary.main,
+    },
   },
 }));
 

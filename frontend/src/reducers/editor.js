@@ -3,8 +3,6 @@ import * as types from "../constants/ActionTypes";
 
 function mainReducer(
   state = Map({
-    search: "",
-    editorOpen: false,
     tags: Set(),
     sort: Map({ field: "_twin.dateUpdated", asc: false }),
     selected: List(),
@@ -13,22 +11,12 @@ function mainReducer(
   action
 ) {
   switch (action.type) {
-    case types.SET_PREVIEW_LANGUAGE:
-      return state.set("previewLanguage", action.language);
-    case types.SET_DATA:
-      return state.set("previewLanguage", action.availableLanguages[0] || "");
     case types.SET_METADATA:
       return state.set("metadata", fromJS(action.metadata));
     case types.ADD_COLLECTION:
       return state.update("metadata", (metadata) =>
         metadata.set(action.name, fromJS(action.options))
       );
-    case types.SET_SEARCH:
-      return state.set("search", action.search);
-    case types.OPEN_EDITOR:
-      return state.set("activeItem", action.item).set("editorOpen", true);
-    case types.CLOSE_EDITOR:
-      return state.set("editorOpen", false);
     case types.SET_ITEMS:
       return state
         .set(
@@ -39,15 +27,12 @@ function mainReducer(
     case types.ADD_TAG:
       return state.update("tags", (tags) => tags.add(action.tag));
     case types.ADD_ITEM:
-      return state.set("activeItem", action.id).set("editorOpen", true);
-    case types.SET_SAVED:
-      return state
-        .remove("tags")
-        .remove("search")
-        .remove("activeItem")
-        .remove("previewLanguage")
-        .remove("defaultData")
-        .remove("metadata");
+      return state.update("metadata", (metadata) => {
+        if (metadata.has(action.collection)) return metadata;
+        return metadata.set(action.collection, Map());
+      });
+    case types.CLEAR_DATA:
+      return state.remove("tags").remove("defaultData").remove("metadata");
     case types.SET_SORT:
       return state.setIn(["sort", "field"], action.field).setIn(["sort", "text"], action.text);
     case types.TOGGLE_SELECT:

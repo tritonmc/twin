@@ -1,14 +1,17 @@
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  Table as MuiTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow as MuiTableRow,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MuiTable from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import MuiTableRow from "@material-ui/core/TableRow";
+import { useEditorSettings } from "hooks/useEditorSettings";
 import { List, Map } from "immutable";
 import fileDownload from "js-file-download";
+import { safeDump as stringifyYaml, safeLoad as parseYaml } from "js-yaml";
 import { useSnackbar } from "notistack";
-import properties from "properties";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { importTranslations } from "../../actions/items";
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Table = () => {
-  const languages = useSelector((state) => state.main.get("availableLanguages", List()));
+  const { languages } = useEditorSettings();
   const classes = useStyles();
 
   return (
@@ -73,7 +76,7 @@ const TableRow = ({ lang }) => {
           `${v.getIn(["_twin", "id"])}.${v.get("key")}`,
           v.get("type", "text") === "sign"
             ? v.getIn(["lines", lang], List()).join("\n")
-            : v.getIn(["languages", lang], "")
+            : v.getIn(["languages", lang], null)
         ),
       Map()
     );
@@ -81,13 +84,13 @@ const TableRow = ({ lang }) => {
   const dispatch = useDispatch();
 
   const onExport = () => {
-    fileDownload(properties.stringify(items.toJS()), `${lang}.properties`);
+    fileDownload(stringifyYaml(items.toJS()), `${lang}.yml`);
   };
 
   const onImport = async (e) => {
     if (e.target.files.length === 0) return;
     const contents = await getFileContents(e.target.files[0]);
-    const objects = properties.parse(contents);
+    const objects = parseYaml(contents);
     try {
       dispatch(importTranslations(lang, objects));
       enqueueSnackbar("Sucessfully imported file!", { variant: "success" });
@@ -104,7 +107,7 @@ const TableRow = ({ lang }) => {
           Export
         </Button>
         <label>
-          <input accept=".properties" className={classes.input} type="file" onChange={onImport} />
+          <input accept=".yml,.yaml" className={classes.input} type="file" onChange={onImport} />
           <Button color="primary" component="span">
             Import
           </Button>

@@ -1,45 +1,52 @@
 {
   "name": "twin",
-  "version": "2.6.2",
+  "version": "3.0.0-beta.1",
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
-    "@material-ui/core": "^4.8.1",
-    "@material-ui/icons": "^4.5.1",
-    "axios": "^0.19.0",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "axios": "^0.20.0",
+    "classnames": "^2.2.6",
     "fuse-immutable": "^2.0.0",
     "immutable": "^4.0.0-rc.12",
     "immutablediff": "^0.4.4",
-    "js-file-download": "^0.4.9",
-    "mdi-material-ui": "^6.10.0",
-    "notistack": "^0.9.7",
-    "properties": "^1.2.1",
-    "react": "^16.12.0",
-    "react-cookie": "^4.0.3",
+    "js-file-download": "^0.4.12",
+    "js-yaml": "^3.14.0",
+    "mdi-material-ui": "^6.18.0",
+    "notistack": "^1.0.0",
+    "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
-    "react-dom": "^16.12.0",
-    "react-helmet-async": "^1.0.4",
-    "react-redux": "^7.1.3",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.1",
-    "react-select": "^3.0.8",
+    "react-dom": "^16.13.1",
+    "react-helmet-async": "^1.0.6",
+    "react-redux": "^7.2.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-select": "^3.1.0",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "redux-undo-immutable": "^0.2.0",
-    "uuid": "^3.3.3"
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint './src/**/*.{js,jsx}'",
+    "lint:fix": "eslint './src/**/*.{js,jsx}' --fix"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^2.1.1"
+  },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app"
+    ]
   },
   "browserslist": [
     ">0.2%",

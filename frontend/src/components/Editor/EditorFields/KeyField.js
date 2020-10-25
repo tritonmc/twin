@@ -1,48 +1,38 @@
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
+import { InputAdornment, TextField } from "@material-ui/core";
 import VpnIcon from "@material-ui/icons/VpnKey";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../../../actions/items";
 
-class KeyField extends Component {
-  render() {
-    return (
-      <TextField
-        id="editor-item-key"
-        label="Item Key"
-        defaultValue={this.props.itemKey}
-        key={this.props.itemKey}
-        onBlur={this.props.updateField}
-        margin="normal"
-        variant="outlined"
-        fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <VpnIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-    );
-  }
-}
+const KeyField = ({ index }) => {
+  const value = useSelector((state) => state.items.getIn(["present", index, "key"]));
+  const dispatch = useDispatch();
 
-const mapStateToProps = (state, ownProps) => {
-  const item = state.items
-    .get("present")
-    .find((item) => item.getIn(["_twin", "id"]) === ownProps.id);
-  return {
-    itemKey: item ? item.get("key") : "",
-  };
+  const updateValue = useCallback(
+    (evt) => dispatch(updateField(index, ["key"], evt.target.value)),
+    [dispatch, index]
+  );
+
+  return (
+    <TextField
+      id="editor-item-key"
+      label="Item Key"
+      defaultValue={value}
+      // Use key here so it updates on undo/redo
+      key={value}
+      onBlur={updateValue}
+      margin="normal"
+      variant="outlined"
+      fullWidth
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <VpnIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateField: (evt) => dispatch(updateField(ownProps.id, ["key"], evt.target.value)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(KeyField);
+export default KeyField;

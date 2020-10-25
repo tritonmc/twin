@@ -1,50 +1,74 @@
-import { Paper, Typography } from "@material-ui/core";
-import List from "@material-ui/core/List";
-import { withStyles } from "@material-ui/core/styles";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import classNames from "classnames";
 import Fuse from "fuse-immutable";
+import { useEditorSettings } from "hooks/useEditorSettings";
 import { List as IList } from "immutable";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { FixedSizeList as VirtualList } from "react-window";
-import ItemRow from "./ItemRow";
-import SelectionToolbar from "./SelectionToolbar";
+import InnerList from "./InnerList";
 
-const styles = (theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    flex: "1 1 auto",
-    borderRadius: theme.shape.borderRadius,
-  },
-  list: {
-    paddingBottom: 20,
-    "&::-webkit-scrollbar": {
-      width: 7,
-      height: 7,
-    },
-    "&::-webkit-scrollbar-track": {
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.primary.main, 0.15),
-    },
-    "&::-webkit-scrollbar-thumb": {
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  paper: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  warningNoItems: {
-    fontSize: "calc(16px + 1vw)",
-    fontWeight: 300,
-    color: theme.palette.text.secondary,
-    textAlign: "center",
-  },
-});
+const ItemList = ({ archivedOnly = false, tag, collection }) => {
+  const { search, setLoading, languages } = useEditorSettings();
+  const { translations, sortField, sortText } = useSelector((state) => ({
+    sortField: state.editor.getIn(["sort", "field"]),
+    sortText: state.editor.getIn(["sort", "text"]),
+    translations: state.items.get("present", IList()),
+  }));
+  const [filteredKeys, setFilteredKeys] = useState([]);
+
+  const fuseKeys = useMemo(
+    () => languages.flatMap((lang) => [`languages.${lang}`, `lines.${lang}`]),
+    [languages]
+  );
+
+  useEffect(() => {
+    const filteredTranslations = translations.filter((item) => {
+      if (collection) return item.get("fileName") === collection;
+      if (tag) return item.getIn(["_twin", "tags"], IList()).indexOf(tag) !== -1;
+      return item.getIn(["_twin", "archived"], false) === archivedOnly;
+    });
+
+    if (search.length === 0) {
+      const sortFieldSplit = sortField.split(".");
+      setFilteredKeys(
+        filteredTranslations
+          .sort((a, b) =>
+            sortText
+              ? a.getIn(sortFieldSplit).localeCompare(b.getIn(sortFieldSplit))
+              : b.getIn(sortFieldSplit) - a.getIn(sortFieldSplit)
+          )
+          .map((item) => item.getIn(["_twin", "id"]))
+      );
+      return;
+    }
+    //setLoading(true);
+    const fuse = new Fuse(filteredTranslations, {
+      ...fuseOptions,
+      keys: [...fuseOptions.keys, ...fuseKeys],
+    });
+    setFilteredKeys(fuse.search(search));
+    //setLoading(false);
+  }, [
+    search,
+    translations,
+    sortText,
+    setLoading,
+    collection,
+    tag,
+    archivedOnly,
+    fuseKeys,
+    sortField,
+  ]);
+
+  return (
+    <AutoSizer>
+      {({ width, height }) => (
+        <InnerList width={width} height={height} filteredKeys={filteredKeys} />
+      )}
+    </AutoSizer>
+  );
+};
+
+/*export default ItemList;
 
 class ItemList extends Component {
   constructor() {
@@ -55,7 +79,7 @@ class ItemList extends Component {
   render() {
     return (
       <AutoSizer
-        archivedOnly={this.props.archivedOnly}
+        archivedOnly={this.props.archivedOnly || false}
         tag={this.props.tag}
         collection={this.props.collection}
         defaultHeight={200}
@@ -68,7 +92,7 @@ class ItemList extends Component {
   _renderList({ width, height }) {
     return (
       <InnerList
-        archivedOnly={this.props.archivedOnly}
+        archivedOnly={this.props.archivedOnly || false}
         tag={this.props.tag}
         collection={this.props.collection}
         height={height}
@@ -85,9 +109,8 @@ const mapStateToProps = (state, ownProps) => {
   var data = state.items
     .get("present", IList())
     .filter((item) => {
-      if (!!ownProps.collection) return item.get("fileName") === ownProps.collection;
-      if (!!ownProps.tag)
-        return item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1;
+      if (ownProps.collection) return item.get("fileName") === ownProps.collection;
+      if (ownProps.tag) return item.getIn(["_twin", "tags"], IList()).indexOf(ownProps.tag) !== -1;
       return item.getIn(["_twin", "archived"], false) === ownProps.archivedOnly;
     })
     .sort((a, b) =>
@@ -161,7 +184,7 @@ const InnerList = withStyles(styles)(
       }
     }
   )
-);
+);*/
 
 const fuseOptions = {
   id: "_twin.id",

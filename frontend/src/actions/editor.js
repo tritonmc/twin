@@ -1,27 +1,8 @@
 import * as types from "../constants/ActionTypes";
 
-export const setPreviewLanguage = (language) => ({
-  type: types.SET_PREVIEW_LANGUAGE,
-  language,
-});
-
 export const setMetadata = (metadata) => ({
   type: types.SET_METADATA,
   metadata,
-});
-
-export const setSearch = (search) => ({
-  type: types.SET_SEARCH,
-  search,
-});
-
-export const openEditor = (item) => ({
-  type: types.OPEN_EDITOR,
-  item,
-});
-
-export const closeEditor = () => ({
-  type: types.CLOSE_EDITOR,
 });
 
 export const addTag = (tag) => ({
@@ -46,17 +27,17 @@ export const setAllSelected = (selected, id) => ({
   selected,
 });
 
-export const addCollection = (name) => (dispatch, getState) =>
-  dispatch({
-    type: types.ADD_COLLECTION,
-    name,
-    options:
-      getState().main.get("tritonVersion", 1) >= 5
-        ? { blacklist: true, servers: [] }
-        : { universal: true, blacklist: false, servers: [] },
-  });
+export const addCollection = (name) => ({
+  type: types.ADD_COLLECTION,
+  name,
+  options: {},
+});
 
 export const deleteCollection = (name) => ({
   type: types.DELETE_COLLECTION,
   name,
+});
+
+export const clearData = () => ({
+  type: types.CLEAR_DATA,
 });
