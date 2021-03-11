@@ -1,5 +1,15 @@
 # TWIN
 
+## Deployment
+
+- Install dependencies on `backend` and `frontend`.
+- Create a copy of `backend/api/config.def.js` on `backend/api/config.js` and edit it.
+- Set environtment variables `PORT` and `SECRET` (must be a 64-char long - i.e. 32 bit - hex string)
+  Can be generated with `openssl rand -hex 32`.
+- Build frontend.
+- Run migrations with Knex (`cd backend && npx knex migrate:latest`)
+- Start `backend/index.js`.
+
 ## Config version changelog
 
 ### Version 6 (Triton v3.1.0)
