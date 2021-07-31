@@ -5,6 +5,8 @@
 /*******************************************************/
 
 module.exports = {
+  // Disable database (and auth) when testing
+  disableDatabase: true,
   database: {
     host: "localhost",
     port: 3306,

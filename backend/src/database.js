@@ -1,4 +1,6 @@
-const knex = require("knex")(require("../../knexfile.js"));
+// TODO
+
+const knex = require("knex")(require("../knexfile.js"));
 
 module.exports.getTokenUser = (token) => {
   return new Promise((resolve, reject) => {
