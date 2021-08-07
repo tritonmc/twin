@@ -1,8 +1,8 @@
+import { randomBytes } from "crypto";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { randomBytes } from "crypto";
-//TODO const database = require("./database");
+import database from "./database.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const UPLOAD_DIR = path.join(__dirname, "../upload");
@@ -38,7 +38,7 @@ const upload = async (req, res) => {
     // If the payload has that field, it means it's saving changed so we skip authentication
     if (!config.disableDatabase && !body.origin) {
       try {
-        body.username = await db.getTokenUser(req.token);
+        body.username = await database.getTokenUser(req.token);
       } catch (e) {
         return res.sendStatus(401);
       }

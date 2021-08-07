@@ -18,7 +18,8 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "migrate": "knex migrate:latest --esm"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

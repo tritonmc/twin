@@ -4,7 +4,7 @@
 /*         Then edit the config as you please.         */
 /*******************************************************/
 
-module.exports = {
+export default {
   // Disable database (and auth) when testing
   disableDatabase: true,
   database: {
