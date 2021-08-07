@@ -4,7 +4,9 @@
 /*         Then edit the config as you please.         */
 /*******************************************************/
 
-module.exports = {
+export default {
+  // Disable database (and auth) when testing
+  disableDatabase: true,
   database: {
     host: "localhost",
     port: 3306,
@@ -12,5 +14,6 @@ module.exports = {
     password: "",
     database: "triton",
   },
+  fileExpiry: 24 * 60 * 60 * 1000, // 24h
   disabledModules: [],
 };

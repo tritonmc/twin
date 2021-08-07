@@ -14,7 +14,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import NotesIcon from "@material-ui/icons/Notes";
-import React, { useState } from "react";
+import { ADD_ITEM, ADD_ITEM_SIGN, ADD_ITEM_TEXT } from "constants/HotKeys";
+import Mousetrap from "mousetrap";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { v4 as uuid } from "uuid";
@@ -58,12 +60,29 @@ const AddItemButton = ({ collection, list }) => {
   const history = useHistory();
   const { id: configId } = useParams();
 
-  const toggleDialog = () => setOpen((open) => !open);
-  const handleAddItem = (type) => () => {
-    toggleDialog();
-    dispatch(addItem(type, uuid(), collection || "default"));
-    history.push(`/${configId}/translation/${nextIndex}`);
-  };
+  const toggleDialog = useCallback(() => setOpen((open) => !open), []);
+  const handleAddItem = useCallback(
+    (type) => () => {
+      toggleDialog();
+      dispatch(addItem(type, uuid(), collection || "default"));
+      history.push(`/${configId}/translation/${nextIndex}`);
+    },
+    [toggleDialog, dispatch, collection, history, configId, nextIndex]
+  );
+
+  useEffect(() => {
+    Mousetrap.bind(ADD_ITEM.sequence, toggleDialog);
+    if (isOpen) {
+      Mousetrap.bind(ADD_ITEM_TEXT.sequence, handleAddItem("text"));
+      Mousetrap.bind(ADD_ITEM_SIGN.sequence, handleAddItem("sign"));
+    }
+
+    return () => {
+      Mousetrap.unbind(ADD_ITEM.sequence);
+      Mousetrap.unbind(ADD_ITEM_TEXT.sequence);
+      Mousetrap.unbind(ADD_ITEM_SIGN.sequence);
+    };
+  }, [handleAddItem, isOpen, toggleDialog]);
 
   return (
     <>

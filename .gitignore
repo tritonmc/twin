@@ -23,7 +23,7 @@ yarn-error.log*
 /backend/access.log
 
 frontend/src/styles/index.css
-backend/api/config.js
+backend/config.js
 
 test
 
