@@ -3,9 +3,9 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import database from "./database.js";
+import { addFile, UPLOAD_DIR } from "./storage.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const UPLOAD_DIR = path.join(__dirname, "../upload");
 
 let config = {};
 let staticConfigs = {};
@@ -45,6 +45,7 @@ const upload = async (req, res) => {
     }
 
     const id = randomBytes(6).toString("hex");
+    await addFile(id);
     await fs.promises.writeFile(path.join(UPLOAD_DIR, id), JSON.stringify(body), "utf-8");
 
     res.end(id);

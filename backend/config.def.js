@@ -14,5 +14,6 @@ export default {
     password: "",
     database: "triton",
   },
+  fileExpiry: 24 * 60 * 60 * 1000, // 24h
   disabledModules: [],
 };

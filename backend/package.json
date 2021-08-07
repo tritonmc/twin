@@ -14,11 +14,12 @@
     "express": "^4.17.1",
     "express-bearer-token": "^2.4.0",
     "knex": "^0.95.9",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.0"
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon src/index.js --ignore upload",
     "migrate": "knex migrate:latest --esm"
   },
   "devDependencies": {
