@@ -1,6 +1,10 @@
-const config = require("./api/config.auto.js");
+import config from "./config.js";
 
-module.exports = {
+export default {
   client: "mysql",
   connection: config.database,
+  migrations: {
+    directory: "./migrations",
+    loadExtensions: [".mjs"],
+  },
 };
