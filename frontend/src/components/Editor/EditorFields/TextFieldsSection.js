@@ -18,7 +18,7 @@ const TextFieldsSection = ({ index }) => {
   });
 
   const updateTextValue = (language, value) =>
-    dispatch(updateField(index, ["languages", language], value));
+    dispatch(updateField(index, ["languages", language], value || null));
   const updateSignValue = (language, line, value) =>
     dispatch(updateSignLine(index, language, parseInt(line), value));
 
@@ -42,7 +42,7 @@ const TextFieldsSection = ({ index }) => {
       <LanguageField
         key={language}
         language={language}
-        value={content.get(language, "")}
+        value={content.get(language, null)}
         updateField={updateTextValue}
       />
     ));

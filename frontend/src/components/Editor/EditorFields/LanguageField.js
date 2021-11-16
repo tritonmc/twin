@@ -19,8 +19,11 @@ const LanguageField = ({ updateField, value, language }) => {
       id={"editor-language-field-" + language}
       label={language}
       className={classes.textField}
-      defaultValue={value}
-      key={value}
+      defaultValue={value || ""}
+      placeholder={value == null ? "Using translation from the default language" : undefined}
+      InputLabelProps={{
+        shrink: true,
+      }}
       onBlur={handleChange}
       margin="normal"
       variant="outlined"
