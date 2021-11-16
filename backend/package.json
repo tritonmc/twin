@@ -13,16 +13,18 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-bearer-token": "^2.4.0",
-    "knex": "^0.95.9",
+    "knex": "^0.95.14",
     "mysql": "^2.18.1",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "pino-http": "^6.0.0"
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js --ignore upload",
-    "migrate": "knex migrate:latest --esm"
+    "dev": "NODE_ENV=development nodemon src/index.js --ignore upload | pino-pretty -c -l -t",
+    "migrate": "knex migrate:latest"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.15",
+    "pino-pretty": "^7.2.0"
   }
 }

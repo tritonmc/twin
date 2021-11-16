@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import database from "./database.js";
+import { logger } from "./logger.js";
 import { addFile, UPLOAD_DIR } from "./storage.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -50,7 +51,7 @@ const upload = async (req, res) => {
 
     res.end(id);
   } catch (ex) {
-    console.log(ex);
+    req.log.error(ex);
     res.sendStatus(500);
   }
 };
@@ -73,10 +74,16 @@ const loadStaticConfigs = () => {
 export const setupRoutes = (route, conf) => {
   config = conf;
   staticConfigs = loadStaticConfigs();
+  logger.debug(
+    { configs: Object.keys(staticConfigs) },
+    `Imported ${Object.keys(staticConfigs).length} static configs`
+  );
 
   route.get("/get/:id", getConfig);
   route.post("/upload", upload);
   route.post("/save", upload);
+
+  logger.debug("API routes setup have been setup");
 };
 
 export default { setupRoutes };
