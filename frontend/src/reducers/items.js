@@ -150,6 +150,12 @@ function itemReducer(state = List(), action) {
             )
           : v
       );
+    case types.SCRIPT_REPLACE_BLANK_TRANSLATIONS_WITH_NULL:
+      return state.map((v) =>
+        v.update("languages", (langs) =>
+          !langs ? langs : langs.map((lang) => (!lang ? null : lang))
+        )
+      );
     default:
       return state;
   }
