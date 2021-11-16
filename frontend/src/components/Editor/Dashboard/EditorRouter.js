@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import Export from "components/Export/Export";
+import { DRAWER_WIDTH } from "constants/Settings";
 import { useEditorSettings } from "hooks/useEditorSettings";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import ErrorsWarnings from "../ErrorsWarnings/ErrorsWarnings";
 import ItemList from "./ItemList";
-import { DRAWER_WIDTH } from "constants/Settings";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -45,6 +46,9 @@ const EditorRouter = () => {
         </Route>
         <Route path="/:id/export">
           <Export />
+        </Route>
+        <Route path="/:id/errors-warnings">
+          <ErrorsWarnings />
         </Route>
         <Route
           path="/:id/collection/:collection"

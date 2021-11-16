@@ -14,6 +14,7 @@ import ExportIcon from "@material-ui/icons/ImportExportRounded";
 import TagIcon from "@material-ui/icons/Label";
 import SettingsIcon from "@material-ui/icons/Settings";
 import CollectionIcon from "@material-ui/icons/StyleRounded";
+import WarningIcon from "@material-ui/icons/WarningRounded";
 import { useEditorSettings } from "hooks/useEditorSettings";
 import { List as IList, Map } from "immutable";
 import React from "react";
@@ -48,6 +49,11 @@ const DrawerChild = () => {
         <ListItemLink to={`/${id}`} primary="Dashboard" icon={<DashboardIcon />} />
         <ListItemLink to={`/${id}/archive`} primary="Archive" icon={<ArchiveIcon />} />
         <ListItemLink to={`/${id}/export`} primary="Export/Import" icon={<ExportIcon />} />
+        <ListItemLink
+          to={`/${id}/errors-warnings`}
+          primary="Errors &amp; Warnings"
+          icon={<WarningIcon />}
+        />
         {tritonv >= 4 && (
           <>
             <Divider />
