@@ -9,8 +9,11 @@ function itemReducer(state = List(), action) {
       return action.data;
     case types.UPDATE_FIELD:
       return state.update(action.index, (item) => {
-        if (item.getIn(action.path) !== action.value)
+        if (item.getIn(action.path, null) !== action.value) {
+          if (action.value === null)
+            return item.removeIn(action.path).setIn(["_twin", "dateUpdated"], Date.now());
           return item.setIn(action.path, action.value).setIn(["_twin", "dateUpdated"], Date.now());
+        }
         return item;
       });
     case types.UPDATE_SIGN_LINE:
@@ -152,9 +155,7 @@ function itemReducer(state = List(), action) {
       );
     case types.SCRIPT_REPLACE_BLANK_TRANSLATIONS_WITH_NULL:
       return state.map((v) =>
-        v.update("languages", (langs) =>
-          !langs ? langs : langs.map((lang) => (!lang ? null : lang))
-        )
+        v.update("languages", (langs) => (!langs ? langs : langs.filter((lang) => !!lang)))
       );
     default:
       return state;

@@ -20,7 +20,7 @@ const LanguageField = ({ updateField, value, language }) => {
       label={language}
       className={classes.textField}
       defaultValue={value || ""}
-      placeholder={value == null ? "Using translation from the default language" : undefined}
+      placeholder={value === null ? "Using translation from the default language" : undefined}
       InputLabelProps={{
         shrink: true,
       }}
