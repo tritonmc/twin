@@ -11,6 +11,14 @@ import { useHistory, useParams } from "react-router";
 import saveV1 from "utils/save";
 import saveV2 from "utils/save-v2";
 
+const hasError = (data) =>
+  data.some((translation) => {
+    // Disallow empty translation keys
+    if (!translation.get("key")) return true;
+
+    return false;
+  });
+
 const SaveButton = ({ list }) => {
   const dispatch = useDispatch();
   const { setLoading } = useGlobalSettings();
@@ -27,6 +35,16 @@ const SaveButton = ({ list }) => {
         const data = state.items.get("present");
         const defaultData = state.editor.get("defaultData");
         const metadata = state.editor.get("metadata");
+
+        if (hasError(data)) {
+          enqueueSnackbar(
+            "There is an error with your current translation list! Please check the Errors & Warning tab for more information.",
+            {
+              variant: "error",
+            }
+          );
+          return;
+        }
 
         let payload;
         if (configVersion >= 2 && configVersion <= 6) {

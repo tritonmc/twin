@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  unknownKey: {
+    color: theme.palette.error.main,
+  },
 }));
 
 const ItemRow = ({ index, data, style }) => {
@@ -129,7 +132,9 @@ const ItemRow = ({ index, data, style }) => {
       <ListItemText disableTypography className={classes.itemText}>
         <div className={classes.title}>
           <div className={classes.titleText}>
-            <Typography noWrap>{title || "Unknown key"}</Typography>
+            <Typography noWrap>
+              {title || <span className={classes.unknownKey}>Unknown key</span>}
+            </Typography>
           </div>
           <CopyToClipboard text={copySyntax}>
             <IconButton size="small" className={classes.copyButton} onClick={onCopy}>
