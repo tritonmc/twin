@@ -111,6 +111,7 @@ function itemReducer(state = List(), action) {
         if (index === undefined)
           return acc.push(
             fromJS({
+              fileName: "default",
               type: "text",
               key: key.split(".").slice(1).join("."),
               _twin: Map({
