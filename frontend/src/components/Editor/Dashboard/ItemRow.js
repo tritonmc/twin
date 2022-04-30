@@ -85,6 +85,10 @@ const ItemRow = ({ index, data, style }) => {
     const itemIndex = state.items
       .get("present")
       .findIndex((obj) => obj.getIn(["_twin", "id"]) === id);
+    if (itemIndex < 0) {
+      // This might happen if we delete a translation and the list size doesn't change rapidly enough
+      return {};
+    }
     const item = state.items.getIn(["present", itemIndex]);
     return {
       translationIndex: itemIndex,
@@ -124,7 +128,7 @@ const ItemRow = ({ index, data, style }) => {
       selected={selected}>
       <Checkbox
         className={classes.checkbox}
-        checked={selected}
+        checked={selected || false}
         onClick={stopPropagation}
         onChange={handleToggleSelected}
         color="primary"
@@ -160,7 +164,7 @@ const ItemRow = ({ index, data, style }) => {
               size="small"
             />
           )}
-          {tags.map((tag) => (
+          {tags?.map((tag) => (
             <Chip
               className={classes.chip}
               classes={{ label: classes.chipLabel }}
