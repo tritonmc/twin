@@ -74,7 +74,7 @@ const SaveButton = ({ list }) => {
           const response = await axios.post("/api/v1/save", payload);
           setLoading(false);
           dispatch(clearData());
-          replace("/saved", { savedId: response.data });
+          replace("/saved", { savedId: response.data.id });
         } catch (ex) {
           enqueueSnackbar("Failed to save! Please check your internet connection.", {
             variant: "error",

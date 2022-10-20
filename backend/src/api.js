@@ -49,7 +49,7 @@ const upload = async (req, res) => {
     await addFile(id);
     await fs.promises.writeFile(path.join(UPLOAD_DIR, id), JSON.stringify(body), "utf-8");
 
-    res.end(id);
+    res.json({ id: id });
   } catch (ex) {
     req.log.error(ex);
     res.sendStatus(500);
