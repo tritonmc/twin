@@ -29,7 +29,7 @@ const getConfig = async (req, res) => {
   }
 };
 
-const upload = async (req, res) => {
+const upload = (isWebapp) => async (req, res) => {
   try {
     if (!req.is("application/json")) return res.send(400);
 
@@ -49,7 +49,12 @@ const upload = async (req, res) => {
     await addFile(id);
     await fs.promises.writeFile(path.join(UPLOAD_DIR, id), JSON.stringify(body), "utf-8");
 
-    res.json({ id: id });
+    if (isWebapp) {
+      res.json({ id: id });
+    } else {
+      // We can't send JSON object back to the plugin client, since it's expecting just a string
+      res.end(id);
+    }
   } catch (ex) {
     req.log.error(ex);
     res.sendStatus(500);
@@ -80,8 +85,8 @@ export const setupRoutes = (route, conf) => {
   );
 
   route.get("/get/:id", getConfig);
-  route.post("/upload", upload);
-  route.post("/save", upload);
+  route.post("/upload", upload(false));
+  route.post("/save", upload(true));
 
   logger.debug("API routes setup have been setup");
 };
