@@ -4,10 +4,10 @@ import RedoIcon from "@material-ui/icons/Redo";
 import UndoIcon from "@material-ui/icons/Undo";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { ActionCreators as UndoActionCreators } from "redux-undo-immutable";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import * as UndoActionCreators from "../../../../actions/undo";
 
 class UndoRedoButtons extends Component {
   render() {

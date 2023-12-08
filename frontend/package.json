@@ -29,7 +29,6 @@
     "react-window": "^1.8.5",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "redux-undo-immutable": "^0.2.0",
     "uuid": "^8.3.0"
   },
   "scripts": {

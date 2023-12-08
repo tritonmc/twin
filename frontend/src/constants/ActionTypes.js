@@ -26,3 +26,7 @@ export const SET_ALL_SELECT = "SET_ALL_SELECT";
 export const SET_METADATA = "SET_METADATA";
 export const ADD_COLLECTION = "ADD_COLLECTION";
 export const DELETE_COLLECTION = "DELETE_COLLECTION";
+
+// undo
+export const UNDO = 'UNDO';
+export const REDO = 'REDO';
