@@ -33,8 +33,8 @@ const ItemList = ({ archivedOnly = false, tag, collection }) => {
         filteredTranslations
           .sort((a, b) =>
             sortText
-              ? a.getIn(sortFieldSplit).localeCompare(b.getIn(sortFieldSplit))
-              : b.getIn(sortFieldSplit) - a.getIn(sortFieldSplit)
+              ? (a.getIn(sortFieldSplit) ?? "").localeCompare(b.getIn(sortFieldSplit) ?? "")
+              : (b.getIn(sortFieldSplit) ?? 0) - (a.getIn(sortFieldSplit) ?? 0)
           )
           .map((item) => item.getIn(["_twin", "id"]))
       );
