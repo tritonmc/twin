@@ -7,13 +7,7 @@
 export default {
   // Disable database (and auth) when testing
   disableDatabase: true,
-  database: {
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "",
-    database: "triton",
-  },
+  database: "postgresql:///triton?host=/run/postgresql",
   fileExpiry: 24 * 60 * 60 * 1000, // 24h
   disabledModules: [],
 };

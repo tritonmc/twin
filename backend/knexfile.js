@@ -1,7 +1,7 @@
 import config from "./config.js";
 
 export default {
-  client: "mysql",
+  client: "pg",
   connection: config.database,
   migrations: {
     directory: "./migrations",

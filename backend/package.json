@@ -14,8 +14,8 @@
     "express": "^4.17.1",
     "express-bearer-token": "^2.4.0",
     "knex": "^0.95.14",
-    "mysql": "^2.18.1",
     "node-cron": "^3.0.0",
+    "pg": "^8.13.1",
     "pino-http": "^6.0.0"
   },
   "scripts": {
