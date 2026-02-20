@@ -1,7 +1,6 @@
 import { IconButton, ListItemIcon, ListItemText, MenuItem, Tooltip } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import { clearData } from "actions/editor";
-import axios from "axios";
 import { useEditorSettings } from "hooks/useEditorSettings";
 import { useGlobalSettings } from "hooks/useGlobalSettings";
 import { useSnackbar } from "notistack";
@@ -71,10 +70,20 @@ const SaveButton = ({ list }) => {
 
         try {
           setLoading(true);
-          const response = await axios.post("/api/v1/save", payload);
+          const response = await fetch("/api/v1/save", {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error("non-200 status code");
+          }
+          const responseData = await response.json();
           setLoading(false);
           dispatch(clearData());
-          replace("/saved", { savedId: response.data.id });
+          replace("/saved", { savedId: responseData.id });
         } catch (ex) {
           enqueueSnackbar("Failed to save! Please check your internet connection.", {
             variant: "error",

@@ -1,6 +1,5 @@
 import { setMetadata } from "actions/editor";
 import { setItems } from "actions/items";
-import axios from "axios";
 import { useEditorSettings } from "hooks/useEditorSettings";
 import { useGlobalSettings } from "hooks/useGlobalSettings";
 import { fromJS, List, Map } from "immutable";
@@ -19,7 +18,11 @@ const EditorLoader = ({ setErrorLoading }) => {
     (async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get("/api/v1/get/" + id);
+        const response = await fetch("/api/v1/get/" + id);
+        if (!response.ok) {
+          throw new Error("non-200 code response");
+        }
+        const data = await response.json();
 
         setTritonv(data.tritonv);
         setBungee(data.bungee);
